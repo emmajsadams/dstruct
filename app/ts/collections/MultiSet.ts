@@ -57,13 +57,13 @@ module tsds.collections {
             return this.map.delete(element);
         }
 
-        forEach(callback:forEachCollectionCallback<E>, thisArg?:any):void {
+        forEach(callback: ForEachCollectionCallback<E>, thisArg?:any):void {
             Validator.null(callback);
             // TODO: force forEachCollection to map with an any cast. Reconsider?
             this.map.forEach(<any>callback, thisArg);
         }
 
-        values():Iterator<E> {
+        values(): Iterator<E> {
             return this.map.keys();
         }
 
