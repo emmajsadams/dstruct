@@ -1,6 +1,6 @@
-/// <reference path="../References.d.ts"/>
+/// <reference path="../../References.d.ts"/>
 
-describe("MainController", () => {
+describe("MultiSet", () => {
 
     beforeEach(() => {
 

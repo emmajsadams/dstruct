@@ -160,7 +160,7 @@ module.exports = function(grunt) {
     uglify: {
       production: {
         files: {
-          "production/app.js": productionPath + "/app.js"
+          "app/dist.min.js": ["app/dist.js"]
         }
 
       }
@@ -242,9 +242,14 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('dev', [
-    'clean:development',
+    //'clean:development',
     'concurrent:compileDevelopment',
     'traceur'
+  ]);
+
+  grunt.registerTask('prod', [
+    'dev',
+    'uglify'
   ]);
 
   grunt.registerTask('unit', [
