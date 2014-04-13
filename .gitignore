@@ -1,0 +1,21 @@
+**/.DS_Store
+nbproject
+manifest.mf
+build.xml
+
+# IntellJ
+.project
+.settings
+.idea/*
+*.iml
+
+# libraries
+node_modules
+bower_components
+typings
+
+# Distribution/compiled folders.
+production
+development
+app/js
+.tmp
