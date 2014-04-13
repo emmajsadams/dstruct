@@ -2,7 +2,7 @@
 
 declare module tsds.collections {
 
-    export interface forEachCollectionCallback<E> {
+    export interface ForEachCollectionCallback<E> {
         (value: E): void;
     }
 
@@ -13,7 +13,7 @@ declare module tsds.collections {
         add(value: E): void;
         isEmpty(): boolean;
         delete(value: E);
-        forEach(callback: forEachCollectionCallback<E>, thisArg: any): void;
+        forEach(callback: ForEachCollectionCallback<E>, thisArg: any): void;
     }
 
 }

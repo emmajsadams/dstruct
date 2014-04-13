@@ -22,3 +22,4 @@ app/js
 
 # grunt
 app/ts/**/*.js
+app/dist.js

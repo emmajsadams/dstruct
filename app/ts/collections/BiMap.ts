@@ -1,19 +1,21 @@
+/// <reference path="../References.d.ts"/>
+
 module tsds.collections {
 
-    export interface BiMap<K, V> extends Map<K ,V> {
-        inverse(): BiMap<V, K>;
+    export interface IBiMap<K, V> extends Map<K ,V> {
+        inverse(): IBiMap<V, K>
     }
 
-    export class HashBiMap<K, V> implements BiMap<K, V>{
+    export class HashBiMap<K, V> implements IBiMap<K, V>{
         get size(): number {
             return this.map.size;
         }
 
         constructor(private map: Map<K, V> = <any>new Map<K, V>(),
-                    private inverseMap: Map<K, V> = <any>new Map<V, K>()) {
+                    private inverseMap: Map<V, K> = <any>new Map<V, K>()) {
         }
 
-        has(key: K): V {
+        has(key: K): boolean {
             return this.map.has(key);
         }
 
@@ -37,7 +39,7 @@ module tsds.collections {
         }
 
         // TODO: return map, or BiMap?? Guava returns BiMap
-        inverse(): BiMap<V, K> {
+        inverse(): IBiMap<V, K> {
             // TODO: return a copy, or immutable/protected?
             // user should not be able to modify inverseMap
             return new HashBiMap(this.map, this.inverseMap);
@@ -50,6 +52,14 @@ module tsds.collections {
 
         forEach(callback: forEachMapCallback<K, V>, thisArg: any): void {
 
+        }
+
+        keys(): Iterator<K> {
+            return <any>{};
+        }
+
+        values(): Iterator<V> {
+            return <any>{};
         }
     }
 }
