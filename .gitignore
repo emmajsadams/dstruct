@@ -19,3 +19,6 @@ production
 development
 app/js
 .tmp
+
+# grunt
+app/ts/**/*.js
