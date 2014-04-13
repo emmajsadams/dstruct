@@ -9,7 +9,7 @@
 /// <reference path="./collections/Collection.d.ts"/>
 /// <reference path="./collections/List.d.ts"/>
 /// <reference path="./collections/Iterator.d.ts"/>
-/// <reference path="./collections/Comparable.ts"/>
+/// <reference path="./collections/Comparator.ts"/>
 
 /// <reference path="./search/BinarySearch.ts"/>
 /// <reference path="./search/Search.d.ts"/>
