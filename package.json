@@ -1,0 +1,35 @@
+{
+  "name": "App",
+  "version": "0.0.0",
+  "scripts": {
+    "install": "bower install && tsd update && grunt bowerInstall"
+  },
+  "devDependencies": {
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-typescript": "*",
+    "grunt-karma": "*",
+    "grunt-concurrent": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-tsd": "*",
+    "load-grunt-tasks": "*",
+    "grunt-bower-install": "*",
+    "time-grunt": "*",
+    "grunt": "*",
+    "karma-chrome-launcher": "*",
+    "karma-firefox-launcher": "*",
+    "karma-ie-launcher": "*",
+    "karma-script-launcher": "*",
+    "karma-html2js-preprocessor": "*",
+    "karma-jasmine": "*",
+    "karma-story-reporter": "*",
+    "karma": "*",
+    "grunt-traceur": "0.0.3"
+  },
+  "dependencies": {
+    "es6-collections": "^0.2.0"
+  }
+}
