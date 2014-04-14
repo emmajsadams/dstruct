@@ -7,9 +7,10 @@ describe("MultiSet", () => {
     });
 
     it("Should have a number after added", () => {
-        var multiSet = new tsds.MultiSet<number>();
+        var multiSet = new tsds.collections.MultiSet<number>();
         multiSet.add(4);
         expect(multiSet.has(4));
     });
 
+    it("Should have a ")
 });
