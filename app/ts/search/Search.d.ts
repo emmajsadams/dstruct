@@ -9,5 +9,5 @@ declare module tsds.search {
                comparator?: tsds.collections.Comparator<E> = tsds.collections.DefaultComparator)
     }
 
-*/
+
 }
