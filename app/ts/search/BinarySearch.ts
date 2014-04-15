@@ -2,7 +2,10 @@
 
 module tsds.search {
 
-    export function BinarySearch<E>(list: tsds.collections.List<E>, value: E, comparator: tsds.collections.Comparator<E> = tsds.collections.DefaultComparator) {
+    export function BinarySearch<E>(
+        list: tsds.collections.List<E>,
+        value: E,
+        comparator: tsds.collections.Comparator<E> = tsds.collections.DefaultComparator) {
         var minIndex = 0;
         var maxIndex = list.size - 1;
         var midIndex: number;
