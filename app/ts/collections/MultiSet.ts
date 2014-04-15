@@ -3,14 +3,14 @@
 module tsds.collections {
 
     export class MultiSet<E> implements Set<E> {
-        get size():number {
-            return this.map.size;
-        }
-
         private map:Map<E, number>;
 
         constructor() {
             this.map = <any>new Map();
+        }
+
+        get size(): number {
+            return this.map.size;
         }
 
        /**
