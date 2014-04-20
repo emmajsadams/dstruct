@@ -14,12 +14,7 @@ node_modules
 bower_components
 typings
 
-# Distribution/compiled folders.
-production
-development
-app/js
-.tmp
-
 # grunt
-app/ts/**/*.js
-app/dist.js
+js/**/*.js
+ts/**/*.js
+dist.js

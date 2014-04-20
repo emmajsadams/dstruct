@@ -10,7 +10,7 @@
     "grunt-contrib-uglify": "*",
     "grunt-contrib-connect": "*",
     "grunt-contrib-concat": "*",
-    "grunt-typescript": "*",
+    "grunt-ts": "*",
     "grunt-karma": "*",
     "grunt-concurrent": "*",
     "grunt-contrib-watch": "*",
