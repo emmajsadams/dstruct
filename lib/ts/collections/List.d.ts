@@ -1,6 +1,6 @@
 /// <reference path="../../References.d.ts"/>
 
-declare module tsds.collections {
+declare module dsa.collections {
 
     export interface List<E> extends Collection<E> {
         indexOf(element: E)

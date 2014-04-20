@@ -1,6 +1,6 @@
 /// <reference path="../../References.d.ts"/>
 
-module tsds.collections {
+module dsa.collections {
 
     export class MultiSet<E> implements Set<E> {
         private map:Map<E, number>;
@@ -27,8 +27,9 @@ module tsds.collections {
         * @param occurrences Number of occurrences to add.
         */
         addMany(element:E, occurrences:number):void {
-            Validator.null(element);
-            Validator.lessThanZero(occurrences);
+            //TODO: convert to checkArgument
+            //Validator.null(element);
+            //Validator.lessThanZero(occurrences);
             this.map.set(element, this.count(element) + occurrences);
         }
 
@@ -38,13 +39,15 @@ module tsds.collections {
         * @returns The number of occurrences of the element in this multiset.
         */
         count(element:E):number {
-            Validator.null(element);
+            //TODO: convert to checkArgument
+            //Validator.null(element);
             var count = this.map.get(element);
             return count ? count : 0;
         }
 
         has(element:E):boolean {
-            Validator.null(element);
+            //TODO: convert to checkArgument
+            //Validator.null(element);
             return this.count(element) > 0;
         }
 
@@ -53,12 +56,14 @@ module tsds.collections {
         }
 
         delete(element:E):boolean {
-            Validator.null(element);
+            //TODO: convert to checkArgument
+            //Validator.null(element);
             return this.map.delete(element);
         }
 
         forEach(callback: ForEachCollectionCallback<E>, thisArg?:any):void {
-            Validator.null(callback);
+            //TODO: convert to checkArgument
+            //Validator.null(callback);
             // TODO: force forEachCollection to map with an any cast. Reconsider?
             this.map.forEach(<any>callback, thisArg);
         }

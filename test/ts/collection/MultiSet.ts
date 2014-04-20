@@ -7,7 +7,7 @@ describe("MultiSet", () => {
     });
 
     it("Should have a number after added", () => {
-        var multiSet = new tsds.collections.MultiSet<number>();
+        var multiSet = new dsa.collections.MultiSet<number>();
         multiSet.add(4);
         expect(multiSet.has(4));
     });

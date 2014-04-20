@@ -1,11 +1,11 @@
 /// <reference path="../../References.d.ts"/>
 
-module tsds.search {
+module dsa.search {
 
     export function BinarySearch<E>(
-        list: tsds.collections.List<E>,
+        list: dsa.collections.List<E>,
         value: E,
-        comparator: tsds.collections.Comparator<E> = tsds.collections.DefaultComparator) {
+        comparator: dsa.collections.Comparator<E> = dsa.collections.DefaultComparator) {
         var minIndex = 0;
         var maxIndex = list.size - 1;
         var midIndex: number;

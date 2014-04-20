@@ -1,6 +1,6 @@
 /// <reference path="../References.d.ts"/>
 
-module tsds.Exceptions {
+module dsa.Exceptions {
 
     class BaseException {
         error: Error;
@@ -23,6 +23,20 @@ module tsds.Exceptions {
         constructor(message?: string) {
             this.name = "NullPointer";
             super(message);
+        }
+    }
+
+    export class Preconditions {
+        static checkNotNull(arugment: any, message: string): void {
+            if (arugment) {
+                throw new dsa.Exceptions.NullPointer(message || "argument is null.");
+            }
+        }
+
+        static checkArgument(condition: boolean, message?: string):void {
+            if (condition) {
+                throw new dsa.Exceptions.IllegalArgument(message);
+            }
         }
     }
 
