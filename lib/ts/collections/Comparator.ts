@@ -1,6 +1,6 @@
 /// <reference path="../../References.d.ts"/>
 
-module tsds.collections {
+module dsa.collections {
 
     export interface Comparator<E> {
         (item1: E, item2: E): number
@@ -17,7 +17,10 @@ module tsds.collections {
         } else {
             // Check all conditions, and throw an error else. This ensures base types
             // and class types that cannot be compared will throw an error when this is used.
-            throw new tsds.Exceptions.IllegalArgument("item1 cannot be compared to item2");
+            /*
+            throw new dsa.Exceptions.IllegalArgument("item1 cannot be compared to item2");
+             TODO: convert to checkArgument
+            */
         }
 
     }

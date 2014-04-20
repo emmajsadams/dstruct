@@ -1,6 +1,6 @@
 /// <reference path="../../References.d.ts"/>
 
-declare module tsds.collections {
+declare module dsa.collections {
 
     export interface ForEachCollectionCallback<E> {
         (value: E): void;

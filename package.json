@@ -6,10 +6,8 @@
   },
   "devDependencies": {
     "grunt-contrib-clean": "*",
-    "grunt-contrib-copy": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-connect": "*",
-    "grunt-contrib-concat": "*",
     "grunt-ts": "*",
     "grunt-karma": "*",
     "grunt-concurrent": "*",
