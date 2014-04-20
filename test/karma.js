@@ -9,7 +9,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       "../node_modules/es6-collections/build/es6-collections.js",
-      "../app/dist.js",
+      "../js/dist.traceur.js",
       // Specifications
       "./unit/**/*.js"
     ],

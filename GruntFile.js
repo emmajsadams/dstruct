@@ -46,18 +46,43 @@ module.exports = function(grunt) {
     },
 
     // Compiles TypeScript to JavaScript
-    typescript: {
+    ts: {
       development: {
-        src: ['app/ts/**/*.ts'],
-        dest: '.tmp/dist.js',
+        // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
+        src: [
+          'ts/**/*.ts'
+        ],
+
+        // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
+        //html: ["test/work/**/*.tpl.html"],
+
+        // If specified, generate this file that to can use for reference management
+        reference: "References.d.ts",
+
+        // If specified, generate an out.js file which is the merged js file
+        out: 'js/dist.js',
+
+        // If specified, the generate JavaScript files are placed here. Only works if out is not specified
+        //outDir: 'test/outputdirectory',
+
+        // If specified, watches this directory for changes, and re-runs the current target
+        //watch: 'ts',
+
+        // Use to override the default options, http://gruntjs.com/configuring-tasks#options
         options: {
-          module: 'commonjs', //or commonjs
-          target: 'es5', //or es3,
-          basePath: "app/ts",
+          // 'es3' (default) | 'es5'
+          target: 'es5',
+          // 'amd' (default) | 'commonjs'
+          module: 'commonjs',
+          // true (default) | false
           sourceMap: false,
-          declaration: false
-        }
+          // true | false (default)
+          declaration: false,
+          // true (default) | false
+          removeComments: true
+        },
       },
+
       /*
       production: {
         src: ['app/ts/** /*.ts'],
@@ -71,31 +96,21 @@ module.exports = function(grunt) {
         }
       },
   */
+      /*
       unit: {
         src: [
-          'app/ts/**/*.ts',
-          'test/unit/**/*.ts'
+          'ts/** /*.ts',
+          'test/ts/** /*.ts'
         ],
+        dest: 'test/js',
         options: {
           module: 'commonjs',
           target: 'es5',
+          basePath: "test/ts",
           sourceMap: false,
           declaration: false
         }
       },
-/*
-      integration: {
-        src: [
-          'test/integration/** /*.ts'
-        ],
-        //dest: 'test/integration.js',
-        options: {
-          module: 'commonjs',
-          target: 'es5',
-          sourceMap: false,
-          declaration: false
-        }
-      }
 */
     },
 
@@ -106,7 +121,7 @@ module.exports = function(grunt) {
       },
       project: {
         files:{
-          'app/dist.js': ['.tmp/dist.js']
+          'js/dist.js': ['js/dist.traceur.js']
         }
       },
     },
@@ -160,7 +175,7 @@ module.exports = function(grunt) {
     uglify: {
       production: {
         files: {
-          "app/dist.min.js": ["app/dist.js"]
+          "js/dist.min.js": ["js/dist.traceur.js"]
         }
 
       }
@@ -171,17 +186,9 @@ module.exports = function(grunt) {
     // Run some tasks in parallel to speed up the build process
     concurrent: {
       compileDevelopment: [
-        "typescript:development",
+        "ts:development",
         "tsd:refresh",
       ],
-      compileProduction: [
-        "less:production",
-        "typescript:production"
-      ],
-      production: [
-        'imagemin',
-        'svgmin'
-      ]
     },
 
     // Watches files for changes and runs tasks based on the changed files
