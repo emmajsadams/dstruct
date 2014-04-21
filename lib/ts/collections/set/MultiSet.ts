@@ -1,4 +1,4 @@
-/// <reference path="../../References.d.ts"/>
+/// <reference path="../../../References.d.ts"/>
 
 module dsa.collections {
 
@@ -9,7 +9,7 @@ module dsa.collections {
             this.map = <any>new Map();
         }
 
-        get size(): number {
+        size(): number {
             return this.map.size;
         }
 
@@ -74,6 +74,11 @@ module dsa.collections {
 
         isEmpty():boolean {
             return this.map.size === 0;
+        }
+
+        toArray(): E[] {
+            //TODO!!!
+            return [];
         }
     }
 

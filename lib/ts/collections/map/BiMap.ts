@@ -1,4 +1,4 @@
-/// <reference path="../../References.d.ts"/>
+/// <reference path="../../../References.d.ts"/>
 
 module dsa.collections {
 
@@ -24,11 +24,7 @@ module dsa.collections {
         }
 
         set(key: K, value: V): void {
-            /* TODO: convert to checkArgument
-            if (this.inverseMap.has(value)) {
-                throw new tsds.Exceptions.IllegalArgument("value already bound to key");
-            }
-            */
+            //Exceptions.Preconditions.checkArgument(this.inverseMap.has(value), "value already bound to key");
 
             this.map.set(key, value);
             this.inverseMap.set(value, key);
