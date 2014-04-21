@@ -5,7 +5,9 @@ declare module dsa.collections {
     export interface List<E> extends Collection<E> {
         indexOf(element:E): number;
         get(index:number): E;
-        set(index:number, value:E): E;
+        set(index:number, Element:E): E;
+        addAtIndex(index:number, element:E):void;
+        removeAtIndex(index:number): E;
     }
 
 }

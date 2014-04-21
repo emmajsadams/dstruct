@@ -10,9 +10,9 @@ module dsa.collections {
     export var DefaultComparator: Comparator<any> = (item1: any, item2: any): number  => {
         if (item1 === item2) {
             return 0;
-        } else if (item1 < item2) {
+        } else if (!item1 || item1 < item2) {
             return -1;
-        } else if (item1 > item2) {
+        } else if (!item2 || item1 > item2) {
             return 1;
         } else {
             // Check all conditions, and throw an error else. This ensures base types
