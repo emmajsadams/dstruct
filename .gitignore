@@ -19,3 +19,4 @@ lib/js/**
 lib/ts/**/*.js
 dist.js
 .tscache
+tscommand*.tmp.txt

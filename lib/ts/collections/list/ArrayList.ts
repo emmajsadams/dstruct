@@ -2,34 +2,75 @@
 
 module dsa.collections {
 
+    class ArrayListIterator<E> implements Iterator<E> {
+        private index = 0;
+
+        constructor(private array:E[]) {}
+
+        next():E {
+            if (this.index >= this.array.length) {
+                throw StopIteration;
+            }
+
+            var element = this.array[this.index];
+            this.index++;
+            return element;
+        }
+    }
+
     export class ArrayList<E> implements List<E> {
         private array:E[];
 
-        constructor(//TODO: is comparator necessary? might be for inedxOF
-                    private comparator?:Comparator<E>, size?:number) {
-            this.array = new Array(size || 0);
+        constructor(private comparator:Comparator<E> = DefaultComparator, initialCapacity?:number) {
+            this.array = new Array(initialCapacity || 0);
         }
 
-        add(value:E):void {
-            Preconditions.checkNotNull(value);
+        __iterator__(): Iterator<E> {
+            return new ArrayListIterator(this.array);
+        }
 
-            this.array.push(value);
+        add(element:E):boolean {
+            this.addAtIndex(0, element);
+            return true;
+        }
+
+        addAtIndex(index:number, element:E):void {
+            Preconditions.checkNotNull(element);
+
+            this.array.splice(index, 0, element);
         }
 
         clear():void {
             util.clearArray(this.array);
         }
 
-        delete(value:E):boolean {
-            Preconditions.checkNotNull(value);
+        removeAtIndex(index:number):E {
+            Preconditions.checkNotNull(index);
+            Preconditions.checkIndex(index, this.size());
 
-            var index = this.indexOf(value);
+            var element = this.get(index);
+            this.array.splice(index, 1);
+            return element;
+        }
+
+        remove(element:E):boolean {
+            Preconditions.checkNotNull(element);
+
+            var index = this.indexOf(element);
             if (index >= 0) {
                 this.array.splice(index, 1);
                 return true;
             } else {
                 return false;
             }
+        }
+
+        equals(collection:Collection<E>):boolean {
+            return genericEquals(this, collection);
+        }
+
+        forEach(callback:ForEachCollectionCallback<E>):void {
+            genericForEach(this, callback);
         }
 
         get(index:number):E {
@@ -39,22 +80,28 @@ module dsa.collections {
             return this.array[index];
         }
 
-        has(value:E):boolean {
-            return this.indexOf(value) >= 0;
+        has(element:E):boolean {
+            return this.indexOf(element) >= 0;
         }
 
         indexOf(value:E):number {
             Preconditions.checkNotNull(value);
 
-            // TODO: consider if this will work with objects?
-            return this.array.indexOf(value);
+            var index = 0;
+            for (var element in this) {
+                if (this.comparator(element, value) === 0) {
+                    return index;
+                }
+                index++;
+            }
+            return -1;
         }
 
-        set(index:number, value:E):E {
-            Preconditions.checkNotNull(value);
+        set(index:number, element:E):E {
+            Preconditions.checkNotNull(element);
 
             var currentValue = this.get(index);
-            this.array[index] = value;
+            this.array[index] = element;
 
             return currentValue;
         }
@@ -71,6 +118,7 @@ module dsa.collections {
         isEmpty():boolean {
             return this.size() > 0;
         }
+
     }
 
 }

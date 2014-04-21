@@ -1,13 +1,6 @@
-/// <reference path="../References.d.ts"/>
+
+//TODO: proper typing for end iteration exception?
+declare var StopIteration;
 
 module dsa {}
 
-module dsa.util {
-
-    export function clearArray(array:any[]) {
-        while (array.length > 0) {
-            array.pop();
-        }
-    }
-
-}

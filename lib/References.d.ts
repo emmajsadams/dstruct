@@ -1,5 +1,7 @@
 //grunt-start
 /// <reference path="ts/Preconditions.ts" />
+/// <reference path="ts/Util.ts" />
+/// <reference path="ts/collections/BaseCollection.ts" />
 /// <reference path="ts/collections/Collection.d.ts" />
 /// <reference path="ts/collections/Comparator.ts" />
 /// <reference path="ts/collections/Iterator.d.ts" />

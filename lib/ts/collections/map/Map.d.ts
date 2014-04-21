@@ -13,7 +13,7 @@ declare module dsa.collections {
         set(key: K, value: V): void;
         delete(key: K): boolean;
         has(key: K): boolean;
-        forEach(callback: forEachMapCallback<K, V>, thisArg: any): void;
+        //forEach(callback: forEachMapCallback<K, V>, thisArg: any): void;
         keys(): Iterator<K>;
         values(): Iterator<V>;
         //entries(): Iterator<[K, V]>;
