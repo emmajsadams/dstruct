@@ -90,12 +90,11 @@ module.exports = function(grunt) {
 
     traceur: {
       options: {
-
         experimental: true
       },
-      project: {
+      typescript: {
         files:{
-          'lib/js/dist.js': ['lib/js/dist.traceur.js']
+          'lib/js/dist.traceur.js': ['lib/js/dist.js']
         }
       },
     },
@@ -180,7 +179,7 @@ module.exports = function(grunt) {
     'clean:development',
     'concurrent:compileDevelopment',
     'traceur',
-    'watch:typescript'
+    //'watch:typescript'
   ]);
 
   grunt.registerTask('prod', [

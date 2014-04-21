@@ -7,7 +7,7 @@ module dsa.search {
         value: E,
         comparator: dsa.collections.Comparator<E> = dsa.collections.DefaultComparator) {
         var minIndex = 0;
-        var maxIndex = list.size - 1;
+        var maxIndex = list.size() - 1;
         var midIndex: number;
         var midValue: E;
 

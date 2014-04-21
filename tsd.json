@@ -6,7 +6,7 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "lodash/lodash.d.ts": {
-      "commit": "13258f7f2bbf2979b0feba9b0d97cc63585b6577"
+      "commit": "5f90111fc7b532da58f1a41086a16bc370bcde6b"
     }
   }
 }
