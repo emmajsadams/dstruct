@@ -23,6 +23,8 @@ declare module dsa.collections {
 
         // TODO: mixin or abstract class for shared isEmpty logic?
         isEmpty(): boolean;
+
+        // Although a readonly property would be better, typescript does not support this for interfaces.
         size(): number;
         toArray(): E[];
 
