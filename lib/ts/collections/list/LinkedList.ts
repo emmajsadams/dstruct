@@ -131,7 +131,6 @@ module dsa.collections {
         indexOf(element:E):number {
             Preconditions.checkNotNull(element);
 
-
             var i = 0;
             for (var node in this) {
                 if (this.comparator(element, node.value) === 0) {
