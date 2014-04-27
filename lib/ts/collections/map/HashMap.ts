@@ -6,7 +6,7 @@ module dsa.collections {
         private map: ES6Map<K, V> = <any>new Map();
 
         clear(): void {
-
+            this.map.clear();
         }
 
         containsKey(key:K): boolean {
@@ -18,12 +18,14 @@ module dsa.collections {
         equals(map: Map<K, V>):boolean {
             Preconditions.checkNotNull(map);
 
+            //TODO: implement
             return false;
         }
 
         forEach(callback:forEachMapCallback<K, V>): void {
             Preconditions.checkNotNull(callback);
 
+            this.map.forEach(callback);
         }
 
         get(key:K): V {
@@ -34,7 +36,7 @@ module dsa.collections {
 
         // TODO: mixin or abstract class for shared isEmpty logic?
         isEmpty(): boolean {
-            return size() === 0;
+            return this.size() === 0;
         }
 
         keys(): Iterator<K> {
@@ -64,7 +66,7 @@ module dsa.collections {
 
         // not to be used directly
         __iterator__(): Iterator<K> {
-            return null;
+            return this.keys();
         }
 
     }
