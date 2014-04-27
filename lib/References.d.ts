@@ -14,6 +14,7 @@
 /// <reference path="ts/collections/map/Map.d.ts" />
 /// <reference path="ts/collections/set/MultiSet.ts" />
 /// <reference path="ts/collections/set/Set.d.ts" />
+/// <reference path="ts/collections/tree/TreeBase.ts" />
 /// <reference path="ts/index.ts" />
 /// <reference path="ts/search/BinarySearch.ts" />
 /// <reference path="ts/search/Search.d.ts" />
