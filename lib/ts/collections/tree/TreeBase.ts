@@ -6,11 +6,11 @@ module dsa.collections {
     }
 
 
-    export class Node<K, V> {
+    export class TreeBaseNode<K, V> {
 
-        constructor(public key:K, public value?:V, public left?:Node<K, V>, public right?:Node<K, V>) {}
+        constructor(public key:K, public value?:V, public left?:TreeBaseNode<K, V>, public right?:TreeBaseNode<K, V>) {}
 
-        getChild(comparatorValue: number): Node<K, V> {
+        getChild(comparatorValue: number): TreeBaseNode<K, V> {
             if (comparatorValue === 0) {
                 return this;
             }
@@ -18,7 +18,8 @@ module dsa.collections {
             return comparatorValue > 0 ? this.right : this.left;
         }
 
-        setChild(direction:Direction, node:Node<K,V>) {
+        // TODO: change to comparator value!
+        setChild(direction:Direction, node:TreeBaseNode<K,V>) {
             if (direction === Direction.Right) {
                 this.right = node;
             } else {
@@ -28,117 +29,107 @@ module dsa.collections {
 
     }
 
-    class TreeBaseIterator {
-        private ancestors = []; //TODO type
-        private cursor = null; //TODO
+    // Consider rewriting as ES6 iterator
+    export class TreeBaseIterator<K, V> {
+        // consider protected?
+        ancestors = []; //TODO type
+        cursor: TreeBaseNode<K, V>; //TODO
 
         // TODO: replace treebase with interface?
-        constructor(private tree: TreeBase) {
+        constructor(private tree: TreeBase<K, V>) {}
 
+        key(): K {
+            return this.cursor !== null ? this.cursor.key : null;
         }
-    }
 
-    function Iterator(tree) {
-        this._tree = tree;
-        this._ancestors = [];
-        this._cursor = null;
-    }
-
-    Iterator.prototype.data = function() {
-        return this._cursor !== null ? this._cursor.data : null;
-    };
-
-    // if null-iterator, returns first node
-    // otherwise, returns next node
-    Iterator.prototype.next = function() {
-        if(this._cursor === null) {
-            var root = this._tree._root;
-            if(root !== null) {
-                this._minNode(root);
-            }
-        }
-        else {
-            if(this._cursor.right === null) {
-                // no greater node in subtree, go up to parent
-                // if coming from a right child, continue up the stack
-                var save;
-                do {
-                    save = this._cursor;
-                    if(this._ancestors.length) {
-                        this._cursor = this._ancestors.pop();
-                    }
-                    else {
-                        this._cursor = null;
-                        break;
-                    }
-                } while(this._cursor.right === save);
+        next(): K {
+            if(this.cursor === null) {
+                var root = this.tree._root;
+                if(root !== null) {
+                    this.minNode(root);
+                }
             }
             else {
-                // get the next node from the subtree
-                this._ancestors.push(this._cursor);
-                this._minNode(this._cursor.right);
+                if(this.cursor.right === null) {
+                    // no greater node in subtree, go up to parent
+                    // if coming from a right child, continue up the stack
+                    var save;
+                    do {
+                        save = this.cursor;
+                        if(this.ancestors.length) {
+                            this.cursor = this.ancestors.pop();
+                        }
+                        else {
+                            this.cursor = null;
+                            break;
+                        }
+                    } while(this.cursor.right === save);
+                }
+                else {
+                    // get the next node from the subtree
+                    this.ancestors.push(this.cursor);
+                    this.minNode(this.cursor.right);
+                }
             }
-        }
-        return this._cursor !== null ? this._cursor.data : null;
-    };
 
-    // if null-iterator, returns last node
-    // otherwise, returns previous node
-    Iterator.prototype.prev = function() {
-        if(this._cursor === null) {
-            var root = this._tree._root;
-            if(root !== null) {
-                this._maxNode(root);
-            }
+            return this.key();
         }
-        else {
-            if(this._cursor.left === null) {
-                var save;
-                do {
-                    save = this._cursor;
-                    if(this._ancestors.length) {
-                        this._cursor = this._ancestors.pop();
-                    }
-                    else {
-                        this._cursor = null;
-                        break;
-                    }
-                } while(this._cursor.left === save);
+
+        prev(): K {
+            if(this.cursor === null) {
+                var root = this.tree._root;
+                if(root !== null) {
+                    this.maxNode(root);
+                }
             }
             else {
-                this._ancestors.push(this._cursor);
-                this._maxNode(this._cursor.left);
+                if(this.cursor.left === null) {
+                    var save;
+                    do {
+                        save = this.cursor;
+                        if(this.ancestors.length) {
+                            this.cursor = this.ancestors.pop();
+                        }
+                        else {
+                            this.cursor = null;
+                            break;
+                        }
+                    } while(this.cursor.left === save);
+                }
+                else {
+                    this.ancestors.push(this.cursor);
+                    this.maxNode(this.cursor.left);
+                }
             }
+            return this.key();
         }
-        return this._cursor !== null ? this._cursor.data : null;
-    };
 
-    Iterator.prototype._minNode = function(start) {
-        while(start.left !== null) {
-            this._ancestors.push(start);
-            start = start.left;
+        // TODO: Consider returning the node, and assignign it to curors?
+        private minNode(start: TreeBaseNode<K, V>): void {
+            while(start.left !== null) {
+                this.ancestors.push(start);
+                start = start.left;
+            }
+            this.cursor = start;
         }
-        this._cursor = start;
-    };
 
-    Iterator.prototype._maxNode = function(start) {
-        while(start.right !== null) {
-            this._ancestors.push(start);
-            start = start.right;
+        // TODO: Consider returning the node, and assignign it to curors?
+        private maxNode(start: TreeBaseNode<K, V>): void {
+            while(start.right !== null) {
+                this.ancestors.push(start);
+                start = start.right;
+            }
+            this.cursor = start;
         }
-        this._cursor = start;
-    };
-
-    module.exports = TreeBase;
-}
+    }
 
     export class TreeBase<K, V> {
         size: number;
 
         // Protected?
-        _root: Node<K, V>;
+        _root: TreeBaseNode<K, V>;
 
-        constructor(private comparator:Comparator<E> = DefaultComparator) {
+        constructor(private comparator:Comparator<K> = DefaultComparator) {
         }
 
         clear(): void {
@@ -146,16 +137,16 @@ module dsa.collections {
             this.size = 0;
         }
 
-        find(key: K): Node<K, V> {
+        find(key: K): K {
             var res = this._root;
 
             while(res !== null) {
-                var c = this.comparator(data, res.data);
-                if(c === 0) {
-                    return res.data;
+                var comparatorValue = this.comparator(key, res.key);
+                if(comparatorValue === 0) {
+                    return res.key;
                 }
                 else {
-                    res = res.get_child(c > 0);
+                    res = res.getChild(comparatorValue);
                 }
             }
 
@@ -163,24 +154,28 @@ module dsa.collections {
         }
 
         // returns iterator to node if found, null otherwise
-        findIterator(key: K): null {
+        findIterator(key: K): TreeBaseIterator<K, V> {
             var res = this._root;
             var iter = this.iterator();
 
             while(res !== null) {
-                var c = this._comparator(data, res.data);
-                if(c === 0) {
-                    iter._cursor = res;
+                var comparatorValue = this.comparator(key, res.key);
+                if(comparatorValue === 0) {
+                    iter.cursor = res;
                     return iter;
                 }
                 else {
-                    iter._ancestors.push(res);
-                    res = res.get_child(c > 0);
+                    iter.ancestors.push(res);
+                    res = res.getChild(comparatorValue);
                 }
             }
 
             return null;
-        };
+        }
+
+        iterator(): TreeBaseIterator<K, V> {
+            return null; //TODO
+        }
 
     }
 
