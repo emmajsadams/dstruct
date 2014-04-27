@@ -2,14 +2,14 @@
 
 module dsa.collections {
 
-    export class Node<E> {
-        constructor(public value:E, public prev?:Node<E>, public next?:Node<E>) {
+    export class DoublyLinkedNode<E> {
+        constructor(public value:E, public prev?:DoublyLinkedNode<E>, public next?:DoublyLinkedNode<E>) {
         }
     }
 
     // Circular doubly linked
     class DoublyLinkedListIterator<E> implements Iterator<E> {
-        constructor(private currentNode:Node<E>) {
+        constructor(private currentNode:DoublyLinkedNode<E>) {
         }
 
         next():E {
@@ -24,8 +24,8 @@ module dsa.collections {
     }
 
     export class DoublyLinkedList<E> implements List<E> {
-        private rootNode:Node<E>;
-        private lastNode:Node<E>;
+        private rootNode:DoublyLinkedNode<E>;
+        private lastNode:DoublyLinkedNode<E>;
         private count:number;
 
         constructor(private comparator:Comparator<E> = DefaultComparator) {
@@ -46,11 +46,11 @@ module dsa.collections {
 
             if (index === 0) {
                 if (this.size() === 0) {
-                    this.rootNode = this.lastNode = new Node<E>(element);
+                    this.rootNode = this.lastNode = new DoublyLinkedNode<E>(element);
                     this.rootNode.next = this.rootNode;
                     this.rootNode.prev = this.rootNode;
                 } else if (this.size() === 1) {
-                    this.lastNode.next = new Node<E>(element);
+                    this.lastNode.next = new DoublyLinkedNode<E>(element);
                     this.rootNode.prev = this.lastNode.next;
                 }
             }
@@ -165,7 +165,7 @@ module dsa.collections {
             return this.size() > 0;
         }
 
-        private getNodeByElement(element:E):Node<E> {
+        private getNodeByElement(element:E):DoublyLinkedNode<E> {
             for (var node in this) {
                 if (this.comparator(element, node.value) === 0) {
                     return node.value;
@@ -174,7 +174,7 @@ module dsa.collections {
             return null
         }
 
-        private getNodeByIndex(index:number):Node<E> {
+        private getNodeByIndex(index:number):DoublyLinkedNode<E> {
             var i = 0;
             for (var node in this) {
                 if (i === index) {
