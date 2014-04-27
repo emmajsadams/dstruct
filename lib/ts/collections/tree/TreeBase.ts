@@ -121,6 +121,7 @@ module dsa.collections {
             }
             this.cursor = start;
         }
+
     }
 
     export class TreeBase<K, V> {
@@ -173,50 +174,44 @@ module dsa.collections {
             return null;
         }
 
+        // Returns an interator to the tree node at or immediately after the item
+        lowerBound(key: K) {
+            var cursor = this._root;
+            var iterator = this.iterator();
+
+            while(cursor !== null) {
+                var comparatorValue = this.comparator(key, cursor.key);
+                if(comparatorValue === 0) {
+                    iterator.cursor = cursor;
+                    return iterator;
+                }
+                iterator.ancestors.push(cursor);
+                cursor = cursor.getChild(comparatorValue);
+
+            }
+
+            for(var i=iterator.ancestors.length - 1; i >= 0; --i) {
+                cursor = iterator.ancestors[i];
+                if (this.comparator(key, cursor.key) < 0) {
+                    iterator.cursor = cursor;
+                    iterator.ancestors.length = i;
+                    return iterator;
+                }
+            }
+
+            iterator.ancestors.length = 0;
+            return iterator;
+        }
+
+        // returns a null iterator
+        // call next() or prev() to point to an element
         iterator(): TreeBaseIterator<K, V> {
-            return null; //TODO
+            return new TreeBaseIterator<K, V>(this);
         }
 
     }
 
-    // public _ is protected!
     /*
-     export class TreeBase {
-     public _root;
-     public size: number;
-
-
-
-
-
-     // Returns an interator to the tree node at or immediately after the item
-     TreeBase.prototype.lowerBound = function(item) {
-     var cur = this._root;
-     var iter = this.iterator();
-     var cmp = this._comparator;
-
-     while(cur !== null) {
-     var c = cmp(item, cur.data);
-     if(c === 0) {
-     iter._cursor = cur;
-     return iter;
-     }
-     iter._ancestors.push(cur);
-     cur = cur.get_child(c > 0);
-     }
-
-     for(var i=iter._ancestors.length - 1; i >= 0; --i) {
-     cur = iter._ancestors[i];
-     if(cmp(item, cur.data) < 0) {
-     iter._cursor = cur;
-     iter._ancestors.length = i;
-     return iter;
-     }
-     }
-
-     iter._ancestors.length = 0;
-     return iter;
-     };
 
      // Returns an interator to the tree node immediately after the item
      TreeBase.prototype.upperBound = function(item) {
@@ -258,10 +253,9 @@ module dsa.collections {
      return res.data;
      };
 
-     // returns a null iterator
-     // call next() or prev() to point to an element
+
      TreeBase.prototype.iterator = function() {
-     return new Iterator(this);
+
      };
 
      // calls cb on each node's data, in order
