@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-module dsa.collections {
+module dsa.structs {
 
 
     export interface Tree<K, V> {

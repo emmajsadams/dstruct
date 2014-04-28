@@ -1,6 +1,6 @@
 /// <reference path="../../References.d.ts"/>
 
-module dsa.collections {
+module dsa.structs {
 
     export interface Comparator<E> {
         (item1: E, item2: E): number

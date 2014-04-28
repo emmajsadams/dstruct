@@ -1,6 +1,6 @@
 /// <reference path="../../References.d.ts"/>
 
-declare module dsa.collections {
+declare module dsa.structs {
 
     // Use in for ( element in Iterator ) { .. }
     // throws StopIteration when done

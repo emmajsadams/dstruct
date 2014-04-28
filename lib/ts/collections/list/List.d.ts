@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-declare module dsa.collections {
+declare module dsa.structs {
 
     export interface List<E> extends Collection<E> {
         indexOf(element:E): number;

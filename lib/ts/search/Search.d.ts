@@ -4,9 +4,9 @@ declare module dsa.search {
 
     /*
     export interface Search<E> {
-        search(list: dsa.collections.List<E>,
+        search(list: dsa.structs.List<E>,
                value: E,
-               comparator?: dsa.collections.Comparator<E> = dsa.collections.DefaultComparator)
+               comparator?: dsa.structs.Comparator<E> = dsa.structs.DefaultComparator)
     }
 
     */

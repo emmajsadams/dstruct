@@ -1,8 +1,8 @@
 /// <reference path="../../References.d.ts"/>
 
-function test(mapFactory: () => dsa.collections.Map<number, number>, name: string) {
+function test(mapFactory: () => dsa.structs.Map<number, number>, name: string) {
     describe(name, () => {
-        var map: dsa.collections.Map<number, number>;
+        var map: dsa.structs.Map<number, number>;
 
         beforeEach(() => {
             map = mapFactory();
@@ -20,11 +20,11 @@ function test(mapFactory: () => dsa.collections.Map<number, number>, name: strin
 describe("Map", () => {
 
     test(() => {
-        return new dsa.collections.HashMap<number, number>();
+        return new dsa.structs.HashMap<number, number>();
     }, "HashMap");
 
     test(() => {
-        return new dsa.collections.TreeMap<number, number>();
+        return new dsa.structs.TreeMap<number, number>();
     }, "TreeMap");
 
 });

@@ -1,7 +1,7 @@
 /// <reference path="../../References.d.ts"/>
 
 //TODO: better filename?
-module dsa.collections {
+module dsa.structs {
 
     export function genericForEach<E>(collection:Collection<E>, callback:ForEachCollectionCallback<E>):void {
         Preconditions.checkNotNull(callback);

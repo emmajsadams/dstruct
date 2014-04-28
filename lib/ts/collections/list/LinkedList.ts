@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-module dsa.collections {
+module dsa.structs {
 
     export class DoublyLinkedNode<E> {
         constructor(public value:E, public prev?:DoublyLinkedNode<E>, public next?:DoublyLinkedNode<E>) {
