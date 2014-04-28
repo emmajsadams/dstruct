@@ -19,7 +19,7 @@ module dsa.collections {
         //TODO: insert
         put(key:K, value:V): void;
         size(): number;
-        values(): Iterator<V>;
+        //values(): Iterator<V>;
 
         // not to be used directly
         __iterator__(): Iterator<K>;

@@ -13,7 +13,18 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            'lib/js'
+            'lib/js',
+
+          ]
+        }]
+      },
+
+      unit: {
+        files: [{
+          dot: true,
+          src: [
+            'test/js',
+
           ]
         }]
       },
@@ -225,6 +236,7 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('unit', [
+    'clean:unit',
     'ts:unit',
     'karma'
   ]);
