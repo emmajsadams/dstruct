@@ -169,8 +169,8 @@ module dsa.structs {
         // inserts a node with the given key and value
         // if a node with the given key exists, the value will be overwritten with the given value
         insert(key:K, value:V) {
-            Preconditions.checkNotNull(key);
-            Preconditions.checkNotNull(value);
+            dsa.error.checkNotNull(key);
+            dsa.error.checkNotNull(value);
 
             var returnValue = false;
 
@@ -250,7 +250,7 @@ module dsa.structs {
         }
 
         remove(key: K) {
-            Preconditions.checkNotNull(key);
+            dsa.error.checkNotNull(key);
 
             if(this._root === null) {
                 return false;
@@ -346,7 +346,7 @@ module dsa.structs {
 
         // return null
         get(key:K): TreeNode<K, V> {
-            Preconditions.checkNotNull(key);
+            dsa.error.checkNotNull(key);
 
             var res = this._root;
 
@@ -387,7 +387,7 @@ module dsa.structs {
 
         // Returns an interator to the tree node at or immediately after the item
         lowerBound(key:K):TreeBaseIterator<K, V> {
-            Preconditions.checkNotNull(key);
+            dsa.error.checkNotNull(key);
 
             var cursor = this._root;
             var iterator = this.iterator();
@@ -418,7 +418,7 @@ module dsa.structs {
 
         // Returns an interator to the tree node immediately after the item
         upperBound(key:K):TreeBaseIterator<K, V> {
-            Preconditions.checkNotNull(key);
+            dsa.error.checkNotNull(key);
 
             var iter = this.lowerBound(key);
 
@@ -461,7 +461,7 @@ module dsa.structs {
         // calls cb on each node's data, in order
         // TODO: Type
         each(callback:any):void {
-            Preconditions.checkNotNull(callback);
+            dsa.error.checkNotNull(callback);
 
             var it = this.iterator(), data;
 

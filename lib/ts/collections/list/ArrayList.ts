@@ -35,7 +35,7 @@ module dsa.structs {
         }
 
         addAtIndex(index:number, element:E):void {
-            Preconditions.checkNotNull(element);
+            dsa.error.checkNotNull(element);
 
             this.array.splice(index, 0, element);
         }
@@ -45,8 +45,8 @@ module dsa.structs {
         }
 
         removeAtIndex(index:number):E {
-            Preconditions.checkNotNull(index);
-            Preconditions.checkIndex(index, this.size());
+            dsa.error.checkNotNull(index);
+            dsa.error.checkIndex(index, this.size());
 
             var element = this.get(index);
             this.array.splice(index, 1);
@@ -54,7 +54,7 @@ module dsa.structs {
         }
 
         remove(element:E):boolean {
-            Preconditions.checkNotNull(element);
+            dsa.error.checkNotNull(element);
 
             var index = this.indexOf(element);
             if (index >= 0) {
@@ -74,8 +74,8 @@ module dsa.structs {
         }
 
         get(index:number):E {
-            Preconditions.checkNotNull(index);
-            Preconditions.checkIndex(index, this.size());
+            dsa.error.checkNotNull(index);
+            dsa.error.checkIndex(index, this.size());
 
             return this.array[index];
         }
@@ -85,7 +85,7 @@ module dsa.structs {
         }
 
         indexOf(value:E):number {
-            Preconditions.checkNotNull(value);
+            dsa.error.checkNotNull(value);
 
             var index = 0;
             for (var element in this) {
@@ -98,7 +98,7 @@ module dsa.structs {
         }
 
         set(index:number, element:E):E {
-            Preconditions.checkNotNull(element);
+            dsa.error.checkNotNull(element);
 
             var currentValue = this.get(index);
             this.array[index] = element;

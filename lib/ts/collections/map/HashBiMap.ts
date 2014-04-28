@@ -17,7 +17,7 @@ module dsa.structs {
         }
 
         set(key:K, value:V):void {
-            //Exceptions.Preconditions.checkArgument(this.inverseMap.has(value), "value already bound to key");
+            //Exceptions.dsa.error.checkArgument(this.inverseMap.has(value), "value already bound to key");
 
             this.map.set(key, value);
             this.inverseMap.set(value, key);
