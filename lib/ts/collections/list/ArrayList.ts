@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-module dsa.collections {
+module dsa.structs {
 
     class ArrayListIterator<E> implements Iterator<E> {
         private index = 0;

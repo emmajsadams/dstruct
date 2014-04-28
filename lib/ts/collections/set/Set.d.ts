@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-declare module dsa.collections {
+declare module dsa.structs {
 
     /*
     export interface Set<E> extends Collection<E>{

@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-module dsa.collections {
+module dsa.structs {
 
     // TODO: implement IBiMap
     export class HashBiMap<K, V> {

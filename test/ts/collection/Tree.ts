@@ -3,10 +3,10 @@
 describe("Tree", () => {
 
     describe("RedBlackTree", () => {
-        var tree: dsa.collections.RedBlackTree<number, number>;
+        var tree: dsa.structs.RedBlackTree<number, number>;
 
         beforeEach(() => {
-            tree = new dsa.collections.RedBlackTree<number, number>();
+            tree = new dsa.structs.RedBlackTree<number, number>();
         });
 
         it("Should find a key and value after inserted once.", () => {

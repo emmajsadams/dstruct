@@ -3,9 +3,9 @@
 module dsa.search {
 
     export function BinarySearch<E>(
-        list: dsa.collections.List<E>,
+        list: dsa.structs.List<E>,
         value: E,
-        comparator: dsa.collections.Comparator<E> = dsa.collections.DefaultComparator) {
+        comparator: dsa.structs.Comparator<E> = dsa.structs.DefaultComparator) {
         var minIndex = 0;
         var maxIndex = list.size() - 1;
         var midIndex: number;

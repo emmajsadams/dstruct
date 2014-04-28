@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-module dsa.collections {
+module dsa.structs {
 
     export class HashMap<K, V> implements Map<K, V> {
         private map: ES6Map<K, V> = <any>new Map();

@@ -1,6 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
-module dsa.collections {
+module dsa.structs {
 
     /*
     export class MultiSet<E> implements Set<E> {

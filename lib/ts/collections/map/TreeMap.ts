@@ -1,4 +1,4 @@
-module dsa.collections {
+module dsa.structs {
 
     export class TreeMap<K, V> implements Map<K, V> {
         private tree: RedBlackTree<K, V>;
