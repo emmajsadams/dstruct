@@ -4,7 +4,7 @@
 module dsa.structs {
 
     export function genericForEach<E>(collection:Collection<E>, callback:ForEachCollectionCallback<E>):void {
-        Preconditions.checkNotNull(callback);
+        dsa.error.checkNotNull(callback);
 
         for (var element in collection) {
             callback(element);
@@ -12,8 +12,8 @@ module dsa.structs {
     }
 
     export function genericEquals<E>(collection:Collection<E>, otherCollection:Collection<E>, comparator:Comparator<E> = DefaultComparator):boolean {
-        Preconditions.checkNotNull(collection);
-        Preconditions.checkNotNull(otherCollection);
+        dsa.error.checkNotNull(collection);
+        dsa.error.checkNotNull(otherCollection);
 
         if (collection.size() !== otherCollection.size()) {
             return false;
