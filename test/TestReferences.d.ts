@@ -21,6 +21,7 @@
 /// <reference path="../lib/ts/search/BinarySearch.ts" />
 /// <reference path="../lib/ts/search/Search.d.ts" />
 /// <reference path="../lib/ts/sort/InsertionSort.ts" />
+/// <reference path="ts/collection/Map.ts" />
 /// <reference path="ts/collection/MultiSet.ts" />
 /// <reference path="ts/collection/Tree.ts" />
 //grunt-end
