@@ -9,9 +9,13 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       "../node_modules/es6-collections/build/es6-collections.js",
-      "../js/dist.traceur.js",
+
+      //TODO fix traceur!
+      //"../lib/js/dist.traceur.js",
+      "../lib/js/dist.js",
+
       // Specifications
-      "./unit/**/*.js"
+      "./js/test/**/*.js"
     ],
 
     // list of files / patterns to exclude
@@ -26,7 +30,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:
