@@ -25,12 +25,14 @@ declare module dsa.collections {
 
     export interface Map<K, V> {
         clear(): void;
+
+        //TODO: mixin, helper function for shared logic?
         containsKey(key:K): boolean;
         equals(map: Map<K, V>):boolean;
         forEach(callback:forEachMapCallback<K, V>): void;
         get(key:K): V;
 
-        // TODO: mixin or abstract class for shared isEmpty logic?
+        //TODO: mixin, helper function for shared logic?
         isEmpty(): boolean;
         keys(): Iterator<K>;
         remove(key:K): boolean;

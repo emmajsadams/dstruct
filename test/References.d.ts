@@ -5,4 +5,5 @@ declare var describe: any;
 declare var expect: any;
 
 
-/// <reference path="../app/ts/References.d.ts"/>
+/// <reference path="./TestReferences.d.ts"/>
+/// <reference path="../lib/References.d.ts"/>
