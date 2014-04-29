@@ -1,8 +1,9 @@
 declare module dsa.structs {
 
     export interface Iterable {
-        __iterator__(): any;
+        forEach(callback: (element:any) => void): void;
         size(): number;
+        __iterator__(): any;
     }
 
 }

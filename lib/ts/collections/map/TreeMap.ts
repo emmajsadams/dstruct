@@ -16,8 +16,7 @@ module dsa.structs {
         }
 
         equals(map:Map<K, V>):boolean {
-            //TODO!
-            return false;
+            return dsa.structs.genericEquals(this, map);
         }
 
         forEach(callback:forEachMapCallback<K, V>):void {

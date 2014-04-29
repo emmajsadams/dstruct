@@ -3,6 +3,7 @@
 //TODO: better filename?
 module dsa.structs {
 
+    //TODO: generic foreach for maps may be different since keys and values!
     export function genericForEach<E>(iterable:Iterable, callback:ForEachCollectionCallback<E>):void {
         dsa.error.checkNotNull(iterable);
         dsa.error.checkNotNull(callback);
@@ -13,6 +14,7 @@ module dsa.structs {
     }
 
 
+    // TODO: generic equals for maps may be different that lists since keys, and values must be comparaed!
     export function genericEquals<E>(iterable:Iterable, otherIterable:Iterable, comparator:Comparator<E> = DefaultComparator):boolean {
         dsa.error.checkNotNull(iterable);
         dsa.error.checkNotNull(otherIterable);

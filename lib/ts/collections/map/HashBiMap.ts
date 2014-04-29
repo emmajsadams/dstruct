@@ -3,6 +3,8 @@
 module dsa.structs {
 
     // TODO: implement IBiMap
+    /*
+    Rewrite with HashMap!!
     export class HashBiMap<K, V> {
 
         constructor(private map:ES6Map<K, V> = <any>new Map<K, V>(), private inverseMap:ES6Map<V, K> = <any>new Map<V, K>()) {
@@ -63,4 +65,5 @@ module dsa.structs {
             return null;
         }
     }
+    */
 }
