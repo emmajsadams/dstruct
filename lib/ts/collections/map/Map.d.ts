@@ -23,14 +23,14 @@ declare module dsa.structs {
         values(): Iterator<V>;
     }
 
-    export interface Map<K, V> extends Iterable{
+    export interface Map<K, V> extends Iterable {
         //TOC
 
         clear(): void;
 
         //TODO: mixin, helper function for shared logic?
         containsKey(key:K): boolean;
-        equals(map: Map<K, V>):boolean;
+        equals(map:Map<K, V>):boolean;
         forEach(callback:forEachMapCallback<K, V>): void;
         get(key:K): V;
 
