@@ -35,6 +35,7 @@ module.exports = function(grunt) {
       development: {
         // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
         src: [
+          'lib/ts/**/TreeNode.ts',
           'lib/ts/**/*.ts'
         ],
 
@@ -57,8 +58,8 @@ module.exports = function(grunt) {
         options: {
           // 'es3' (default) | 'es5'
           target: 'es5',
-          // 'amd' (default) | 'commonjs'
-          module: 'commonjs',
+          // 'amd' guarantees that the compiled output is sorted according to the dependency graph
+          module: 'amd',
           // true (default) | false
           sourceMap: false,
           // true | false (default)
@@ -94,8 +95,8 @@ module.exports = function(grunt) {
         options: {
           // 'es3' (default) | 'es5'
           target: 'es5',
-          // 'amd' (default) | 'commonjs'
-          module: 'commonjs',
+          // 'amd' guarantees that the compiled output is sorted according to the dependency graph
+          module: 'amd',
           // true (default) | false
           sourceMap: false,
           // true | false (default)
