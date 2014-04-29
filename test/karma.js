@@ -10,9 +10,7 @@ module.exports = function(config) {
     files: [
       "../node_modules/es6-collections/build/es6-collections.js",
 
-      //TODO fix traceur!
-      //"../lib/js/dist.traceur.js",
-      "../lib/js/dist.js",
+      "../lib/js/dist.traceur.js",
 
       // Specifications
       "./js/test/**/*.js"
