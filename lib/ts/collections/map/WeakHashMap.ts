@@ -1,5 +1,13 @@
-/**
- * Created by codys_000 on 4/27/2014.
- */
+/// <reference path="../../../References.d.ts"/>
 
-//TODO: ensure keys are objects, weakhashmap cannot handle primitives
+module dsa.structs {
+
+    export class WeakHashMap<K extends Object, V> extends ES6BaseMap<K, V> {
+
+        constructor(comparator:Comparator<K> = DefaultComparator) {
+            super(<any>new Map(), comparator);
+        }
+
+    }
+
+}
