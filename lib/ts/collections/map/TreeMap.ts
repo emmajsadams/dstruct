@@ -3,8 +3,8 @@ module dsa.structs {
     export class TreeMap<K, V> implements Map<K, V> {
         private tree: RedBlackTree<K, V>;
 
-        constructor(comparator:Comparator<K> = DefaultComparator) {
-            this.tree = new RedBlackTree<K, V>(comparator);
+        constructor(private comparator:Comparator<K> = DefaultComparator) {
+            this.tree = new RedBlackTree<K, V>(this.comparator);
         }
 
         clear(): void {

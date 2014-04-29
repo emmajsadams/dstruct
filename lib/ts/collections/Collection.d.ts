@@ -6,7 +6,7 @@ declare module dsa.structs {
         (value:E): void;
     }
 
-    export interface Collection<E> {
+    export interface Collection<E> extends Iterable {
         add(element:E): boolean;
         //addAll(collection: Collection<E>);
         clear(): void;
@@ -25,7 +25,6 @@ declare module dsa.structs {
         isEmpty(): boolean;
 
         // Although a readonly property would be better, typescript does not support this for interfaces.
-        size(): number;
         toArray(): E[];
 
         // not to be used directly, enables using for (var element:E,

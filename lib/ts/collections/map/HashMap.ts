@@ -5,6 +5,9 @@ module dsa.structs {
     export class HashMap<K, V> implements Map<K, V> {
         private map: ES6Map<K, V> = <any>new Map();
 
+        constructor(private comparator:Comparator<K> = DefaultComparator) {
+        }
+
         clear(): void {
             this.map.clear();
         }
@@ -19,7 +22,7 @@ module dsa.structs {
             dsa.error.checkNotNull(map);
 
             //TODO: implement
-            return false;
+            return dsa.structs.genericEquals(this, map, this,c);
         }
 
         forEach(callback:forEachMapCallback<K, V>): void {
