@@ -7,7 +7,7 @@ module dsa.structs {
         dsa.error.checkNotNull(iterable);
         dsa.error.checkNotNull(callback);
 
-        for (var element in collection) {
+        for (var element in iterable) {
             callback(element);
         }
     }
@@ -25,17 +25,21 @@ module dsa.structs {
         }
 
         // Get each element
-        var collectionIterator = iterable.__iterator__();
-        var otherCollectionIterator = otherIterable.__iterator__();
+        var iterableIterator = iterable.__iterator__();
+        var otherIterableIterator = otherIterable.__iterator__();
         var index = 0;
-        while (index < collection.size()) {
-            if (comparator(collectionIterator.next(), otherCollectionIterator.next()) !== 0) {
+        while (index < iterable.size()) {
+            if (comparator(iterableIterator.next(), otherIterableIterator.next()) !== 0) {
                 return false;
             }
             index++;
         }
 
         return true;
+    }
+
+    export function genericIsEmpty(iterable:Iterable) {
+        return iterable.size() === 0;
     }
 
 }
