@@ -23,7 +23,9 @@ declare module dsa.structs {
         values(): Iterator<V>;
     }
 
-    export interface Map<K, V> {
+    export interface Map<K, V> extends Iterable{
+        //TOC
+
         clear(): void;
 
         //TODO: mixin, helper function for shared logic?
@@ -37,7 +39,6 @@ declare module dsa.structs {
         keys(): Iterator<K>;
         remove(key:K): boolean;
         set(key:K, value:V): void;
-        size(): number;
         values(): Iterator<V>;
 
         // not to be used directly

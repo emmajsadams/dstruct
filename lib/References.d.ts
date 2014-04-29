@@ -1,8 +1,8 @@
 //grunt-start
 /// <reference path="ts/Util.ts" />
-/// <reference path="ts/collections/BaseCollection.ts" />
 /// <reference path="ts/collections/Collection.d.ts" />
 /// <reference path="ts/collections/Comparator.ts" />
+/// <reference path="ts/collections/GenericHelpers.ts" />
 /// <reference path="ts/collections/Iterable.d.ts" />
 /// <reference path="ts/collections/Iterator.d.ts" />
 /// <reference path="ts/collections/list/ArrayList.ts" />
