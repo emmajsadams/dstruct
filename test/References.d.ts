@@ -6,4 +6,4 @@ declare var expect: any;
 
 
 /// <reference path="./TestReferences.d.ts"/>
-/// <reference path="../lib/References.d.ts"/>
+/// <reference path="../References.d.ts"/>

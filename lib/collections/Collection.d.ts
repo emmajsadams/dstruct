@@ -1,5 +1,5 @@
-/// <reference path="../../References.d.ts"/>
-
+/// <reference path="../../../References.d.ts"/>
+CollectionHelpers
 declare module dsa.structs {
 
     export interface ForEachCollectionCallback<E> {
