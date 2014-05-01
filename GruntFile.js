@@ -5,6 +5,8 @@ module.exports = function(grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+
+
   grunt.initConfig({
 
     // Empties folders to start fresh
@@ -13,7 +15,7 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            'lib/js',
+            'bin',
 
           ]
         }]
@@ -23,7 +25,8 @@ module.exports = function(grunt) {
         files: [{
           dot: true,
           src: [
-            'test/js',
+            //'bin',
+            '.temp'
 
           ]
         }]
@@ -35,18 +38,18 @@ module.exports = function(grunt) {
       development: {
         // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
         src: [
-          'lib/ts/**/TreeNode.ts',
-          'lib/ts/**/*.ts'
+          'lib/collections/tree/TreeNode.ts',
+          'lib/**/*.ts'
         ],
 
         // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
         //html: ['test/work/**/*.tpl.html'],
 
         // If specified, generate this file that to can use for reference management
-        reference: 'lib/References.d.ts',
+        reference: 'References.d.ts',
 
         // If specified, generate an out.js file which is the merged js file
-        out: 'lib/js/dist.js',
+        out: 'bin/dist.js',
 
         // If specified, the generate JavaScript files are placed here. Only works if out is not specified
         //outDir: 'test/outputdirectory',
@@ -72,8 +75,8 @@ module.exports = function(grunt) {
       unit: {
         // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
         src: [
-          'lib/ts/**/*.ts',
-          'test/ts/**/*.ts'
+          'lib/**/*.ts',
+          'test/**/*.ts'
         ],
 
         // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
@@ -86,7 +89,9 @@ module.exports = function(grunt) {
         //out: '',
 
         // If specified, the generate JavaScript files are placed here. Only works if out is not specified
-        outDir: 'test/js',
+        outDir: '.temp',
+
+        baseDir: 'test/',
 
         // If specified, watches this directory for changes, and re-runs the current target
         //watch: 'ts',
@@ -142,7 +147,7 @@ module.exports = function(grunt) {
       },
       typescript: {
         files:{
-          'lib/js/dist.traceur.js': ['lib/js/dist.js']
+          'bin/dist.traceur.js': ['bin/dist.js']
         }
       },
     },
@@ -150,7 +155,7 @@ module.exports = function(grunt) {
     uglify: {
       production: {
         files: {
-          'lib/js/dist.min.js': ['lib/js/dist.traceur.js']
+          'bin/dist.min.js': ['bin/dist.traceur.js']
         }
 
       }

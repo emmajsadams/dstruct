@@ -1,5 +1,5 @@
-/// <reference path="../../../References.d.ts"/>
-CollectionHelpers
+/// <reference path="../../References.d.ts"/>
+
 declare module dsa.structs {
 
     // Use in for ( element in Iterator ) { .. }

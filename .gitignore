@@ -15,8 +15,7 @@ bower_components
 typings
 
 # grunt
-lib/js/**
-test/js/**
+.temp
 lib/ts/**/*.js
 dist.js
 .tscache

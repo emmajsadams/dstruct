@@ -1,5 +1,5 @@
-/// <reference path="../../../../References.d.ts"/>
-CollectionHelpers
+/// <reference path="../../../References.d.ts"/>
+
 module dsa.structs {
 
     export class HashMap<K, V> extends ES6BaseMap<K, V> {
