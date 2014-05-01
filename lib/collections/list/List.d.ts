@@ -1,5 +1,5 @@
-/// <reference path="../../../../References.d.ts"/>
-CollectionHelpers
+/// <reference path="../../../References.d.ts"/>
+
 declare module dsa.structs {
 
     export interface List<E> extends Collection<E> {

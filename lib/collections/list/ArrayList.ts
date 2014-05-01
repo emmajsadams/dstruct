@@ -1,5 +1,6 @@
-/// <reference path="../../../../References.d.ts"/>
-CollectionHelpers
+/// <reference path="../../../References.d.ts"/> 
+
+
 module dsa.structs {
 
     class ArrayListIterator<E> implements Iterator<E> {
