@@ -1,6 +1,5 @@
 //grunt-start
-/// <reference path="ts/collections/tree/TreeNode.ts" />
-/// <reference path="ts/Util.ts" />
+/// <reference path="lib/ts/Util.ts" />
 /// <reference path="ts/collections/Collection.d.ts" />
 /// <reference path="ts/collections/Comparator.ts" />
 /// <reference path="ts/collections/GenericHelpers.ts" />
@@ -19,6 +18,7 @@
 /// <reference path="ts/collections/set/MultiSet.ts" />
 /// <reference path="ts/collections/set/Set.d.ts" />
 /// <reference path="ts/collections/tree/RedBlackTree.ts" />
+/// <reference path="ts/collections/tree/TreeNode.ts" />
 /// <reference path="ts/error/Exceptions.ts" />
 /// <reference path="ts/error/Preconditions.ts" />
 /// <reference path="ts/index.ts" />

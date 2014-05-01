@@ -1,5 +1,5 @@
-/// <reference path="../../References.d.ts"/>
-
+/// <reference path="../../../References.d.ts"/>
+CollectionHelpers
 //TODO: better filename?
 module dsa.structs {
 

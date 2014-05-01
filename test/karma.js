@@ -10,10 +10,10 @@ module.exports = function(config) {
     files: [
       "../node_modules/es6-collections/build/es6-collections.js",
 
-      "../lib/js/dist.traceur.js",
+      "../bin/dist.traceur.js",
 
       // Specifications
-      "./js/test/**/*.js"
+      "../.temp/test/**/*.js"
     ],
 
     // list of files / patterns to exclude
@@ -53,7 +53,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: true,
+    singleRun: false,
 
     reporters: ["story"]
   });
