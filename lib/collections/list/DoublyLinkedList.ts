@@ -110,7 +110,7 @@ module dsa.structs {
         }
 
         equals(collection:Collection<E>):boolean {
-            return genericEquals(this, collection);
+            return genericCollectionEquals(this, collection);
         }
 
         forEach(callback:ForEachCollectionCallback<E>):void {

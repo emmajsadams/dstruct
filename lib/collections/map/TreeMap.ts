@@ -16,7 +16,10 @@ module dsa.structs {
         }
 
         equals(map:Map<K, V>):boolean {
-            return dsa.structs.genericEquals(this, map);
+            //return dsa.structs.genericCollectionEquals(this, map);
+
+            //TODO: need a generic map equals!
+            return false;
         }
 
         forEach(callback:forEachMapCallback<K, V>):void {
@@ -26,6 +29,10 @@ module dsa.structs {
         get(key:K):V {
             var node = this.tree.get(key);
             return node ? node.value : null;
+        }
+
+        has(element:K):boolean {
+            return this.get(element) !== null;
         }
 
         isEmpty():boolean {

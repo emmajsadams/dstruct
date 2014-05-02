@@ -34,6 +34,8 @@ declare module dsa.structs {
         forEach(callback:forEachMapCallback<K, V>): void;
         get(key:K): V;
 
+        has(key:K): boolean;
+
         //TODO: mixin, helper function for shared logic?
         isEmpty(): boolean;
         keys(): Iterator<K>;
