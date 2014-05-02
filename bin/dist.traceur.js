@@ -74,30 +74,30 @@ var dsa;
       }
     }
     structs.genericForEach = genericForEach;
-    function genericEquals(iterable, otherIterable, comparator) {
+    function genericCollectionEquals(collection, otherCollection, comparator) {
       if (typeof comparator === "undefined") {
         comparator = dsa.structs.DefaultComparator;
       }
-      dsa.error.checkNotNull(iterable);
-      dsa.error.checkNotNull(otherIterable);
-      if (iterable.size() !== otherIterable.size()) {
+      dsa.error.checkNotNull(collection);
+      dsa.error.checkNotNull(otherCollection);
+      if (collection.size() !== otherCollection.size()) {
         return false;
       }
-      if (iterable.size() === otherIterable.size() && iterable.size() === 0) {
+      if (collection.size() === otherCollection.size() && collection.size() === 0) {
         return true;
       }
-      var iterableIterator = iterable.__iterator__();
-      var otherIterableIterator = otherIterable.__iterator__();
+      var collectionIterator = collection.__iterator__();
+      var otherCollectionIterator = otherCollection.__iterator__();
       var index = 0;
-      while (index < iterable.size()) {
-        if (comparator(iterableIterator.next(), otherIterableIterator.next()) !== 0) {
+      while (index < collection.size()) {
+        if (comparator(collectionIterator.next(), otherCollectionIterator.next()) !== 0) {
           return false;
         }
         index++;
       }
       return true;
     }
-    structs.genericEquals = genericEquals;
+    structs.genericCollectionEquals = genericCollectionEquals;
     function genericIsEmpty(iterable) {
       return iterable.size() === 0;
     }
@@ -163,7 +163,7 @@ var dsa;
         }
       };
       ArrayList.prototype.equals = function(collection) {
-        return dsa.structs.genericEquals(this, collection);
+        return dsa.structs.genericCollectionEquals(this, collection);
       };
       ArrayList.prototype.forEach = function(callback) {
         dsa.structs.genericForEach(this, callback);
@@ -307,7 +307,7 @@ var dsa;
         }
       };
       DoublyLinkedList.prototype.equals = function(collection) {
-        return dsa.structs.genericEquals(this, collection);
+        return dsa.structs.genericCollectionEquals(this, collection);
       };
       DoublyLinkedList.prototype.forEach = function(callback) {
         dsa.structs.genericForEach(this, callback);
@@ -398,7 +398,7 @@ var dsa;
         return this.map.has(key);
       };
       ES6BaseMap.prototype.equals = function(map) {
-        return dsa.structs.genericEquals(this, map);
+        return false;
       };
       ES6BaseMap.prototype.forEach = function(callback) {
         dsa.error.checkNotNull(callback);
@@ -407,6 +407,9 @@ var dsa;
       ES6BaseMap.prototype.get = function(key) {
         dsa.error.checkNotNull(key);
         return this.map.get(key);
+      };
+      ES6BaseMap.prototype.has = function(element) {
+        return this.get(element) !== null;
       };
       ES6BaseMap.prototype.isEmpty = function() {
         return dsa.structs.genericIsEmpty(this);
@@ -481,12 +484,15 @@ var dsa;
         return this.get(key) !== null;
       };
       TreeMap.prototype.equals = function(map) {
-        return dsa.structs.genericEquals(this, map);
+        return false;
       };
       TreeMap.prototype.forEach = function(callback) {};
       TreeMap.prototype.get = function(key) {
         var node = this.tree.get(key);
         return node ? node.value: null;
+      };
+      TreeMap.prototype.has = function(element) {
+        return this.get(element) !== null;
       };
       TreeMap.prototype.isEmpty = function() {
         return this.size() === 0;
@@ -529,6 +535,102 @@ var dsa;
       return WeakHashMap;
     })(dsa.structs.ES6BaseMap);
     structs.WeakHashMap = WeakHashMap;
+  })(dsa.structs || (dsa.structs = {}));
+  var structs = dsa.structs;
+})(dsa || (dsa = {}));
+var dsa;
+(function(dsa) {
+  (function(structs) {
+    var HashSet = (function() {
+      function HashSet(comparator) {
+        if (typeof comparator === "undefined") {
+          comparator = dsa.structs.DefaultComparator;
+        }
+        this.comparator = comparator;
+        this.set = new Set();
+      }
+      HashSet.prototype.add = function(element) {
+        this.set.add(element);
+        return false;
+      };
+      HashSet.prototype.clear = function() {
+        this.set.clear();
+      };
+      HashSet.prototype.remove = function(element) {
+        this.set.delete (element);
+        return false;
+      };
+      HashSet.prototype.equals = function(set) {
+        return dsa.structs.genericCollectionEquals(this, set, this.comparator);
+      };
+      HashSet.prototype.forEach = function(callback) {
+        this.set.forEach(callback);
+      };
+      HashSet.prototype.has = function(element) {
+        return this.set.has(element);
+      };
+      HashSet.prototype.isEmpty = function() {
+        return dsa.structs.genericIsEmpty(this);
+      };
+      HashSet.prototype.size = function() {
+        return this.set.size;
+      };
+      HashSet.prototype.toArray = function() {
+        return null;
+      };
+      HashSet.prototype.__iterator__ = function() {
+        return this.set.values();
+      };
+      return HashSet;
+    })();
+    structs.HashSet = HashSet;
+  })(dsa.structs || (dsa.structs = {}));
+  var structs = dsa.structs;
+})(dsa || (dsa = {}));
+var dsa;
+(function(dsa) {
+  (function(structs) {
+    var TreeSet = (function() {
+      function TreeSet(comparator) {
+        if (typeof comparator === "undefined") {
+          comparator = dsa.structs.DefaultComparator;
+        }
+        this.comparator = comparator;
+        this.treeMap = new dsa.structs.TreeMap();
+      }
+      TreeSet.prototype.add = function(element) {
+        this.treeMap.set(element, true);
+        return false;
+      };
+      TreeSet.prototype.clear = function() {
+        this.treeMap.clear();
+      };
+      TreeSet.prototype.remove = function(element) {
+        this.treeMap.remove(element);
+        return false;
+      };
+      TreeSet.prototype.equals = function(set) {
+        return dsa.structs.genericCollectionEquals(this, set, this.comparator);
+      };
+      TreeSet.prototype.forEach = function(callback) {};
+      TreeSet.prototype.has = function(element) {
+        return this.treeMap.has(element);
+      };
+      TreeSet.prototype.isEmpty = function() {
+        return dsa.structs.genericIsEmpty(this);
+      };
+      TreeSet.prototype.size = function() {
+        return this.treeMap.size();
+      };
+      TreeSet.prototype.toArray = function() {
+        return null;
+      };
+      TreeSet.prototype.__iterator__ = function() {
+        return this.treeMap.keys();
+      };
+      return TreeSet;
+    })();
+    structs.TreeSet = TreeSet;
   })(dsa.structs || (dsa.structs = {}));
   var structs = dsa.structs;
 })(dsa || (dsa = {}));

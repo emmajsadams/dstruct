@@ -15,23 +15,23 @@ module dsa.structs {
 
 
     // TODO: generic equals for maps may be different that lists since keys, and values must be comparaed!
-    export function genericEquals<E>(iterable:Iterable, otherIterable:Iterable, comparator:Comparator<E> = DefaultComparator):boolean {
-        dsa.error.checkNotNull(iterable);
-        dsa.error.checkNotNull(otherIterable);
+    export function genericCollectionEquals<E>(collection:Collection<E>, otherCollection:Collection<E>, comparator:Comparator<E> = DefaultComparator):boolean {
+        dsa.error.checkNotNull(collection);
+        dsa.error.checkNotNull(otherCollection);
 
-        if (iterable.size() !== otherIterable.size()) {
+        if (collection.size() !== otherCollection.size()) {
             return false;
         }
-        if (iterable.size() === otherIterable.size() && iterable.size() === 0) {
+        if (collection.size() === otherCollection.size() && collection.size() === 0) {
             return true;
         }
 
         // Get each element
-        var iterableIterator = iterable.__iterator__();
-        var otherIterableIterator = otherIterable.__iterator__();
+        var collectionIterator = collection.__iterator__();
+        var otherCollectionIterator = otherCollection.__iterator__();
         var index = 0;
-        while (index < iterable.size()) {
-            if (comparator(iterableIterator.next(), otherIterableIterator.next()) !== 0) {
+        while (index < collection.size()) {
+            if (comparator(collectionIterator.next(), otherCollectionIterator.next()) !== 0) {
                 return false;
             }
             index++;
