@@ -3,36 +3,38 @@
 module dsa.structs {
 
     // TODO: implement IBiMap
-    /*
-    Rewrite with HashMap!!
+    //Rewrite with HashMap!!
     export class HashBiMap<K, V> {
+        // Protected
+        public _map: HashMap<K, V>;
+        public _inverseMap: HashMap<K, V>;
 
-        constructor(private map:ES6Map<K, V> = <any>new Map<K, V>(), private inverseMap:ES6Map<V, K> = <any>new Map<V, K>()) {
+        constructor(private keyComparator:Comparator<K> = DefaultComparator,
+                    private valueComparator:Comparator<V> = DefaultComparator) {
+            this._map = new HashMap<K, V>(this.keyComparator, valueComparator);
+            this._inverseMap = new HashMap<K, V>(this.keyComparator, valueComparator);
         }
 
         containsKey(key:K):boolean {
-            return this.map.has(key);
+            return this._map.has(key);
         }
 
         get(key:K):V {
-            return this.map.get(key);
+            return this._map.get(key);
         }
 
         set(key:K, value:V):void {
-            //Exceptions.dsa.error.checkArgument(this.inverseMap.has(value), "value already bound to key");
-
-            this.map.set(key, value);
-            this.inverseMap.set(value, key);
+            this._map.set(key, value);
+            this._inverseMap.set(value, key);
         }
 
         size():number {
-            return this.map.size;
+            return this._map.size();
         }
 
-        remove(key:K):boolean {
-            var value = this.map.get(key);
-            this.inverseMap.delete(value);
-            return this.map.delete(key);
+        remove(key:K):V {
+            this._inverseMap.remove(value);
+            return this._map.remove(key);
         }
 
         // TODO: return map, or BiMap?? Guava returns BiMap

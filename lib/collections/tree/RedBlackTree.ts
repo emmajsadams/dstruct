@@ -31,7 +31,7 @@ module dsa.structs {
     }
 
     // Consider rewriting as ES6 iterator
-    // TODO: interface?!
+    // TODO: Ensure comparator is used!
     export class TreeIterator<K, V> implements Iterator<K> {
         // consider protected?
         private ancestors = []; //TODO type

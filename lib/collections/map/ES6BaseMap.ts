@@ -2,11 +2,16 @@
 
 module dsa.structs {
 
-    // = <any>new Map();
     export class ES6BaseMap<K, V> implements Map<K, V> {
+
+        //TODO: a separate set of keys must be Maintained, since map keys will be hashed
+
+
+        //private keys:ES6BaseMap<K, V>;
 
         constructor(private map:ES6Map<K, V>,
                     private comparator:Comparator<K> = DefaultComparator) {
+            //this.keys = new WeakHashMap<K, V>; //TODO: weakhashmap?
         }
 
         clear():void {
@@ -47,18 +52,27 @@ module dsa.structs {
         }
 
         keys():Iterator<K> {
-            return this.map.keys();
+            //TODO: return maintained set of keys
+            return null;
+            //return this.map.keys();
         }
 
-        remove(key:K):boolean {
+        remove(key:K):V {
             dsa.error.checkNotNull(key);
 
-            return this.map.delete(key);
+            var value = this.map.get(key);
+            this.map.delete(key);
+            return value;
         }
 
         set(key:K, value:V):void {
             dsa.error.checkNotNull(key);
             dsa.error.checkNotNull(value);
+
+            //TODO: this key needs to be hashed if it is an object. Look at the following links
+            // this is because key equality in javascript maps are by value.
+            //http://esdiscuss.org/topic/maps-with-object-keys
+            //https://github.com/flesler/hashmap
 
             return this.map.set(key, value);
         }
