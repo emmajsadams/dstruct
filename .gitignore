@@ -16,6 +16,7 @@ typings
 
 # grunt
 .temp
+bin/dist.js
 lib/ts/**/*.js
 dist.js
 .tscache

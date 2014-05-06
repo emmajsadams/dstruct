@@ -19,6 +19,12 @@ module dsa.structs {
         }
     }
 
+    /**
+     * TODO
+     * @param comparator TODO
+     * @param initialCapacity TODO
+     * @returns TODO
+     */
     export class ArrayList<E> implements List<E> {
         private array:E[];
 
@@ -31,7 +37,10 @@ module dsa.structs {
         }
 
         add(element:E):boolean {
-            this.addAtIndex(0, element);
+            //TODO: should it default add at 0?
+            this.addAtIndex(this.size() - 1, element);
+
+            //TODO: return true?
             return true;
         }
 

@@ -39,7 +39,7 @@ declare module dsa.structs {
         //TODO: mixin, helper function for shared logic?
         isEmpty(): boolean;
         keys(): Iterator<K>;
-        remove(key:K): boolean;
+        remove(key:K): V;
         set(key:K, value:V): void;
         values(): Iterator<V>;
 
