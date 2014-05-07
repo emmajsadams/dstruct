@@ -25,10 +25,10 @@ module dsa.structs {
      * @param initialCapacity TODO
      * @returns TODO
      */
-    export class ArrayList<E> implements List<E> {
+    export class ArrayList<E extends Object> implements List<E> {
         private array:E[];
 
-        constructor(private comparator:Comparator<E> = DefaultComparator, initialCapacity?:number) {
+        constructor(initialCapacity?:number) {
             this.array = new Array(initialCapacity || 0);
         }
 
@@ -99,7 +99,7 @@ module dsa.structs {
 
             var index = 0;
             for (var element in this) {
-                if (this.comparator(element, value) === 0) {
+                if (element.compareTo(value) === 0) {
                     return index;
                 }
                 index++;

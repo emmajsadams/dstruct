@@ -2,15 +2,14 @@
 
 module dsa.structs {
 
-    export class ES6BaseMap<K, V> implements Map<K, V> {
+    export class ES6BaseMap<K extends Object, V extends Object> implements Map<K, V> {
 
         //TODO: a separate set of keys must be Maintained, since map keys will be hashed
 
 
         //private keys:ES6BaseMap<K, V>;
 
-        constructor(private map:ES6Map<K, V>,
-                    private comparator:Comparator<K> = DefaultComparator) {
+        constructor(private map:ES6Map<K, V>) {
             //this.keys = new WeakHashMap<K, V>; //TODO: weakhashmap?
         }
 

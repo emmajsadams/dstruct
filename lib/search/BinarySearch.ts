@@ -1,5 +1,5 @@
 /// <reference path="../../References.d.ts"/>
-
+/*
 module dsa.search {
 
     export function BinarySearch<E>(
@@ -28,3 +28,4 @@ module dsa.search {
     }
 
 }
+    */

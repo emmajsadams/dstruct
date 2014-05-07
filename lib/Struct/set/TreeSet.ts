@@ -6,7 +6,7 @@ module dsa.structs {
 
         private treeMap: TreeMap<E, boolean>;
 
-        constructor(private comparator:Comparator<E> = DefaultComparator) {
+        constructor() {
             this.treeMap = new TreeMap<E, boolean>();
         }
 
@@ -28,7 +28,7 @@ module dsa.structs {
         }
 
         equals(set: Set<E>):boolean {
-            return genericCollectionEquals(this, set, this.comparator);
+            return genericCollectionEquals(this, set);
         }
 
         forEach(callback: ForEachCollectionCallback<E>): void {

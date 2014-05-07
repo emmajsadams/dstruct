@@ -23,7 +23,7 @@ declare module dsa.structs {
         values(): Iterator<V>;
     }
 
-    export interface Map<K, V> extends Iterable {
+    export interface Map<K extends Object, V extends Object> extends Iterable {
         //TOC
 
         clear(): void;

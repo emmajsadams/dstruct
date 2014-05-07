@@ -2,13 +2,13 @@
 
 module dsa.structs {
 
-    export class DoublyLinkedNode<E> {
+    export class DoublyLinkedNode<E extends Object> {
         constructor(public value:E, public prev?:DoublyLinkedNode<E>, public next?:DoublyLinkedNode<E>) {
         }
     }
 
     // Circular doubly linked
-    class DoublyLinkedListIterator<E> implements Iterator<E> {
+    class DoublyLinkedListIterator<E extends Object> implements Iterator<E> {
         constructor(private currentNode:DoublyLinkedNode<E>) {
         }
 
@@ -28,7 +28,7 @@ module dsa.structs {
         private lastNode:DoublyLinkedNode<E>;
         private count:number;
 
-        constructor(private comparator:Comparator<E> = DefaultComparator) {
+        constructor() {
         }
 
         __iterator__():Iterator<E> {
@@ -70,7 +70,7 @@ module dsa.structs {
                 return false;
             }
 
-            if (this.comparator(this.rootNode.value, element) === 0) {
+            if (this.rootNode.value.compareTo(element) === 0) {
                 if (this.size() === 1) {
                     this.clear();
                     return true;
@@ -81,7 +81,7 @@ module dsa.structs {
                 this.lastNode.prev = this.rootNode;
                 this.count--;
                 return true;
-            } else if (this.comparator(this.lastNode.value, element) === 0) {
+            } else if (this.lastNode.value.compareTo(element) === 0) {
                 return this.removeLastNode() !== null;
             } else {
                 var node = this.getNodeByElement(element);
@@ -133,7 +133,7 @@ module dsa.structs {
 
             var i = 0;
             for (var node in this) {
-                if (this.comparator(element, node.value) === 0) {
+                if (element.compareTo(node.value) === 0) {
                     return i;
                 }
                 i++;
@@ -167,7 +167,7 @@ module dsa.structs {
 
         private getNodeByElement(element:E):DoublyLinkedNode<E> {
             for (var node in this) {
-                if (this.comparator(element, node.value) === 0) {
+                if (element.compareTo(node.value) === 0) {
                     return node.value;
                 }
             }
