@@ -13,14 +13,16 @@ module dsa.structs {
         }
     }
 
+
+
     export function genericCollectionEquals<E>(collection:Collection<E>,
-                                               otherCollection:Collection<E>,
-                                               comparator:Comparator<E> = DefaultComparator):boolean {
+                                               otherCollection:Collection<E>):boolean {
         return genericEquals(collection, otherCollection, (collectionIterator, otherCollectionIterator) => {
-            return comparator(collectionIterator.next(), otherCollectionIterator.next()) === 0;
+            return collectionIterator.next().compareTo(otherCollectionIterator.next()) === 0;
         })
     }
 
+    /*
     export function genericMapEquals<K, V>(map:Map<K, V>,
                                            otherMap:Map<K, V>,
                                            //keyComparator:Comparator<K> = DefaultComparator,
@@ -33,6 +35,7 @@ module dsa.structs {
             return valueComparator(mapValue, otherMapValue) === 0;
         })
     }
+    */
 
     // TODO: generic equals for maps may be different that lists since keys, and values must be comparaed!
     export function genericEquals<E>(iterable:Iterable,

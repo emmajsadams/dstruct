@@ -1,11 +1,11 @@
 /// <reference path="../../References.d.ts"/>
 declare module dsa.structs {
 
-    export interface ForEachCollectionCallback<E> {
+    export interface ForEachCollectionCallback<E extends Object> {
         (value:E): void;
     }
 
-    export interface Collection<E> extends Iterable {
+    export interface Collection<E extends Object> extends Iterable {
         add(element:E): boolean;
         //addAll(collection: Collection<E>);
         clear(): void;

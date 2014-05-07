@@ -1,18 +1,17 @@
-/// <reference path="../../../References.d.ts"/>
+/// <reference path="../../../../References.d.ts"/>
 
 module dsa.structs {
 
     // TODO: implement IBiMap
     //Rewrite with HashMap!!
-    export class HashBiMap<K, V> {
+    export class HashBiMap<K extends Object, V extends Object> {
         // Protected
         public _map: HashMap<K, V>;
-        public _inverseMap: HashMap<K, V>;
+        public _inverseMap: HashMap<V, K>;
 
-        constructor(private keyComparator:Comparator<K> = DefaultComparator,
-                    private valueComparator:Comparator<V> = DefaultComparator) {
-            this._map = new HashMap<K, V>(this.keyComparator, valueComparator);
-            this._inverseMap = new HashMap<K, V>(this.keyComparator, valueComparator);
+        constructor() {
+            this._map = new HashMap<K, V>();
+            this._inverseMap = new HashMap<V, K>();
         }
 
         containsKey(key:K):boolean {
@@ -33,8 +32,11 @@ module dsa.structs {
         }
 
         remove(key:K):V {
-            this._inverseMap.remove(value);
-            return this._map.remove(key);
+            //this._inverseMap.remove(value);
+            //return this._map.remove(key);
+
+            //TODO
+            return null;
         }
 
         // TODO: return map, or BiMap?? Guava returns BiMap
@@ -42,15 +44,16 @@ module dsa.structs {
         inverse() {
             // TODO: return a copy, or immutable/protected?
             // user should not be able to modify inverseMap
-            return new HashBiMap(this.map, this.inverseMap);
+            //return new HashBiMap(this.map, this.inverseMap);
+            return null;
         }
 
         clear():void {
-            this.map.clear();
-            this.inverseMap.clear();
+            this._map.clear();
+            this._inverseMap.clear();
         }
 
-        forEach(callback:forEachMapCallback<K, V>, thisArg:any):void {
+        forEach(callback:forEachMapCallback<K, V>):void {
 
         }
 
@@ -67,5 +70,5 @@ module dsa.structs {
             return null;
         }
     }
-    */
+
 }

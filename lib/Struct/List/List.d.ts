@@ -2,7 +2,7 @@
 
 declare module dsa.structs {
 
-    export interface List<E> extends Collection<E> {
+    export interface List<E extends Object> extends Collection<E> {
         indexOf(element:E): number;
         get(index:number): E;
         set(index:number, Element:E): E;

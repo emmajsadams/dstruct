@@ -1,43 +1,5 @@
 var dsa;
 (function(dsa) {
-  (function(structs) {
-    var TreeNode = (function() {
-      function TreeNode(key, value, left, right) {
-        if (typeof key === "undefined") {
-          key = null;
-        }
-        if (typeof value === "undefined") {
-          value = null;
-        }
-        if (typeof left === "undefined") {
-          left = null;
-        }
-        if (typeof right === "undefined") {
-          right = null;
-        }
-        this.key = key;
-        this.value = value;
-        this.left = left;
-        this.right = right;
-      }
-      TreeNode.prototype.getChild = function(right) {
-        return right ? this.right: this.left;
-      };
-      TreeNode.prototype.setChild = function(right, node) {
-        if (right) {
-          this.right = node;
-        } else {
-          this.left = node;
-        }
-      };
-      return TreeNode;
-    })();
-    structs.TreeNode = TreeNode;
-  })(dsa.structs || (dsa.structs = {}));
-  var structs = dsa.structs;
-})(dsa || (dsa = {}));
-var dsa;
-(function(dsa) {
   (function(util) {
     function clearArray(array) {
       while (array.length > 0) {
@@ -48,6 +10,113 @@ var dsa;
   })(dsa.util || (dsa.util = {}));
   var util = dsa.util;
 })(dsa || (dsa = {}));
+var __extends = this.__extends || function(d, b) {
+  for (var p in b) if (b.hasOwnProperty(p)) $traceurRuntime.elementSet(d, p, $traceurRuntime.elementGet(b, p));
+  function __() {
+    this.constructor = d;
+  }
+  __.prototype = b.prototype;
+  d.prototype = new __();
+};
+var dsa;
+(function(dsa) {
+  (function(error) {
+    var BaseException = (function() {
+      function BaseException(message) {
+        this.error = new Error(message);
+        this.error.name = this.name + "Exception";
+      }
+      return BaseException;
+    })();
+    error.BaseException = BaseException;
+    var IllegalArgument = (function(_super) {
+      __extends(IllegalArgument, _super);
+      function IllegalArgument(message) {
+        this.name = "IllegalArgument";
+        _super.call(this, message);
+      }
+      return IllegalArgument;
+    })(BaseException);
+    error.IllegalArgument = IllegalArgument;
+    var IllegalState = (function(_super) {
+      __extends(IllegalState, _super);
+      function IllegalState(message) {
+        this.name = "IllegalState";
+        _super.call(this, message);
+      }
+      return IllegalState;
+    })(BaseException);
+    error.IllegalState = IllegalState;
+    var NullPointer = (function(_super) {
+      __extends(NullPointer, _super);
+      function NullPointer(message) {
+        this.name = "NullPointer";
+        _super.call(this, message);
+      }
+      return NullPointer;
+    })(BaseException);
+    error.NullPointer = NullPointer;
+    var IndexOutOfBounds = (function(_super) {
+      __extends(IndexOutOfBounds, _super);
+      function IndexOutOfBounds(message) {
+        this.name = "IndexOutOfBounds";
+        _super.call(this, message);
+      }
+      return IndexOutOfBounds;
+    })(BaseException);
+    error.IndexOutOfBounds = IndexOutOfBounds;
+  })(dsa.error || (dsa.error = {}));
+  var error = dsa.error;
+})(dsa || (dsa = {}));
+var dsa;
+(function(dsa) {
+  (function(error) {
+    function checkNotNull(argument, message) {
+      if (argument === null || argument === undefined) {
+        throw new dsa.error.NullPointer(message || "argument is null.").error;
+      }
+    }
+    error.checkNotNull = checkNotNull;
+    function checkArgument(condition, message) {
+      if (condition) {
+        throw new dsa.error.IllegalArgument(message).error;
+      }
+    }
+    error.checkArgument = checkArgument;
+    function checkIndex(index, size, message) {
+      if (index < 0 || index >= size) {
+        throw new dsa.error.IndexOutOfBounds(message).error;
+      }
+    }
+    error.checkIndex = checkIndex;
+    function checkIndexRange(startIndex, endIndex, size, message) {
+      if (startIndex > endIndex || startIndex < 0 || endIndex >= size) {
+        throw new dsa.error.IndexOutOfBounds(message).error;
+      }
+    }
+    error.checkIndexRange = checkIndexRange;
+  })(dsa.error || (dsa.error = {}));
+  var error = dsa.error;
+})(dsa || (dsa = {}));
+Object.prototype.hashCode = function() {
+  return 0;
+};
+Object.prototype.compareTo = function(otherObject) {
+  return 0;
+};
+String.prototype.hashCode = function() {
+  var hash = 0, i, chr, len;
+  if (this.length == 0) return hash;
+  for (i = 0, len = this.length; i < len; i++) {
+    chr = this.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0;
+  }
+  return hash;
+};
+String.prototype.compareTo = function(otherString) {
+  return dsa.structs.DefaultComparator(this, otherString);
+};
 var dsa;
 (function(dsa) {
   (function(structs) {
@@ -60,6 +129,8 @@ var dsa;
         return 1;
       } else {}
     };
+    var map = new dsa.structs.HashMap();
+    map.set("foo", "foo");
   })(dsa.structs || (dsa.structs = {}));
   var structs = dsa.structs;
 })(dsa || (dsa = {}));
@@ -74,30 +145,33 @@ var dsa;
       }
     }
     structs.genericForEach = genericForEach;
-    function genericCollectionEquals(collection, otherCollection, comparator) {
-      if (typeof comparator === "undefined") {
-        comparator = dsa.structs.DefaultComparator;
-      }
-      dsa.error.checkNotNull(collection);
-      dsa.error.checkNotNull(otherCollection);
-      if (collection.size() !== otherCollection.size()) {
+    function genericCollectionEquals(collection, otherCollection) {
+      return genericEquals(collection, otherCollection, function(collectionIterator, otherCollectionIterator) {
+        return collectionIterator.next().compareTo(otherCollectionIterator.next()) === 0;
+      });
+    }
+    structs.genericCollectionEquals = genericCollectionEquals;
+    function genericEquals(iterable, otherIterable, comparisonCallback) {
+      dsa.error.checkNotNull(iterable);
+      dsa.error.checkNotNull(otherIterable);
+      if (iterable.size() !== otherIterable.size()) {
         return false;
       }
-      if (collection.size() === otherCollection.size() && collection.size() === 0) {
+      if (iterable.size() === otherIterable.size() && iterable.size() === 0) {
         return true;
       }
-      var collectionIterator = collection.__iterator__();
-      var otherCollectionIterator = otherCollection.__iterator__();
+      var collectionIterator = iterable.__iterator__();
+      var otherCollectionIterator = otherIterable.__iterator__();
       var index = 0;
-      while (index < collection.size()) {
-        if (comparator(collectionIterator.next(), otherCollectionIterator.next()) !== 0) {
+      while (index < iterable.size()) {
+        if (!comparisonCallback(collectionIterator, otherCollectionIterator)) {
           return false;
         }
         index++;
       }
       return true;
     }
-    structs.genericCollectionEquals = genericCollectionEquals;
+    structs.genericEquals = genericEquals;
     function genericIsEmpty(iterable) {
       return iterable.size() === 0;
     }
@@ -124,18 +198,14 @@ var dsa;
       return ArrayListIterator;
     })();
     var ArrayList = (function() {
-      function ArrayList(comparator, initialCapacity) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
-        this.comparator = comparator;
+      function ArrayList(initialCapacity) {
         this.array = new Array(initialCapacity || 0);
       }
       ArrayList.prototype.__iterator__ = function() {
         return new ArrayListIterator(this.array);
       };
       ArrayList.prototype.add = function(element) {
-        this.addAtIndex(0, element);
+        this.addAtIndex(this.size() - 1, element);
         return true;
       };
       ArrayList.prototype.addAtIndex = function(index, element) {
@@ -180,7 +250,7 @@ var dsa;
         dsa.error.checkNotNull(value);
         var index = 0;
         for (var element in this) {
-          if (this.comparator(element, value) === 0) {
+          if (element.compareTo(value) === 0) {
             return index;
           }
           index++;
@@ -235,12 +305,7 @@ var dsa;
       return DoublyLinkedListIterator;
     })();
     var DoublyLinkedList = (function() {
-      function DoublyLinkedList(comparator) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
-        this.comparator = comparator;
-      }
+      function DoublyLinkedList() {}
       DoublyLinkedList.prototype.__iterator__ = function() {
         return new DoublyLinkedListIterator(this.rootNode);
       };
@@ -272,7 +337,7 @@ var dsa;
         if (this.size() === 0) {
           return false;
         }
-        if (this.comparator(this.rootNode.value, element) === 0) {
+        if (this.rootNode.value.compareTo(element) === 0) {
           if (this.size() === 1) {
             this.clear();
             return true;
@@ -282,7 +347,7 @@ var dsa;
           this.lastNode.prev = this.rootNode;
           this.count--;
           return true;
-        } else if (this.comparator(this.lastNode.value, element) === 0) {
+        } else if (this.lastNode.value.compareTo(element) === 0) {
           return this.removeLastNode() !== null;
         } else {
           var node = this.getNodeByElement(element);
@@ -324,7 +389,7 @@ var dsa;
         dsa.error.checkNotNull(element);
         var i = 0;
         for (var node in this) {
-          if (this.comparator(element, node.value) === 0) {
+          if (element.compareTo(node.value) === 0) {
             return i;
           }
           i++;
@@ -350,7 +415,7 @@ var dsa;
       };
       DoublyLinkedList.prototype.getNodeByElement = function(element) {
         for (var node in this) {
-          if (this.comparator(element, node.value) === 0) {
+          if (element.compareTo(node.value) === 0) {
             return node.value;
           }
         }
@@ -383,12 +448,8 @@ var dsa;
 (function(dsa) {
   (function(structs) {
     var ES6BaseMap = (function() {
-      function ES6BaseMap(map, comparator) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
+      function ES6BaseMap(map) {
         this.map = map;
-        this.comparator = comparator;
       }
       ES6BaseMap.prototype.clear = function() {
         this.map.clear();
@@ -415,11 +476,13 @@ var dsa;
         return dsa.structs.genericIsEmpty(this);
       };
       ES6BaseMap.prototype.keys = function() {
-        return this.map.keys();
+        return null;
       };
       ES6BaseMap.prototype.remove = function(key) {
         dsa.error.checkNotNull(key);
-        return this.map.delete (key);
+        var value = this.map.get(key);
+        this.map.delete (key);
+        return value;
       };
       ES6BaseMap.prototype.set = function(key, value) {
         dsa.error.checkNotNull(key);
@@ -441,24 +504,13 @@ var dsa;
   })(dsa.structs || (dsa.structs = {}));
   var structs = dsa.structs;
 })(dsa || (dsa = {}));
-var __extends = this.__extends || function(d, b) {
-  for (var p in b) if (b.hasOwnProperty(p)) $traceurRuntime.elementSet(d, p, $traceurRuntime.elementGet(b, p));
-  function __() {
-    this.constructor = d;
-  }
-  __.prototype = b.prototype;
-  d.prototype = new __();
-};
 var dsa;
 (function(dsa) {
   (function(structs) {
     var HashMap = (function(_super) {
       __extends(HashMap, _super);
-      function HashMap(comparator) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
-        _super.call(this, new Map(), comparator);
+      function HashMap() {
+        _super.call(this, new Map());
       }
       return HashMap;
     })(dsa.structs.ES6BaseMap);
@@ -470,12 +522,8 @@ var dsa;
 (function(dsa) {
   (function(structs) {
     var TreeMap = (function() {
-      function TreeMap(comparator) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
-        this.comparator = comparator;
-        this.tree = new dsa.structs.RedBlackTree(this.comparator);
+      function TreeMap() {
+        this.tree = new dsa.structs.RedBlackTree();
       }
       TreeMap.prototype.clear = function() {
         this.tree.clear();
@@ -526,11 +574,8 @@ var dsa;
   (function(structs) {
     var WeakHashMap = (function(_super) {
       __extends(WeakHashMap, _super);
-      function WeakHashMap(comparator) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
-        _super.call(this, new Map(), comparator);
+      function WeakHashMap() {
+        _super.call(this, new Map());
       }
       return WeakHashMap;
     })(dsa.structs.ES6BaseMap);
@@ -541,12 +586,55 @@ var dsa;
 var dsa;
 (function(dsa) {
   (function(structs) {
+    var HashBiMap = (function() {
+      function HashBiMap() {
+        this._map = new dsa.structs.HashMap();
+        this._inverseMap = new dsa.structs.HashMap();
+      }
+      HashBiMap.prototype.containsKey = function(key) {
+        return this._map.has(key);
+      };
+      HashBiMap.prototype.get = function(key) {
+        return this._map.get(key);
+      };
+      HashBiMap.prototype.set = function(key, value) {
+        this._map.set(key, value);
+        this._inverseMap.set(value, key);
+      };
+      HashBiMap.prototype.size = function() {
+        return this._map.size();
+      };
+      HashBiMap.prototype.remove = function(key) {
+        return null;
+      };
+      HashBiMap.prototype.inverse = function() {
+        return null;
+      };
+      HashBiMap.prototype.clear = function() {
+        this._map.clear();
+        this._inverseMap.clear();
+      };
+      HashBiMap.prototype.forEach = function(callback) {};
+      HashBiMap.prototype.keys = function() {
+        return {};
+      };
+      HashBiMap.prototype.values = function() {
+        return {};
+      };
+      HashBiMap.prototype.__iterator__ = function() {
+        return null;
+      };
+      return HashBiMap;
+    })();
+    structs.HashBiMap = HashBiMap;
+  })(dsa.structs || (dsa.structs = {}));
+  var structs = dsa.structs;
+})(dsa || (dsa = {}));
+var dsa;
+(function(dsa) {
+  (function(structs) {
     var HashSet = (function() {
-      function HashSet(comparator) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
-        this.comparator = comparator;
+      function HashSet() {
         this.set = new Set();
       }
       HashSet.prototype.add = function(element) {
@@ -561,7 +649,7 @@ var dsa;
         return false;
       };
       HashSet.prototype.equals = function(set) {
-        return dsa.structs.genericCollectionEquals(this, set, this.comparator);
+        return dsa.structs.genericCollectionEquals(this, set);
       };
       HashSet.prototype.forEach = function(callback) {
         this.set.forEach(callback);
@@ -591,11 +679,7 @@ var dsa;
 (function(dsa) {
   (function(structs) {
     var TreeSet = (function() {
-      function TreeSet(comparator) {
-        if (typeof comparator === "undefined") {
-          comparator = dsa.structs.DefaultComparator;
-        }
-        this.comparator = comparator;
+      function TreeSet() {
         this.treeMap = new dsa.structs.TreeMap();
       }
       TreeSet.prototype.add = function(element) {
@@ -610,7 +694,7 @@ var dsa;
         return false;
       };
       TreeSet.prototype.equals = function(set) {
-        return dsa.structs.genericCollectionEquals(this, set, this.comparator);
+        return dsa.structs.genericCollectionEquals(this, set);
       };
       TreeSet.prototype.forEach = function(callback) {};
       TreeSet.prototype.has = function(element) {
@@ -631,6 +715,29 @@ var dsa;
       return TreeSet;
     })();
     structs.TreeSet = TreeSet;
+  })(dsa.structs || (dsa.structs = {}));
+  var structs = dsa.structs;
+})(dsa || (dsa = {}));
+var dsa;
+(function(dsa) {
+  (function(structs) {
+    var ArrayStack = (function(_super) {
+      __extends(ArrayStack, _super);
+      function ArrayStack() {
+        _super.apply(this, arguments);
+      }
+      ArrayStack.prototype.peek = function() {
+        return this.get(this.size() - 1);
+      };
+      ArrayStack.prototype.pop = function() {
+        return this.removeAtIndex(this.size() - 1);
+      };
+      ArrayStack.prototype.push = function(element) {
+        this.add(element);
+      };
+      return ArrayStack;
+    })(dsa.structs.ArrayList);
+    structs.ArrayStack = ArrayStack;
   })(dsa.structs || (dsa.structs = {}));
   var structs = dsa.structs;
 })(dsa || (dsa = {}));
@@ -738,11 +845,7 @@ var dsa;
     })();
     structs.TreeIterator = TreeIterator;
     var RedBlackTree = (function() {
-      function RedBlackTree(_comparator) {
-        if (typeof _comparator === "undefined") {
-          _comparator = dsa.structs.DefaultComparator;
-        }
-        this._comparator = _comparator;
+      function RedBlackTree() {
         this._root = null;
       }
       RedBlackTree.prototype.insert = function(key, value) {
@@ -781,7 +884,7 @@ var dsa;
                 grandParentParent.setChild(dir2, this.doubleRotate(!last, grandParent));
               }
             }
-            var cmp = this._comparator(node.key, key);
+            var cmp = node.key.compareTo(key);
             if (cmp === 0) {
               node.value = value;
               break;
@@ -817,7 +920,7 @@ var dsa;
           grandParent = parent;
           parent = node;
           node = node.getChild(directionRight);
-          var cmp = this._comparator(key, node.key);
+          var cmp = key.compareTo(node.key);
           directionRight = cmp > 0;
           if (cmp === 0) {
             found = node;
@@ -873,7 +976,7 @@ var dsa;
         dsa.error.checkNotNull(key);
         var res = this._root;
         while (res !== null) {
-          var comparatorValue = this._comparator(key, res.key);
+          var comparatorValue = key.compareTo(res.key);
           if (comparatorValue === 0) {
             return res;
           } else {
@@ -911,109 +1014,39 @@ var dsa;
 })(dsa || (dsa = {}));
 var dsa;
 (function(dsa) {
-  (function(error) {
-    var BaseException = (function() {
-      function BaseException(message) {
-        this.error = new Error(message);
-        this.error.name = this.name + "Exception";
-      }
-      return BaseException;
-    })();
-    error.BaseException = BaseException;
-    var IllegalArgument = (function(_super) {
-      __extends(IllegalArgument, _super);
-      function IllegalArgument(message) {
-        this.name = "IllegalArgument";
-        _super.call(this, message);
-      }
-      return IllegalArgument;
-    })(BaseException);
-    error.IllegalArgument = IllegalArgument;
-    var IllegalState = (function(_super) {
-      __extends(IllegalState, _super);
-      function IllegalState(message) {
-        this.name = "IllegalState";
-        _super.call(this, message);
-      }
-      return IllegalState;
-    })(BaseException);
-    error.IllegalState = IllegalState;
-    var NullPointer = (function(_super) {
-      __extends(NullPointer, _super);
-      function NullPointer(message) {
-        this.name = "NullPointer";
-        _super.call(this, message);
-      }
-      return NullPointer;
-    })(BaseException);
-    error.NullPointer = NullPointer;
-    var IndexOutOfBounds = (function(_super) {
-      __extends(IndexOutOfBounds, _super);
-      function IndexOutOfBounds(message) {
-        this.name = "IndexOutOfBounds";
-        _super.call(this, message);
-      }
-      return IndexOutOfBounds;
-    })(BaseException);
-    error.IndexOutOfBounds = IndexOutOfBounds;
-  })(dsa.error || (dsa.error = {}));
-  var error = dsa.error;
-})(dsa || (dsa = {}));
-var dsa;
-(function(dsa) {
-  (function(error) {
-    function checkNotNull(argument, message) {
-      if (argument === null || argument === undefined) {
-        throw new dsa.error.NullPointer(message || "argument is null.").error;
-      }
-    }
-    error.checkNotNull = checkNotNull;
-    function checkArgument(condition, message) {
-      if (condition) {
-        throw new dsa.error.IllegalArgument(message).error;
-      }
-    }
-    error.checkArgument = checkArgument;
-    function checkIndex(index, size, message) {
-      if (index < 0 || index >= size) {
-        throw new dsa.error.IndexOutOfBounds(message).error;
-      }
-    }
-    error.checkIndex = checkIndex;
-    function checkIndexRange(startIndex, endIndex, size, message) {
-      if (startIndex > endIndex || startIndex < 0 || endIndex >= size) {
-        throw new dsa.error.IndexOutOfBounds(message).error;
-      }
-    }
-    error.checkIndexRange = checkIndexRange;
-  })(dsa.error || (dsa.error = {}));
-  var error = dsa.error;
-})(dsa || (dsa = {}));
-var dsa;
-(function(dsa) {
-  (function(search) {
-    function BinarySearch(list, value, comparator) {
-      if (typeof comparator === "undefined") {
-        comparator = dsa.structs.DefaultComparator;
-      }
-      var minIndex = 0;
-      var maxIndex = list.size() - 1;
-      var midIndex;
-      var midValue;
-      while (minIndex <= maxIndex) {
-        midIndex = (minIndex / maxIndex) / 2;
-        midValue = list.get(midIndex);
-        if (comparator(midValue, value) < 0) {
-          minIndex = midIndex + 1;
-        } else if (comparator(midValue, value) > 0) {
-          maxIndex = midIndex - 1;
-        } else {
-          return midIndex;
+  (function(structs) {
+    var TreeNode = (function() {
+      function TreeNode(key, value, left, right) {
+        if (typeof key === "undefined") {
+          key = null;
         }
+        if (typeof value === "undefined") {
+          value = null;
+        }
+        if (typeof left === "undefined") {
+          left = null;
+        }
+        if (typeof right === "undefined") {
+          right = null;
+        }
+        this.key = key;
+        this.value = value;
+        this.left = left;
+        this.right = right;
       }
-      return - 1;
-    }
-    search.BinarySearch = BinarySearch;
-  })(dsa.search || (dsa.search = {}));
-  var search = dsa.search;
+      TreeNode.prototype.getChild = function(right) {
+        return right ? this.right: this.left;
+      };
+      TreeNode.prototype.setChild = function(right, node) {
+        if (right) {
+          this.right = node;
+        } else {
+          this.left = node;
+        }
+      };
+      return TreeNode;
+    })();
+    structs.TreeNode = TreeNode;
+  })(dsa.structs || (dsa.structs = {}));
+  var structs = dsa.structs;
 })(dsa || (dsa = {}));

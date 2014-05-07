@@ -1,10 +1,10 @@
 module dsa.structs {
 
-    export class TreeMap<K, V> implements Map<K, V> {
+    export class TreeMap<K extends Object, V extends Object> implements Map<K, V> {
         private tree:RedBlackTree<K, V>;
 
-        constructor(private comparator:Comparator<K> = DefaultComparator) {
-            this.tree = new RedBlackTree<K, V>(this.comparator);
+        constructor() {
+            this.tree = new RedBlackTree<K, V>();
         }
 
         clear():void {
@@ -43,7 +43,7 @@ module dsa.structs {
             return null;
         }
 
-        remove(key:K):boolean {
+        remove(key:K):V {
             return this.tree.remove(key);
         }
 

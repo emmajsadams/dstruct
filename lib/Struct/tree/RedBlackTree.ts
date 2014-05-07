@@ -2,7 +2,7 @@
 
 module dsa.structs {
 
-    export interface Tree<K, V> extends Iterable {
+    export interface Tree<K extends Object, V extends Object> extends Iterable {
         clear(): void;
 
         //TODO: mixin, helper function for shared logic?
@@ -22,7 +22,7 @@ module dsa.structs {
     }
 
     //TODO: interface?!
-    export class RedBlackTreeNode<K, V> extends TreeNode<K, V> {
+    export class RedBlackTreeNode<K extends Object, V extends Object> extends TreeNode<K, V> {
         public red = true;
 
         constructor(public key:K = null, public value:V = null, public left:RedBlackTreeNode<K, V> = null, public right:RedBlackTreeNode<K, V> = null) {
@@ -32,7 +32,7 @@ module dsa.structs {
 
     // Consider rewriting as ES6 iterator
     // TODO: Ensure comparator is used!
-    export class TreeIterator<K, V> implements Iterator<K> {
+    export class TreeIterator<K extends Object, V extends Object> implements Iterator<K> {
         // consider protected?
         private ancestors = []; //TODO type
         private cursor:RedBlackTreeNode<K, V>; //TODO
@@ -131,12 +131,13 @@ module dsa.structs {
     // TODO: this could use a lot of improvements. Look at CLR more and the gnu opensource implementation
     // https://www.opensource.apple.com/source/gcc/gcc-5484/libjava/java/util/TreeMap.java
     // TODO: ensure the insert check to replace the value guarentees uniqueness!
-    export class RedBlackTree<K, V> {
+    export class RedBlackTree<K extends Object, V extends Object> {
         // Protected
+        // TODO: does this need to be protected?
         _size:number;
         _root:RedBlackTreeNode<K, V> = null;
 
-        constructor(public _comparator:Comparator<K> = DefaultComparator) {
+        constructor() {
         }
 
         // inserts a node with the given key and value
@@ -192,7 +193,7 @@ module dsa.structs {
                         }
                     }
 
-                    var cmp = this._comparator(node.key, key);
+                    var cmp = node.key.compareTo(key);
 
                     // stop if found
                     if (cmp === 0) {
@@ -245,7 +246,7 @@ module dsa.structs {
                 parent = node;
                 node = node.getChild(directionRight);
 
-                var cmp = this._comparator(key, node.key);
+                var cmp = key.compareTo(node.key);
 
                 directionRight = cmp > 0;
 
@@ -323,7 +324,8 @@ module dsa.structs {
             var res = this._root;
 
             while (res !== null) {
-                var comparatorValue = this._comparator(key, res.key);
+
+                var comparatorValue = key.compareTo(res.key);
                 if (comparatorValue === 0) {
                     return res;
                 } else {

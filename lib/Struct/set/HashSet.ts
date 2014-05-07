@@ -2,11 +2,12 @@
 
 module dsa.structs {
 
+    //TODO: reimplement with HashMAp
     export class HashSet<E> implements Set<E> {
 
         private set: ES6Set<E>;
 
-        constructor(private comparator:Comparator<E> = DefaultComparator) {
+        constructor() {
             this.set = <any>new Set();
         }
 
@@ -28,7 +29,7 @@ module dsa.structs {
         }
 
         equals(set: Set<E>):boolean {
-            return genericCollectionEquals(this, set, this.comparator);
+            return genericCollectionEquals(this, set);
         }
 
         forEach(callback: ForEachCollectionCallback<E>): void {
