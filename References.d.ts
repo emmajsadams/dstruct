@@ -8,7 +8,6 @@
 /// <reference path="lib/sort/InsertionSort.ts" />
 /// <reference path="lib/structs/Collection.d.ts" />
 /// <reference path="lib/structs/CollectionObject.ts" />
-/// <reference path="lib/structs/DefaultHashFunction.ts" />
 /// <reference path="lib/structs/GenericHelpers.ts" />
 /// <reference path="lib/structs/HashFunction.d.ts" />
 /// <reference path="lib/structs/Iterable.d.ts" />

@@ -1,7 +1,8 @@
 module dsa.structs {
 
-    export class TreeMap<K extends Object, V extends Object> implements Map<K, V> {
-        private tree:RedBlackTree<K, V>;
+    export class TreeMap<K extends ComparableObject, V extends Object> implements SortedMap<K, V> {
+
+        private tree:Tree<K, V>;
 
         constructor() {
             this.tree = new RedBlackTree<K, V>();
@@ -27,12 +28,7 @@ module dsa.structs {
         }
 
         get(key:K):V {
-            var node = this.tree.get(key);
-            return node ? node.value : null;
-        }
-
-        has(element:K):boolean {
-            return this.get(element) !== null;
+            return this.tree.get(key);
         }
 
         isEmpty():boolean {
@@ -40,6 +36,7 @@ module dsa.structs {
         }
 
         keys():Iterator<K> {
+            //TODO!
             return null;
         }
 
@@ -47,8 +44,9 @@ module dsa.structs {
             return this.tree.remove(key);
         }
 
-        set(key:K, value:V):void {
+        set(key:K, value:V):V {
             this.tree.insert(key, value);
+            return null; //TODO!
         }
 
         size():number {
@@ -56,12 +54,13 @@ module dsa.structs {
         }
 
         values():Iterator<V> {
+            //TODO!
             return null;
         }
 
         // not to be used directly
         __iterator__():Iterator<K> {
-            return null;
+            return this.keys();
         }
     }
 

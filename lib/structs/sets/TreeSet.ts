@@ -2,7 +2,7 @@
 
 module dsa.structs {
 
-    export class TreeSet<E> implements Set<E> {
+    export class TreeSet<E extends ComparableObject> implements Set<E> {
 
         private treeMap: TreeMap<E, boolean>;
 
@@ -37,7 +37,7 @@ module dsa.structs {
         }
 
         has(element:E):boolean {
-            return this.treeMap.has(element);
+            return this.treeMap.containsKey(element);
         }
 
         isEmpty(): boolean {
@@ -50,6 +50,11 @@ module dsa.structs {
 
         toArray(): E[] {
             return null; //TODO!
+        }
+
+        values(): Iterator<E> {
+            //TODO
+            return null;
         }
 
         __iterator__(): Iterator<E> {

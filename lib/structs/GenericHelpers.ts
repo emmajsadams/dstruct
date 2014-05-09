@@ -18,7 +18,7 @@ module dsa.structs {
     export function genericCollectionEquals<E>(collection:Collection<E>,
                                                otherCollection:Collection<E>):boolean {
         return genericEquals(collection, otherCollection, (collectionIterator, otherCollectionIterator) => {
-            return collectionIterator.next().compareTo(otherCollectionIterator.next()) === 0;
+            return collectionIterator.next().equals(otherCollectionIterator.next());
         })
     }
 

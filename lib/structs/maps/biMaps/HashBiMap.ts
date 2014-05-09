@@ -15,7 +15,7 @@ module dsa.structs {
         }
 
         containsKey(key:K):boolean {
-            return this._map.has(key);
+            return this._map.containsKey(key);
         }
 
         get(key:K):V {

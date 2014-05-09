@@ -2,15 +2,17 @@
 
 module dsa.structs {
 
+    export interface Entry<K, V> {
+        key: K
+        value: V;
+        next: Entry<K, V>; //TODO: consider using a singly linkedlist?
+    }
+
     export class ES6BaseMap<K extends Object, V extends Object> implements Map<K, V> {
 
-        //TODO: a separate set of keys must be Maintained, since map keys will be hashed
+        private keyCount: number;
 
-
-        //private keys:ES6BaseMap<K, V>;
-
-        constructor(private map:ES6Map<K, V>) {
-            //this.keys = new WeakHashMap<K, V>; //TODO: weakhashmap?
+        constructor(private map:ES6Map<number, Entry<K, V>>) {
         }
 
         clear():void {
@@ -20,12 +22,10 @@ module dsa.structs {
         containsKey(key:K):boolean {
             dsa.error.checkNotNull(key);
 
-            return this.map.has(key);
+            return this.get(key) !== null;
         }
 
         equals(map:Map<K, V>):boolean {
-            //return dsa.structs.genericCollectionEquals(this, map);
-
             //TODO: need a generic map equals!
             return false;
         }
@@ -33,17 +33,32 @@ module dsa.structs {
         forEach(callback:forEachMapCallback<K, V>):void {
             dsa.error.checkNotNull(callback);
 
-            this.map.forEach(callback);
+            this.map.forEach(function (entry) {
+                while (entry !== null) {
+                    callback(entry.value, entry.key);
+                    entry = entry.next;
+                }
+            });
         }
 
         get(key:K):V {
             dsa.error.checkNotNull(key);
 
-            return this.map.get(key);
-        }
+            // Check if the bucket exists
+            var entry = this.map.get(key.hashCode());
+            if (!entry) {
+                return null;
+            }
 
-        has(element:K):boolean {
-            return this.get(element) !== null;
+            // Check if an entry with the key exists in the bucket
+            while (entry !== null) {
+                if (entry.key.equals(key)) {
+                    return entry.value;
+                }
+                entry = entry.next;
+            }
+
+            return null;
         }
 
         isEmpty():boolean {
@@ -51,41 +66,110 @@ module dsa.structs {
         }
 
         keys():Iterator<K> {
-            //TODO: return maintained set of keys
+            //TODO
             return null;
-            //return this.map.keys();
         }
 
         remove(key:K):V {
             dsa.error.checkNotNull(key);
 
-            var value = this.map.get(key);
-            this.map.delete(key);
-            return value;
+            var hashCode = key.hashCode();
+            // Check if the bucket exists
+            var entry = this.map.get(hashCode);
+            if (!entry) {
+                return null;
+            }
+
+            // Check if the first entry is the key
+            if (entry.key.equals(key)) {
+                this.keyCount--;
+                if (entry.next) {
+                    // Map hashCode to entry.next if it exist s
+                    this.map.set(hashCode, entry.next);
+                } else {
+                    // Remove the hashCode mapping else
+                    this.map.delete(hashCode);
+                }
+
+                return entry.value;
+            }
+
+            // Check if the next entry has the key and remove it from the bucket and set.
+            while (entry.next !== null) {
+                if (entry.next.key.equals(key)) {
+                    this.keyCount--;
+                    var removedEntry = entry.next;
+                    entry.next = entry.next.next;
+                    return removedEntry.value;
+                }
+                entry = entry.next;
+            }
+
+            return null;
         }
 
-        set(key:K, value:V):void {
+        set(key:K, value:V):V {
             dsa.error.checkNotNull(key);
             dsa.error.checkNotNull(value);
 
-            //TODO: this key needs to be hashed if it is an object. Look at the following links
-            // this is because key equality in javascript maps are by value.
-            //http://esdiscuss.org/topic/maps-with-object-keys
-            //https://github.com/flesler/hashmap
+            // Check if the bucket exists
+            var hashCode = key.hashCode();
+            var entry = this.map.get(hashCode);
+            if (!entry) {
+                this.keyCount++;
 
-            return this.map.set(key, value);
+                //Map the hashCode to a new bucket if no bucket exists.
+                this.map.set(hashCode, {
+                    key: key,
+                    value: value,
+                    next: null
+                });
+
+                return null;
+            }
+
+            // Check if an entry with the key exists in the bucket
+            while (entry.next !== null) {
+                if (entry.key.equals(key)) {
+                    return this.swapEntryValue(entry, key, value);
+                }
+                entry = entry.next;
+            }
+
+            // Check if the last entry has the key. Else add it.
+            if (entry.key.equals(key)) {
+                return this.swapEntryValue(entry, key, value);
+            } else {
+               this.keyCount++;
+               entry.next = {
+                   key: key,
+                   value: value,
+                   next: null
+               };
+            }
+
+            return null;
         }
 
         size():number {
-            return this.map.size;
+            return this.keyCount;
         }
 
         values():Iterator<V> {
-            return this.map.values();
+            //TODO!
+            //return this.forEach(value, key);
+            return null;
         }
 
         __iterator__():Iterator<K> {
             return this.keys();
+        }
+
+        private swapEntryValue(entry: Entry<K, V>, key:K, value: V) {
+            // Swap value
+            var oldValue = entry.value;
+            entry.value = value;
+            return oldValue;
         }
 
     }

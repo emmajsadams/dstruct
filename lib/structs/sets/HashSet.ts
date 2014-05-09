@@ -54,6 +54,11 @@ module dsa.structs {
             return null; //TODO!
         }
 
+        values(): Iterator<E> {
+            //TODO
+            return null;
+        }
+
         // not to be used directly, enables using for (var element:E,
         __iterator__(): Iterator<E> {
             return this.set.values();
