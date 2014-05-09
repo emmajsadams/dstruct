@@ -2,7 +2,7 @@
 
 module dsa.structs {
 
-    export interface Tree<K extends Object, V extends Object> extends Iterable {
+    export interface Tree<K extends ComparableObject, V extends Object> extends Iterable {
         clear(): void;
 
         //TODO: mixin, helper function for shared logic?
@@ -15,14 +15,15 @@ module dsa.structs {
         keys(): Iterator<K>;
         remove(key:K): boolean;
 
-        //TODO: insert
-        put(key:K, value:V): void;
+        insert(key:K, value:V): void;
         //values(): Iterator<V>;
 
     }
 
+
+
     //TODO: interface?!
-    export class RedBlackTreeNode<K extends Object, V extends Object> extends TreeNode<K, V> {
+    export class RedBlackTreeNode<K extends ComparableObject, V extends Object> extends TreeNode<K, V> {
         public red = true;
 
         constructor(public key:K = null, public value:V = null, public left:RedBlackTreeNode<K, V> = null, public right:RedBlackTreeNode<K, V> = null) {
@@ -32,7 +33,7 @@ module dsa.structs {
 
     // Consider rewriting as ES6 iterator
     // TODO: Ensure comparator is used!
-    export class TreeIterator<K extends Object, V extends Object> implements Iterator<K> {
+    export class TreeIterator<K extends ComparableObject, V extends Object> implements Iterator<K> {
         // consider protected?
         private ancestors = []; //TODO type
         private cursor:RedBlackTreeNode<K, V>; //TODO
@@ -131,7 +132,7 @@ module dsa.structs {
     // TODO: this could use a lot of improvements. Look at CLR more and the gnu opensource implementation
     // https://www.opensource.apple.com/source/gcc/gcc-5484/libjava/java/util/TreeMap.java
     // TODO: ensure the insert check to replace the value guarentees uniqueness!
-    export class RedBlackTree<K extends Object, V extends Object> {
+    export class RedBlackTree<K  extends ComparableObject, V extends Object> {
         // Protected
         // TODO: does this need to be protected?
         _size:number;
@@ -312,13 +313,21 @@ module dsa.structs {
             return this._size;
         }
 
+        isEmpty():boolean {
+            return this.size() === 0;
+        }
+
+        keys(): Iterator<K> {
+            return null; //TODO
+        }
+
         clear():void {
             this._root = null;
             this._size = 0;
         }
 
         // return null
-        get(key:K):RedBlackTreeNode<K, V> {
+        get(key:K):V {
             dsa.error.checkNotNull(key);
 
             var res = this._root;
@@ -327,7 +336,7 @@ module dsa.structs {
 
                 var comparatorValue = key.compareTo(res.key);
                 if (comparatorValue === 0) {
-                    return res;
+                    return res.value;
                 } else {
                     res = res.getChild(comparatorValue > 0);
                 }

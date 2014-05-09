@@ -2,7 +2,7 @@
 
 module dsa.structs {
 
-    export class TreeNode<K, V> {
+    export class TreeNode<K extends ComparableObject, V extends Object> {
 
         constructor(public key:K = null, public value:V = null, public left:RedBlackTreeNode<K, V> = null, public right:RedBlackTreeNode<K, V> = null) {
         }

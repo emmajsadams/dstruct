@@ -34,17 +34,19 @@ declare module dsa.structs {
         forEach(callback:forEachMapCallback<K, V>): void;
         get(key:K): V;
 
-        has(key:K): boolean;
-
         //TODO: mixin, helper function for shared logic?
         isEmpty(): boolean;
         keys(): Iterator<K>;
         remove(key:K): V;
-        set(key:K, value:V): void;
+        set(key:K, value:V): V;
         values(): Iterator<V>;
 
         // not to be used directly
         __iterator__(): Iterator<K>;
+    }
+
+    export interface SortedMap<K extends ComparableObject, V extends Object> extends Map<K, V> {
+
     }
 
 }

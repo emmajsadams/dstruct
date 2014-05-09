@@ -70,7 +70,7 @@ module dsa.structs {
                 return false;
             }
 
-            if (this.rootNode.value.compareTo(element) === 0) {
+            if (this.rootNode.value.equals(element)) {
                 if (this.size() === 1) {
                     this.clear();
                     return true;
@@ -81,7 +81,7 @@ module dsa.structs {
                 this.lastNode.prev = this.rootNode;
                 this.count--;
                 return true;
-            } else if (this.lastNode.value.compareTo(element) === 0) {
+            } else if (this.lastNode.value.equals(element)) {
                 return this.removeLastNode() !== null;
             } else {
                 var node = this.getNodeByElement(element);
@@ -133,7 +133,7 @@ module dsa.structs {
 
             var i = 0;
             for (var node in this) {
-                if (element.compareTo(node.value) === 0) {
+                if (element.equals(node.value)) {
                     return i;
                 }
                 i++;
@@ -167,7 +167,7 @@ module dsa.structs {
 
         private getNodeByElement(element:E):DoublyLinkedNode<E> {
             for (var node in this) {
-                if (element.compareTo(node.value) === 0) {
+                if (element.equals(node.value)) {
                     return node.value;
                 }
             }

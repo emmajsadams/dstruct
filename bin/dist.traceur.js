@@ -98,12 +98,6 @@ var dsa;
   })(dsa.error || (dsa.error = {}));
   var error = dsa.error;
 })(dsa || (dsa = {}));
-Object.prototype.hashCode = function() {
-  return 0;
-};
-Object.prototype.compareTo = function(otherObject) {
-  return 0;
-};
 String.prototype.hashCode = function() {
   var hash = 0, i, chr, len;
   if (this.length == 0) return hash;
@@ -113,6 +107,9 @@ String.prototype.hashCode = function() {
     hash |= 0;
   }
   return hash;
+};
+String.prototype.equals = function(otherString) {
+  return this.compareTo(otherString) === 0;
 };
 String.prototype.compareTo = function(otherString) {
   return dsa.structs.DefaultComparator(this, otherString);
@@ -129,8 +126,6 @@ var dsa;
         return 1;
       } else {}
     };
-    var map = new dsa.structs.HashMap();
-    map.set("foo", "foo");
   })(dsa.structs || (dsa.structs = {}));
   var structs = dsa.structs;
 })(dsa || (dsa = {}));
@@ -147,7 +142,7 @@ var dsa;
     structs.genericForEach = genericForEach;
     function genericCollectionEquals(collection, otherCollection) {
       return genericEquals(collection, otherCollection, function(collectionIterator, otherCollectionIterator) {
-        return collectionIterator.next().compareTo(otherCollectionIterator.next()) === 0;
+        return collectionIterator.next().equals(otherCollectionIterator.next());
       });
     }
     structs.genericCollectionEquals = genericCollectionEquals;
@@ -337,7 +332,7 @@ var dsa;
         if (this.size() === 0) {
           return false;
         }
-        if (this.rootNode.value.compareTo(element) === 0) {
+        if (this.rootNode.value.equals(element)) {
           if (this.size() === 1) {
             this.clear();
             return true;
@@ -347,7 +342,7 @@ var dsa;
           this.lastNode.prev = this.rootNode;
           this.count--;
           return true;
-        } else if (this.lastNode.value.compareTo(element) === 0) {
+        } else if (this.lastNode.value.equals(element)) {
           return this.removeLastNode() !== null;
         } else {
           var node = this.getNodeByElement(element);
@@ -389,7 +384,7 @@ var dsa;
         dsa.error.checkNotNull(element);
         var i = 0;
         for (var node in this) {
-          if (element.compareTo(node.value) === 0) {
+          if (element.equals(node.value)) {
             return i;
           }
           i++;
@@ -415,7 +410,7 @@ var dsa;
       };
       DoublyLinkedList.prototype.getNodeByElement = function(element) {
         for (var node in this) {
-          if (element.compareTo(node.value) === 0) {
+          if (element.equals(node.value)) {
             return node.value;
           }
         }
@@ -456,21 +451,33 @@ var dsa;
       };
       ES6BaseMap.prototype.containsKey = function(key) {
         dsa.error.checkNotNull(key);
-        return this.map.has(key);
+        return this.get(key) !== null;
       };
       ES6BaseMap.prototype.equals = function(map) {
         return false;
       };
       ES6BaseMap.prototype.forEach = function(callback) {
         dsa.error.checkNotNull(callback);
-        this.map.forEach(callback);
+        this.map.forEach(function(entry) {
+          while (entry !== null) {
+            callback(entry.value, entry.key);
+            entry = entry.next;
+          }
+        });
       };
       ES6BaseMap.prototype.get = function(key) {
         dsa.error.checkNotNull(key);
-        return this.map.get(key);
-      };
-      ES6BaseMap.prototype.has = function(element) {
-        return this.get(element) !== null;
+        var entry = this.map.get(key.hashCode());
+        if (!entry) {
+          return null;
+        }
+        while (entry !== null) {
+          if (entry.key.equals(key)) {
+            return entry.value;
+          }
+          entry = entry.next;
+        }
+        return null;
       };
       ES6BaseMap.prototype.isEmpty = function() {
         return dsa.structs.genericIsEmpty(this);
@@ -480,23 +487,76 @@ var dsa;
       };
       ES6BaseMap.prototype.remove = function(key) {
         dsa.error.checkNotNull(key);
-        var value = this.map.get(key);
-        this.map.delete (key);
-        return value;
+        var hashCode = key.hashCode();
+        var entry = this.map.get(hashCode);
+        if (!entry) {
+          return null;
+        }
+        if (entry.key.equals(key)) {
+          this.keyCount--;
+          if (entry.next) {
+            this.map.set(hashCode, entry.next);
+          } else {
+            this.map.delete (hashCode);
+          }
+          return entry.value;
+        }
+        while (entry.next !== null) {
+          if (entry.next.key.equals(key)) {
+            this.keyCount--;
+            var removedEntry = entry.next;
+            entry.next = entry.next.next;
+            return removedEntry.value;
+          }
+          entry = entry.next;
+        }
+        return null;
       };
       ES6BaseMap.prototype.set = function(key, value) {
         dsa.error.checkNotNull(key);
         dsa.error.checkNotNull(value);
-        return this.map.set(key, value);
+        var hashCode = key.hashCode();
+        var entry = this.map.get(hashCode);
+        if (!entry) {
+          this.keyCount++;
+          this.map.set(hashCode, {
+            key: key,
+            value: value,
+            next: null
+          });
+          return null;
+        }
+        while (entry.next !== null) {
+          if (entry.key.equals(key)) {
+            return this.swapEntryValue(entry, key, value);
+          }
+          entry = entry.next;
+        }
+        if (entry.key.equals(key)) {
+          return this.swapEntryValue(entry, key, value);
+        } else {
+          this.keyCount++;
+          entry.next = {
+            key: key,
+            value: value,
+            next: null
+          };
+        }
+        return null;
       };
       ES6BaseMap.prototype.size = function() {
-        return this.map.size;
+        return this.keyCount;
       };
       ES6BaseMap.prototype.values = function() {
-        return this.map.values();
+        return null;
       };
       ES6BaseMap.prototype.__iterator__ = function() {
         return this.keys();
+      };
+      ES6BaseMap.prototype.swapEntryValue = function(entry, key, value) {
+        var oldValue = entry.value;
+        entry.value = value;
+        return oldValue;
       };
       return ES6BaseMap;
     })();
@@ -536,11 +596,7 @@ var dsa;
       };
       TreeMap.prototype.forEach = function(callback) {};
       TreeMap.prototype.get = function(key) {
-        var node = this.tree.get(key);
-        return node ? node.value: null;
-      };
-      TreeMap.prototype.has = function(element) {
-        return this.get(element) !== null;
+        return this.tree.get(key);
       };
       TreeMap.prototype.isEmpty = function() {
         return this.size() === 0;
@@ -553,6 +609,7 @@ var dsa;
       };
       TreeMap.prototype.set = function(key, value) {
         this.tree.insert(key, value);
+        return null;
       };
       TreeMap.prototype.size = function() {
         return this.tree.size();
@@ -561,7 +618,7 @@ var dsa;
         return null;
       };
       TreeMap.prototype.__iterator__ = function() {
-        return null;
+        return this.keys();
       };
       return TreeMap;
     })();
@@ -592,7 +649,7 @@ var dsa;
         this._inverseMap = new dsa.structs.HashMap();
       }
       HashBiMap.prototype.containsKey = function(key) {
-        return this._map.has(key);
+        return this._map.containsKey(key);
       };
       HashBiMap.prototype.get = function(key) {
         return this._map.get(key);
@@ -666,6 +723,9 @@ var dsa;
       HashSet.prototype.toArray = function() {
         return null;
       };
+      HashSet.prototype.values = function() {
+        return null;
+      };
       HashSet.prototype.__iterator__ = function() {
         return this.set.values();
       };
@@ -698,7 +758,7 @@ var dsa;
       };
       TreeSet.prototype.forEach = function(callback) {};
       TreeSet.prototype.has = function(element) {
-        return this.treeMap.has(element);
+        return this.treeMap.containsKey(element);
       };
       TreeSet.prototype.isEmpty = function() {
         return dsa.structs.genericIsEmpty(this);
@@ -707,6 +767,9 @@ var dsa;
         return this.treeMap.size();
       };
       TreeSet.prototype.toArray = function() {
+        return null;
+      };
+      TreeSet.prototype.values = function() {
         return null;
       };
       TreeSet.prototype.__iterator__ = function() {
@@ -968,6 +1031,12 @@ var dsa;
       RedBlackTree.prototype.size = function() {
         return this._size;
       };
+      RedBlackTree.prototype.isEmpty = function() {
+        return this.size() === 0;
+      };
+      RedBlackTree.prototype.keys = function() {
+        return null;
+      };
       RedBlackTree.prototype.clear = function() {
         this._root = null;
         this._size = 0;
@@ -978,7 +1047,7 @@ var dsa;
         while (res !== null) {
           var comparatorValue = key.compareTo(res.key);
           if (comparatorValue === 0) {
-            return res;
+            return res.value;
           } else {
             res = res.getChild(comparatorValue > 0);
           }

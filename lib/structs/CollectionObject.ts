@@ -1,18 +1,20 @@
 /// <reference path="../../References.d.ts"/>
 
-//TODO: consider using Object.prototype
+//TODO: consider using Object.prototype, make the prototype not enumberable
 interface Object {
+    // TODO: hashCode needs to be unique currently, should not! Consider implementing an actual hashMap instead of using the ES6 collections.
     hashCode(): number;
+    equals(otherObject: Object);
+}
+interface Comparable {
     compareTo(otherObject: Object): number;
 }
-Object.prototype.hashCode = function() {
-    return 0; //TODO!
-};
-Object.prototype.compareTo = function(otherObject: Object) {
-    return 0; //TODO
-};
-interface String {
+//TODO: is this necessary? typesafe generics seems to not be able to implement multiple interfaces
+interface ComparableObject extends Object, Comparable {
+}
+interface String extends Object, Comparable {
     hashCode(): number;
+    equals(string: String);
     compareTo(otherString: String): number;
 }
 String.prototype.hashCode = function () {
@@ -25,6 +27,10 @@ String.prototype.hashCode = function () {
     }
     return hash;
 };
+String.prototype.equals = function (otherString: string): boolean {
+    //TODO: test this implementation
+    return this.compareTo(otherString) === 0;
+}
 String.prototype.compareTo = function (otherString: String): number {
     return dsa.structs.DefaultComparator(this, otherString);
 };
@@ -49,12 +55,7 @@ module dsa.structs {
              */
         }
 
-    }
-
-    //TODO: array, default object!
-
-    var map = new HashMap<String, String>();
-    map.set("foo", "foo");
+    };
 
 }
 
