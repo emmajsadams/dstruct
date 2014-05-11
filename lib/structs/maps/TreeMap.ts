@@ -17,13 +17,10 @@ module dsa.structs {
         }
 
         equals(map:Map<K, V>):boolean {
-            //return dsa.structs.genericCollectionEquals(this, map);
-
-            //TODO: need a generic map equals!
-            return false;
+            return dsa.structs.mapEquals(this, map);
         }
 
-        forEach(callback:forEachMapCallback<K, V>):void {
+        forEach(callback:ForEachMapCallback<K, V>):void {
             //TODO:
         }
 
@@ -32,7 +29,7 @@ module dsa.structs {
         }
 
         isEmpty():boolean {
-            return this.size() === 0;
+            return dsa.structs.iterableIsEmpty(this);
         }
 
         keys():Iterator<K> {

@@ -3,19 +3,18 @@
 
 module dsa.structs {
 
-    class ArrayListIterator<E> implements Iterator<E> {
+    class ArrayListIterator<E extends Object> implements Iterator<E> {
         private index = 0;
 
         constructor(private array:E[]) {}
 
-        next():E {
-            if (this.index >= this.array.length) {
-                throw StopIteration;
-            }
-
+        next():IteratorReturn<E> {
             var element = this.array[this.index];
             this.index++;
-            return element;
+            return {
+                value: element,
+                done: this.index >= this.array.length - 1
+            };
         }
     }
 
@@ -76,11 +75,11 @@ module dsa.structs {
         }
 
         equals(collection:Collection<E>):boolean {
-            return genericCollectionEquals(this, collection);
+            return collectionEquals(this, collection);
         }
 
         forEach(callback:ForEachCollectionCallback<E>):void {
-            genericForEach(this, callback);
+            collectionForEach(this, callback);
         }
 
         get(index:number):E {

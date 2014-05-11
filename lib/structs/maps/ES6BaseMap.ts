@@ -8,6 +8,34 @@ module dsa.structs {
         next: Entry<K, V>; //TODO: consider using a singly linkedlist?
     }
 
+    export class ES6BaseMapIterator<E> implements Iterator<E> {
+        private currentEntry: Entry<any, any>;
+        private done = false;
+
+        constructor(private iterator: Iterator<Entry<any, any>>,
+                    private valueCallback: (entry: Entry<any, any>) => any) {
+        }
+
+        next(): IteratorReturn<E> {
+            // Check if there is an entry to return
+            if (this.currentEntry === null || this.currentEntry.next === null) {
+                // Get next entry, assign done value and current entry.
+                var next = this.iterator.next();
+                this.done = next.done;
+                this.currentEntry = next.value;
+            }
+
+            return {
+                value: this.valueCallback(this.currentEntry),
+
+                // Check if there is a current entry, and if this is the last key and return true.
+                // Else return false.
+                done: !!(this.currentEntry.next === null && this.done)
+            };
+        }
+    }
+
+    // TODO: benchmark this solution compared to actually implementing a HashMap with an array.
     export class ES6BaseMap<K extends Object, V extends Object> implements Map<K, V> {
 
         private keyCount: number;
@@ -30,7 +58,7 @@ module dsa.structs {
             return false;
         }
 
-        forEach(callback:forEachMapCallback<K, V>):void {
+        forEach(callback:ForEachMapCallback<K, V>):void {
             dsa.error.checkNotNull(callback);
 
             this.map.forEach(function (entry) {
@@ -62,12 +90,13 @@ module dsa.structs {
         }
 
         isEmpty():boolean {
-            return dsa.structs.genericIsEmpty(this);
+            return dsa.structs.iterableIsEmpty(this);
         }
 
         keys():Iterator<K> {
-            //TODO
-            return null;
+            return new ES6BaseMapIterator<K>(this.map.values(), (currentEntry) => {
+                return currentEntry.key;
+            });
         }
 
         remove(key:K):V {
@@ -118,7 +147,7 @@ module dsa.structs {
             if (!entry) {
                 this.keyCount++;
 
-                //Map the hashCode to a new bucket if no bucket exists.
+                // Map the hashCode to a new bucket if no bucket exists.
                 this.map.set(hashCode, {
                     key: key,
                     value: value,
@@ -156,9 +185,9 @@ module dsa.structs {
         }
 
         values():Iterator<V> {
-            //TODO!
-            //return this.forEach(value, key);
-            return null;
+            return new ES6BaseMapIterator<V>(this.map.values(), (currentEntry) => {
+                return currentEntry.value;
+            });
         }
 
         __iterator__():Iterator<K> {

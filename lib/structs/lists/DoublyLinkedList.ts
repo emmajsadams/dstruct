@@ -12,14 +12,13 @@ module dsa.structs {
         constructor(private currentNode:DoublyLinkedNode<E>) {
         }
 
-        next():E {
-            if (this.currentNode === null) {
-                throw StopIteration;
-            }
-
+        next():IteratorReturn<E> {
             var node = this.currentNode;
             this.currentNode = this.currentNode.next;
-            return this.currentNode.value;
+            return {
+                value: this.currentNode.value,
+                done: this.currentNode.next === null
+            };
         }
     }
 
@@ -110,11 +109,11 @@ module dsa.structs {
         }
 
         equals(collection:Collection<E>):boolean {
-            return genericCollectionEquals(this, collection);
+            return collectionEquals(this, collection);
         }
 
         forEach(callback:ForEachCollectionCallback<E>):void {
-            genericForEach(this, callback);
+            collectionForEach(this, callback);
         }
 
         get(index:number):E {

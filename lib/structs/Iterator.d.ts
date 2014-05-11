@@ -5,7 +5,12 @@ declare module dsa.structs {
     // Use in for ( element in Iterator ) { .. }
     // throws StopIteration when done
     export interface Iterator<E> {
-        next(): E;
+        next(): IteratorReturn<E>;
+    }
+
+    export interface IteratorReturn<E> {
+        value: E;
+        done: boolean;
     }
 
     /*

@@ -16,7 +16,7 @@ declare module dsa.structs {
         //TODO: entries?
         forEach(callback:ForEachCollectionCallback<E>): void;
         has(value:E): boolean;
-        //keys(): Iterator<K>;
+        //keys(): Iterator<E>;
         values(): Iterator<E>;
     }
 

@@ -2,73 +2,78 @@
 
 module dsa.structs {
 
-    // TODO: implement IBiMap
-    //Rewrite with HashMap!!
-    export class HashBiMap<K extends Object, V extends Object> {
-        // Protected
-        public _map: HashMap<K, V>;
-        public _inverseMap: HashMap<V, K>;
+    export class HashBiMap<K extends Object, V extends Object> implements BiMap<K, V> {
 
-        constructor() {
-            this._map = new HashMap<K, V>();
-            this._inverseMap = new HashMap<V, K>();
+        constructor(private map: HashMap<K, V> = new HashMap<K, V>(),
+                    private inverseMap: HashMap<V, K> = new HashMap<V, K>()) {
         }
 
         containsKey(key:K):boolean {
-            return this._map.containsKey(key);
+            return this.map.containsKey(key);
+        }
+
+        equals(biMap: BiMap<K, V>): boolean {
+            return dsa.structs.mapEquals(this, biMap);
         }
 
         get(key:K):V {
-            return this._map.get(key);
-        }
-
-        set(key:K, value:V):void {
-            this._map.set(key, value);
-            this._inverseMap.set(value, key);
-        }
-
-        size():number {
-            return this._map.size();
+            return this.map.get(key);
         }
 
         remove(key:K):V {
-            //this._inverseMap.remove(value);
-            //return this._map.remove(key);
+            dsa.error.checkNotNull(key);
 
-            //TODO
-            return null;
+            // Check for the key/value pair, return null if not found
+            var value = this.map.get(key);
+            if (!value) {
+                return null;
+            }
+
+            this.map.remove(key);
+            this.inverseMap.remove(value);
+
+            return value;
         }
 
-        // TODO: return map, or BiMap?? Guava returns BiMap
-        // TODO: return IBiMap
-        inverse() {
+        set(key:K, value:V):V {
+            this.inverseMap.set(value, key);
+            return this.map.set(key, value);
+        }
+
+        size():number {
+            return this.map.size();
+        }
+
+        isEmpty(): boolean {
+            return dsa.structs.iterableIsEmpty(this);
+        }
+
+        inverse(): BiMap<V, K> {
             // TODO: return a copy, or immutable/protected?
-            // user should not be able to modify inverseMap
-            //return new HashBiMap(this.map, this.inverseMap);
-            return null;
+            return new HashBiMap<V, K>(this.inverseMap, this.map);
         }
 
         clear():void {
-            this._map.clear();
-            this._inverseMap.clear();
+            this.map.clear();
+            this.inverseMap.clear();
         }
 
-        forEach(callback:forEachMapCallback<K, V>):void {
-
+        forEach(callback:ForEachMapCallback<K, V>):void {
+            this.map.forEach(callback);
         }
 
         keys():Iterator<K> {
-            return <any>{};
+            return this.map.keys();
         }
 
         values():Iterator<V> {
-            return <any>{};
+            return this.map.values();
         }
 
-        // not to be used directly
         __iterator__():Iterator<K> {
-            return null;
+            return this.map.keys();
         }
+
     }
 
 }

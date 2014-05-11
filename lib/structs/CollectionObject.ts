@@ -30,7 +30,7 @@ String.prototype.hashCode = function () {
 String.prototype.equals = function (otherString: string): boolean {
     //TODO: test this implementation
     return this.compareTo(otherString) === 0;
-}
+};
 String.prototype.compareTo = function (otherString: String): number {
     return dsa.structs.DefaultComparator(this, otherString);
 };
