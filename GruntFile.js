@@ -38,7 +38,6 @@ module.exports = function(grunt) {
       development: {
         // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
         src: [
-          'lib/collections/tree/TreeNode.ts',
           'lib/**/*.ts'
         ],
 

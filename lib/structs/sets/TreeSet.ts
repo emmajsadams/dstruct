@@ -28,7 +28,7 @@ module dsa.structs {
         }
 
         equals(set: Set<E>):boolean {
-            return genericCollectionEquals(this, set);
+            return collectionEquals(this, set);
         }
 
         forEach(callback: ForEachCollectionCallback<E>): void {
@@ -41,7 +41,7 @@ module dsa.structs {
         }
 
         isEmpty(): boolean {
-            return genericIsEmpty(this);
+            return iterableIsEmpty(this);
         }
 
         size(): number {

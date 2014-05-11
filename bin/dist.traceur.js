@@ -98,6 +98,26 @@ var dsa;
   })(dsa.error || (dsa.error = {}));
   var error = dsa.error;
 })(dsa || (dsa = {}));
+var dsa;
+(function(dsa) {
+  (function(structs) {
+    function collectionForEach(collection, callback) {
+      dsa.error.checkNotNull(collection);
+      dsa.error.checkNotNull(callback);
+      for (var element in collection) {
+        callback(element);
+      }
+    }
+    structs.collectionForEach = collectionForEach;
+    function collectionEquals(collection, otherCollection) {
+      return dsa.structs.iterableEquals(collection, otherCollection, function(collectionIterator, otherCollectionIterator) {
+        return collectionIterator.next().equals(otherCollectionIterator.next());
+      });
+    }
+    structs.collectionEquals = collectionEquals;
+  })(dsa.structs || (dsa.structs = {}));
+  var structs = dsa.structs;
+})(dsa || (dsa = {}));
 String.prototype.hashCode = function() {
   var hash = 0, i, chr, len;
   if (this.length == 0) return hash;
@@ -132,21 +152,7 @@ var dsa;
 var dsa;
 (function(dsa) {
   (function(structs) {
-    function genericForEach(iterable, callback) {
-      dsa.error.checkNotNull(iterable);
-      dsa.error.checkNotNull(callback);
-      for (var element in iterable) {
-        callback(element);
-      }
-    }
-    structs.genericForEach = genericForEach;
-    function genericCollectionEquals(collection, otherCollection) {
-      return genericEquals(collection, otherCollection, function(collectionIterator, otherCollectionIterator) {
-        return collectionIterator.next().equals(otherCollectionIterator.next());
-      });
-    }
-    structs.genericCollectionEquals = genericCollectionEquals;
-    function genericEquals(iterable, otherIterable, comparisonCallback) {
+    function iterableEquals(iterable, otherIterable, comparisonCallback) {
       dsa.error.checkNotNull(iterable);
       dsa.error.checkNotNull(otherIterable);
       if (iterable.size() !== otherIterable.size()) {
@@ -166,11 +172,11 @@ var dsa;
       }
       return true;
     }
-    structs.genericEquals = genericEquals;
-    function genericIsEmpty(iterable) {
+    structs.iterableEquals = iterableEquals;
+    function iterableIsEmpty(iterable) {
       return iterable.size() === 0;
     }
-    structs.genericIsEmpty = genericIsEmpty;
+    structs.iterableIsEmpty = iterableIsEmpty;
   })(dsa.structs || (dsa.structs = {}));
   var structs = dsa.structs;
 })(dsa || (dsa = {}));
@@ -183,12 +189,12 @@ var dsa;
         this.index = 0;
       }
       ArrayListIterator.prototype.next = function() {
-        if (this.index >= this.array.length) {
-          throw StopIteration;
-        }
         var element = $traceurRuntime.elementGet(this.array, this.index);
         this.index++;
-        return element;
+        return {
+          value: element,
+          done: this.index >= this.array.length - 1
+        };
       };
       return ArrayListIterator;
     })();
@@ -228,10 +234,10 @@ var dsa;
         }
       };
       ArrayList.prototype.equals = function(collection) {
-        return dsa.structs.genericCollectionEquals(this, collection);
+        return dsa.structs.collectionEquals(this, collection);
       };
       ArrayList.prototype.forEach = function(callback) {
-        dsa.structs.genericForEach(this, callback);
+        dsa.structs.collectionForEach(this, callback);
       };
       ArrayList.prototype.get = function(index) {
         dsa.error.checkNotNull(index);
@@ -290,12 +296,12 @@ var dsa;
         this.currentNode = currentNode;
       }
       DoublyLinkedListIterator.prototype.next = function() {
-        if (this.currentNode === null) {
-          throw StopIteration;
-        }
         var node = this.currentNode;
         this.currentNode = this.currentNode.next;
-        return this.currentNode.value;
+        return {
+          value: this.currentNode.value,
+          done: this.currentNode.next === null
+        };
       };
       return DoublyLinkedListIterator;
     })();
@@ -367,10 +373,10 @@ var dsa;
         }
       };
       DoublyLinkedList.prototype.equals = function(collection) {
-        return dsa.structs.genericCollectionEquals(this, collection);
+        return dsa.structs.collectionEquals(this, collection);
       };
       DoublyLinkedList.prototype.forEach = function(callback) {
-        dsa.structs.genericForEach(this, callback);
+        dsa.structs.collectionForEach(this, callback);
       };
       DoublyLinkedList.prototype.get = function(index) {
         dsa.error.checkNotNull(index);
@@ -442,6 +448,26 @@ var dsa;
 var dsa;
 (function(dsa) {
   (function(structs) {
+    var ES6BaseMapIterator = (function() {
+      function ES6BaseMapIterator(iterator, valueCallback) {
+        this.iterator = iterator;
+        this.valueCallback = valueCallback;
+        this.done = false;
+      }
+      ES6BaseMapIterator.prototype.next = function() {
+        if (this.currentEntry === null || this.currentEntry.next === null) {
+          var next = this.iterator.next();
+          this.done = next.done;
+          this.currentEntry = next.value;
+        }
+        return {
+          value: this.valueCallback(this.currentEntry),
+          done: !!(this.currentEntry.next === null && this.done)
+        };
+      };
+      return ES6BaseMapIterator;
+    })();
+    structs.ES6BaseMapIterator = ES6BaseMapIterator;
     var ES6BaseMap = (function() {
       function ES6BaseMap(map) {
         this.map = map;
@@ -480,10 +506,12 @@ var dsa;
         return null;
       };
       ES6BaseMap.prototype.isEmpty = function() {
-        return dsa.structs.genericIsEmpty(this);
+        return dsa.structs.iterableIsEmpty(this);
       };
       ES6BaseMap.prototype.keys = function() {
-        return null;
+        return new ES6BaseMapIterator(this.map.values(), function(currentEntry) {
+          return currentEntry.key;
+        });
       };
       ES6BaseMap.prototype.remove = function(key) {
         dsa.error.checkNotNull(key);
@@ -548,7 +576,9 @@ var dsa;
         return this.keyCount;
       };
       ES6BaseMap.prototype.values = function() {
-        return null;
+        return new ES6BaseMapIterator(this.map.values(), function(currentEntry) {
+          return currentEntry.value;
+        });
       };
       ES6BaseMap.prototype.__iterator__ = function() {
         return this.keys();
@@ -581,6 +611,36 @@ var dsa;
 var dsa;
 (function(dsa) {
   (function(structs) {
+    function mapEquals(map, otherMap) {
+      return dsa.structs.iterableEquals(map, otherMap, function(mapIterator) {
+        var mapKey = mapIterator.next();
+        var mapValue = map.get(mapKey.value);
+        var otherMapValue = otherMap.get(mapKey.value);
+        return mapValue.value.equals(otherMapValue.value);
+      });
+    }
+    structs.mapEquals = mapEquals;
+    function mapForEach(map, callback) {
+      dsa.error.checkNotNull(map);
+      dsa.error.checkNotNull(callback);
+      if (map.size() > 0) {
+        var keys = map.keys();
+        var values = map.values();
+        var key;
+        do {
+          key = keys.next();
+          var value = values.next();
+          callback(key.value, value.value);
+        } while (!key.done);
+      }
+    }
+    structs.mapForEach = mapForEach;
+  })(dsa.structs || (dsa.structs = {}));
+  var structs = dsa.structs;
+})(dsa || (dsa = {}));
+var dsa;
+(function(dsa) {
+  (function(structs) {
     var TreeMap = (function() {
       function TreeMap() {
         this.tree = new dsa.structs.RedBlackTree();
@@ -592,14 +652,14 @@ var dsa;
         return this.get(key) !== null;
       };
       TreeMap.prototype.equals = function(map) {
-        return false;
+        return dsa.structs.mapEquals(this, map);
       };
       TreeMap.prototype.forEach = function(callback) {};
       TreeMap.prototype.get = function(key) {
         return this.tree.get(key);
       };
       TreeMap.prototype.isEmpty = function() {
-        return this.size() === 0;
+        return dsa.structs.iterableIsEmpty(this);
       };
       TreeMap.prototype.keys = function() {
         return null;
@@ -644,42 +704,63 @@ var dsa;
 (function(dsa) {
   (function(structs) {
     var HashBiMap = (function() {
-      function HashBiMap() {
-        this._map = new dsa.structs.HashMap();
-        this._inverseMap = new dsa.structs.HashMap();
+      function HashBiMap(map, inverseMap) {
+        if (typeof map === "undefined") {
+          map = new dsa.structs.HashMap();
+        }
+        if (typeof inverseMap === "undefined") {
+          inverseMap = new dsa.structs.HashMap();
+        }
+        this.map = map;
+        this.inverseMap = inverseMap;
       }
       HashBiMap.prototype.containsKey = function(key) {
-        return this._map.containsKey(key);
+        return this.map.containsKey(key);
+      };
+      HashBiMap.prototype.equals = function(biMap) {
+        return dsa.structs.mapEquals(this, biMap);
       };
       HashBiMap.prototype.get = function(key) {
-        return this._map.get(key);
-      };
-      HashBiMap.prototype.set = function(key, value) {
-        this._map.set(key, value);
-        this._inverseMap.set(value, key);
-      };
-      HashBiMap.prototype.size = function() {
-        return this._map.size();
+        return this.map.get(key);
       };
       HashBiMap.prototype.remove = function(key) {
-        return null;
+        dsa.error.checkNotNull(key);
+        var value = this.map.get(key);
+        if (!value) {
+          return null;
+        }
+        this.map.remove(key);
+        this.inverseMap.remove(value);
+        return value;
+      };
+      HashBiMap.prototype.set = function(key, value) {
+        this.inverseMap.set(value, key);
+        return this.map.set(key, value);
+      };
+      HashBiMap.prototype.size = function() {
+        return this.map.size();
+      };
+      HashBiMap.prototype.isEmpty = function() {
+        return dsa.structs.iterableIsEmpty(this);
       };
       HashBiMap.prototype.inverse = function() {
-        return null;
+        return new HashBiMap(this.inverseMap, this.map);
       };
       HashBiMap.prototype.clear = function() {
-        this._map.clear();
-        this._inverseMap.clear();
+        this.map.clear();
+        this.inverseMap.clear();
       };
-      HashBiMap.prototype.forEach = function(callback) {};
+      HashBiMap.prototype.forEach = function(callback) {
+        this.map.forEach(callback);
+      };
       HashBiMap.prototype.keys = function() {
-        return {};
+        return this.map.keys();
       };
       HashBiMap.prototype.values = function() {
-        return {};
+        return this.map.values();
       };
       HashBiMap.prototype.__iterator__ = function() {
-        return null;
+        return this.map.keys();
       };
       return HashBiMap;
     })();
@@ -706,7 +787,7 @@ var dsa;
         return false;
       };
       HashSet.prototype.equals = function(set) {
-        return dsa.structs.genericCollectionEquals(this, set);
+        return dsa.structs.collectionEquals(this, set);
       };
       HashSet.prototype.forEach = function(callback) {
         this.set.forEach(callback);
@@ -715,7 +796,7 @@ var dsa;
         return this.set.has(element);
       };
       HashSet.prototype.isEmpty = function() {
-        return dsa.structs.genericIsEmpty(this);
+        return dsa.structs.iterableIsEmpty(this);
       };
       HashSet.prototype.size = function() {
         return this.set.size;
@@ -754,14 +835,14 @@ var dsa;
         return false;
       };
       TreeSet.prototype.equals = function(set) {
-        return dsa.structs.genericCollectionEquals(this, set);
+        return dsa.structs.collectionEquals(this, set);
       };
       TreeSet.prototype.forEach = function(callback) {};
       TreeSet.prototype.has = function(element) {
         return this.treeMap.containsKey(element);
       };
       TreeSet.prototype.isEmpty = function() {
-        return dsa.structs.genericIsEmpty(this);
+        return dsa.structs.iterableIsEmpty(this);
       };
       TreeSet.prototype.size = function() {
         return this.treeMap.size();
@@ -863,32 +944,10 @@ var dsa;
             this.minNode(this.cursor.right);
           }
         }
-        return this.key();
-      };
-      TreeIterator.prototype.prev = function() {
-        if (this.cursor === null) {
-          var root = this.tree._root;
-          if (root !== null) {
-            this.maxNode(root);
-          }
-        } else {
-          if (this.cursor.left === null) {
-            var save;
-            do {
-              save = this.cursor;
-              if (this.ancestors.length) {
-                this.cursor = this.ancestors.pop();
-              } else {
-                this.cursor = null;
-                break;
-              }
-            } while (this.cursor.left === save);
-          } else {
-            this.ancestors.push(this.cursor);
-            this.maxNode(this.cursor.left);
-          }
-        }
-        return this.key();
+        return {
+          value: this.key(),
+          done: false
+        };
       };
       TreeIterator.prototype.minNode = function(start) {
         while (start.left !== null) {
@@ -1054,9 +1113,7 @@ var dsa;
         }
         return null;
       };
-      RedBlackTree.prototype.forEach = function(callback) {
-        dsa.structs.genericForEach(this, callback);
-      };
+      RedBlackTree.prototype.forEach = function(callback) {};
       RedBlackTree.prototype.__iterator__ = function() {
         return new TreeIterator(this);
       };

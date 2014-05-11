@@ -29,7 +29,7 @@ module dsa.structs {
         }
 
         equals(set: Set<E>):boolean {
-            return genericCollectionEquals(this, set);
+            return collectionEquals(this, set);
         }
 
         forEach(callback: ForEachCollectionCallback<E>): void {
@@ -42,7 +42,7 @@ module dsa.structs {
 
         // TODO: mixin or abstract class for shared isEmpty logic?
         isEmpty(): boolean {
-            return genericIsEmpty(this);
+            return dsa.structs.iterableIsEmpty(this);
         }
 
         size(): number {

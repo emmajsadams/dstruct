@@ -6,8 +6,8 @@ module dsa.structs {
         clear(): void;
 
         //TODO: mixin, helper function for shared logic?
-        //equals(tree: Tree<K, V>):boolean;
-        forEach(callback:forEachMapCallback<K, V>): void;
+        //equals(tree: Tree<E, V>):boolean;
+        forEach(callback:ForEachMapCallback<K, V>): void;
         get(key:K): V;
 
         //TODO: mixin, helper function for shared logic?
@@ -47,14 +47,13 @@ module dsa.structs {
             return this.cursor !== null ? this.cursor.key : null;
         }
 
-        next():K {
+        next():IteratorReturn<K> {
             if (this.cursor === null) {
                 var root = this.tree._root;
                 if (root !== null) {
                     this.minNode(root);
                 }
-            }
-            else {
+            } else {
                 if (this.cursor.right === null) {
                     // no greater node in subtree, go up to parent
                     // if coming from a right child, continue up the stack
@@ -77,9 +76,11 @@ module dsa.structs {
                 }
             }
 
-            return this.key();
+            //TODO: done!
+            return { value: this.key(), done: false };
         }
 
+        /*
         prev():K {
             if (this.cursor === null) {
                 var root = this.tree._root;
@@ -108,6 +109,7 @@ module dsa.structs {
             }
             return this.key();
         }
+        */
 
         // TODO: Consider returning the node, and assignign it to curors?
         private minNode(start:RedBlackTreeNode<K, V>):void {
@@ -132,7 +134,7 @@ module dsa.structs {
     // TODO: this could use a lot of improvements. Look at CLR more and the gnu opensource implementation
     // https://www.opensource.apple.com/source/gcc/gcc-5484/libjava/java/util/TreeMap.java
     // TODO: ensure the insert check to replace the value guarentees uniqueness!
-    export class RedBlackTree<K  extends ComparableObject, V extends Object> {
+    export class RedBlackTree<K extends ComparableObject, V extends Object> implements Tree<K, V> {
         // Protected
         // TODO: does this need to be protected?
         _size:number;
@@ -331,7 +333,6 @@ module dsa.structs {
             dsa.error.checkNotNull(key);
 
             var res = this._root;
-
             while (res !== null) {
 
                 var comparatorValue = key.compareTo(res.key);
@@ -348,7 +349,8 @@ module dsa.structs {
         // calls cb on each node's data, in order
         // TODO: Type
         forEach(callback:any):void {
-            dsa.structs.genericForEach(this, callback);
+            //TODO! foreach
+            //dsa.structs.collectionForEach(this, callback);
         }
 
         // returns a null iterator

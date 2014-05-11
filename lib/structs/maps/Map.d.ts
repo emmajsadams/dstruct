@@ -2,7 +2,7 @@
 
 declare module dsa.structs {
 
-    export interface forEachMapCallback<K, V> {
+    export interface ForEachMapCallback<K, V> {
         (value:V, key:K): void;
     }
 
@@ -15,7 +15,7 @@ declare module dsa.structs {
         clear(): void;
         delete(key:K): boolean;
         //TODO: entries?
-        forEach(callback:forEachMapCallback<K, V>): void;
+        forEach(callback:ForEachMapCallback<K, V>): void;
         get(key:K): V;
         has(key:K): boolean;
         keys(): Iterator<K>;
@@ -24,14 +24,12 @@ declare module dsa.structs {
     }
 
     export interface Map<K extends Object, V extends Object> extends Iterable {
-        //TOC
-
         clear(): void;
 
         //TODO: mixin, helper function for shared logic?
         containsKey(key:K): boolean;
         equals(map:Map<K, V>):boolean;
-        forEach(callback:forEachMapCallback<K, V>): void;
+        forEach(callback:ForEachMapCallback<K, V>): void;
         get(key:K): V;
 
         //TODO: mixin, helper function for shared logic?
@@ -41,12 +39,11 @@ declare module dsa.structs {
         set(key:K, value:V): V;
         values(): Iterator<V>;
 
-        // not to be used directly
+        // TODO: ensure current standard matches this interface.
         __iterator__(): Iterator<K>;
     }
 
     export interface SortedMap<K extends ComparableObject, V extends Object> extends Map<K, V> {
-
     }
 
 }
