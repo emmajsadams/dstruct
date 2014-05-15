@@ -1,17 +1,20 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
-    export class TreeSet<E extends ComparableObject> implements Set<E> {
+    // TODO: best null/base object for values?
+    export class TreeSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.Set<E> {
 
-        private treeMap: TreeMap<E, boolean>;
+        private treeMap: TreeMap<E, Interfaces.BaseObject>;
 
         constructor() {
-            this.treeMap = new TreeMap<E, boolean>();
+            this.treeMap = new TreeMap<E, Interfaces.BaseObject>();
         }
 
         add(element:E): boolean {
-            this.treeMap.set(element, true);
+            this.treeMap.set(element, undefined);
 
             return false; //TODO!
         }
@@ -27,11 +30,11 @@ module dsa.structs {
             return false;
         }
 
-        equals(set: Set<E>):boolean {
+        equals(set: Interfaces.Set<E>):boolean {
             return collectionEquals(this, set);
         }
 
-        forEach(callback: ForEachCollectionCallback<E>): void {
+        forEach(callback: Interfaces.ForEachCollectionCallback<E>): void {
             //TODO!
             //this.treeMap.forEach(callback);
         }
@@ -52,12 +55,12 @@ module dsa.structs {
             return null; //TODO!
         }
 
-        values(): Iterator<E> {
+        values(): Interfaces.Iterator<E> {
             //TODO
             return null;
         }
 
-        __iterator__(): Iterator<E> {
+        __iterator__(): Interfaces.Iterator<E> {
             return this.treeMap.keys();
         }
 

@@ -1,4 +1,3 @@
-/// <reference path="../../References.d.ts"/>
 /*
 module dsa.search {
 
@@ -11,8 +10,10 @@ module dsa.search {
         var midIndex: number;
         var midValue: E;
 
+        //Check for sorted condition?
+        // Return two's compliment https://pay.reddit.com/r/javascript/comments/1fx4od/searching_javascript_arrays_with_a_binary_search/caeo5is
         while (minIndex <= maxIndex) {
-            midIndex = (minIndex/maxIndex)/2;
+            midIndex = (minIndex + maxIndex)/2 | 0;
             midValue = list.get(midIndex);
 
             if (comparator(midValue, value) < 0) {
@@ -24,7 +25,7 @@ module dsa.search {
             }
         }
 
-        return -1;
+        return ~maxIndex;
     }
 
 }

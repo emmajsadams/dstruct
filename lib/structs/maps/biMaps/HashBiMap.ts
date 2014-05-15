@@ -1,8 +1,10 @@
 /// <reference path="../../../../References.d.ts"/>
 
+import Interfaces = require("../../../Interfaces");
+
 module dsa.structs {
 
-    export class HashBiMap<K extends Object, V extends Object> implements BiMap<K, V> {
+    export class HashBiMap<K extends BaseObject, V extends BaseObject> implements Interfaces.BiMap<K, V> {
 
         constructor(private map: HashMap<K, V> = new HashMap<K, V>(),
                     private inverseMap: HashMap<V, K> = new HashMap<V, K>()) {
@@ -12,7 +14,7 @@ module dsa.structs {
             return this.map.containsKey(key);
         }
 
-        equals(biMap: BiMap<K, V>): boolean {
+        equals(biMap: Interfaces.BiMap<K, V>): boolean {
             return dsa.structs.mapEquals(this, biMap);
         }
 
@@ -48,7 +50,7 @@ module dsa.structs {
             return dsa.structs.iterableIsEmpty(this);
         }
 
-        inverse(): BiMap<V, K> {
+        inverse(): Interfaces.BiMap<V, K> {
             // TODO: return a copy, or immutable/protected?
             return new HashBiMap<V, K>(this.inverseMap, this.map);
         }
@@ -58,19 +60,19 @@ module dsa.structs {
             this.inverseMap.clear();
         }
 
-        forEach(callback:ForEachMapCallback<K, V>):void {
+        forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
             this.map.forEach(callback);
         }
 
-        keys():Iterator<K> {
+        keys():Interfaces.Iterator<K> {
             return this.map.keys();
         }
 
-        values():Iterator<V> {
+        values():Interfaces.Iterator<V> {
             return this.map.values();
         }
 
-        __iterator__():Iterator<K> {
+        __iterator__():Interfaces.Iterator<K> {
             return this.map.keys();
         }
 

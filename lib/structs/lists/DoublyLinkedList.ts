@@ -1,18 +1,20 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
-    export class DoublyLinkedNode<E extends Object> {
+    export class DoublyLinkedNode<E extends BaseObject> {
         constructor(public value:E, public prev?:DoublyLinkedNode<E>, public next?:DoublyLinkedNode<E>) {
         }
     }
 
     // Circular doubly linked
-    class DoublyLinkedListIterator<E extends Object> implements Iterator<E> {
+    class DoublyLinkedListIterator<E extends BaseObject> implements Interfaces.Iterator<E> {
         constructor(private currentNode:DoublyLinkedNode<E>) {
         }
 
-        next():IteratorReturn<E> {
+        next():Interfaces.IteratorReturn<E> {
             var node = this.currentNode;
             this.currentNode = this.currentNode.next;
             return {
@@ -22,7 +24,7 @@ module dsa.structs {
         }
     }
 
-    export class DoublyLinkedList<E> implements List<E> {
+    export class DoublyLinkedList<E extends BaseObject> implements Interfaces.List<E> {
         private rootNode:DoublyLinkedNode<E>;
         private lastNode:DoublyLinkedNode<E>;
         private count:number;
@@ -30,7 +32,7 @@ module dsa.structs {
         constructor() {
         }
 
-        __iterator__():Iterator<E> {
+        __iterator__():Interfaces.Iterator<E> {
             return new DoublyLinkedListIterator(this.rootNode);
         }
 
@@ -108,11 +110,11 @@ module dsa.structs {
             }
         }
 
-        equals(collection:Collection<E>):boolean {
+        equals(collection:Interfaces.Collection<E>):boolean {
             return collectionEquals(this, collection);
         }
 
-        forEach(callback:ForEachCollectionCallback<E>):void {
+        forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
             collectionForEach(this, callback);
         }
 

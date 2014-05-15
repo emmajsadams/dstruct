@@ -1,6 +1,10 @@
+/// <reference path="../../../References.d.ts"/>
+
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
-    export class TreeMap<K extends ComparableObject, V extends Object> implements SortedMap<K, V> {
+    export class TreeMap<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> implements Interfaces.SortedMap<K, V> {
 
         private tree:Tree<K, V>;
 
@@ -16,11 +20,11 @@ module dsa.structs {
             return this.get(key) !== null;
         }
 
-        equals(map:Map<K, V>):boolean {
+        equals(map:Interfaces.Map<K, V>):boolean {
             return dsa.structs.mapEquals(this, map);
         }
 
-        forEach(callback:ForEachMapCallback<K, V>):void {
+        forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
             //TODO:
         }
 
@@ -32,13 +36,15 @@ module dsa.structs {
             return dsa.structs.iterableIsEmpty(this);
         }
 
-        keys():Iterator<K> {
+        keys():Interfaces.Iterator<K> {
             //TODO!
             return null;
         }
 
         remove(key:K):V {
-            return this.tree.remove(key);
+            //return this.tree.remove(key);
+            //TODO return value, not boolean
+            return null;
         }
 
         set(key:K, value:V):V {
@@ -50,13 +56,13 @@ module dsa.structs {
             return this.tree.size();
         }
 
-        values():Iterator<V> {
+        values():Interfaces.Iterator<V> {
             //TODO!
             return null;
         }
 
         // not to be used directly
-        __iterator__():Iterator<K> {
+        __iterator__():Interfaces.Iterator<K> {
             return this.keys();
         }
     }

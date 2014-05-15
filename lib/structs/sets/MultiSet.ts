@@ -1,6 +1,7 @@
 /// <reference path="../../../References.d.ts"/>
 
-module dsa.structs {
+import Interfaces = require("../../Interfaces");
+
 
     /*
     export class MultiSet<E> implements Set<E> {
@@ -69,7 +70,7 @@ module dsa.structs {
             this.map.forEach(<any>callback, thisArg);
         }
 
-        values(): Iterator<E> {
+        values(): Interfaces.Iterator<E> {
             return this.map.keys();
         }
 
@@ -84,4 +85,3 @@ module dsa.structs {
     }
 */
 
-}

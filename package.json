@@ -25,7 +25,8 @@
     "karma-jasmine": "*",
     "karma-story-reporter": "*",
     "karma": "*",
-    "grunt-traceur": "0.0.3"
+    "grunt-traceur": "0.0.3",
+    "grunt-typescript": "^0.3.5"
   },
   "dependencies": {
     "es6-collections": "^0.2.0"

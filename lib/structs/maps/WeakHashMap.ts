@@ -1,8 +1,10 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
-    export class WeakHashMap<K extends Object, V extends Object> extends ES6BaseMap<K, V> {
+    export class WeakHashMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> extends ES6BaseMap<K, V> {
 
         constructor() {
             super(<any>new Map());

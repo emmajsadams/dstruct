@@ -1,11 +1,13 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
     //TODO: reimplement with HashMAp
-    export class HashSet<E> implements Set<E> {
+    export class HashSet<E extends Interfaces.BaseObject> implements Interfaces.Set<E> {
 
-        private set: ES6Set<E>;
+        private set: Interfaces.ES6Set<E>;
 
         constructor() {
             this.set = <any>new Set();
@@ -28,11 +30,11 @@ module dsa.structs {
             return false;
         }
 
-        equals(set: Set<E>):boolean {
+        equals(set: Interfaces.Set<E>):boolean {
             return collectionEquals(this, set);
         }
 
-        forEach(callback: ForEachCollectionCallback<E>): void {
+        forEach(callback: Interfaces.ForEachCollectionCallback<E>): void {
             this.set.forEach(callback);
         }
 
@@ -54,13 +56,13 @@ module dsa.structs {
             return null; //TODO!
         }
 
-        values(): Iterator<E> {
+        values(): Interfaces.Iterator<E> {
             //TODO
             return null;
         }
 
         // not to be used directly, enables using for (var element:E,
-        __iterator__(): Iterator<E> {
+        __iterator__(): Interfaces.Iterator<E> {
             return this.set.values();
         }
 
