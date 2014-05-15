@@ -36,3 +36,7 @@ export function equals<E extends Interfaces.BaseObject>(iterable:Interfaces.Iter
 export function isEmpty(iterable:Interfaces.Iterable) {
     return iterable.size() === 0;
 }
+
+export function forEach(iterable:Interfaces.Iterable, callback: Interfaces.ForEachCollectionCallback): void {
+    //TODO!
+}
