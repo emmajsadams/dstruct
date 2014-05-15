@@ -1,8 +1,10 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
-    export class ArrayStack<E> extends ArrayList<E> implements Stack<E> {
+    export class ArrayStack<E extends Interfaces.BaseObject> extends ArrayList<E> implements Interfaces.Stack<E> {
 
         peek(): E {
             return this.get(this.size() - 1);

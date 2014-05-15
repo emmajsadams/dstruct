@@ -1,8 +1,10 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
-    export class TreeNode<K extends ComparableObject, V extends Object> {
+    export class TreeNode<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> {
 
         constructor(public key:K = null, public value:V = null, public left:RedBlackTreeNode<K, V> = null, public right:RedBlackTreeNode<K, V> = null) {
         }

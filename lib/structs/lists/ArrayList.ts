@@ -1,133 +1,119 @@
 /// <reference path="../../../References.d.ts"/> 
 
+import Interfaces = require("../../Interfaces");
+import Error = require("../../Error");
 
-module dsa.structs {
+/**
+ * TODO
+ * @param comparator TODO
+ * @param initialCapacity TODO
+ * @returns TODO
+ */
+class ArrayList<E extends BaseObject> implements Interfaces.List<E> {
+    private array:E[];
 
-    class ArrayListIterator<E extends Object> implements Iterator<E> {
-        private index = 0;
+    constructor(initialCapacity?:number) {
+        this.array = new Array(initialCapacity || 0);
+    }
 
-        constructor(private array:E[]) {}
+    __iterator__(): Interfaces.Iterator<E> {
+        return new ArrayListIterator(this.array);
+    }
 
-        next():IteratorReturn<E> {
-            var element = this.array[this.index];
-            this.index++;
-            return {
-                value: element,
-                done: this.index >= this.array.length - 1
-            };
+    add(element:E):boolean {
+        //TODO: should it default add at 0?
+        this.addAtIndex(this.size() - 1, element);
+
+        //TODO: return true?
+        return true;
+    }
+
+    addAtIndex(index:number, element:E):void {
+        Error.checkNotNull(element);
+
+        this.array.splice(index, 0, element);
+    }
+
+    clear():void {
+        util.clearArray(this.array);
+    }
+
+    removeAtIndex(index:number):E {
+        Error.checkNotNull(index);
+        Error.checkIndex(index, this.size());
+
+        var element = this.get(index);
+        this.array.splice(index, 1);
+        return element;
+    }
+
+    remove(element:E):boolean {
+        Error.checkNotNull(element);
+
+        var index = this.indexOf(element);
+        if (index >= 0) {
+            this.array.splice(index, 1);
+            return true;
+        } else {
+            return false;
         }
     }
 
-    /**
-     * TODO
-     * @param comparator TODO
-     * @param initialCapacity TODO
-     * @returns TODO
-     */
-    export class ArrayList<E extends Object> implements List<E> {
-        private array:E[];
+    equals(collection:Interfaces.Collection<E>):boolean {
+        return collectionEquals(this, collection);
+    }
 
-        constructor(initialCapacity?:number) {
-            this.array = new Array(initialCapacity || 0);
-        }
+    forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
+        collectionForEach(this, callback);
+    }
 
-        __iterator__(): Iterator<E> {
-            return new ArrayListIterator(this.array);
-        }
+    get(index:number):E {
+        Error.checkNotNull(index);
+        Error.checkIndex(index, this.size());
 
-        add(element:E):boolean {
-            //TODO: should it default add at 0?
-            this.addAtIndex(this.size() - 1, element);
+        return this.array[index];
+    }
 
-            //TODO: return true?
-            return true;
-        }
+    has(element:E):boolean {
+        return this.indexOf(element) >= 0;
+    }
 
-        addAtIndex(index:number, element:E):void {
-            dsa.error.checkNotNull(element);
+    indexOf(value:E):number {
+        Error.checkNotNull(value);
 
-            this.array.splice(index, 0, element);
-        }
-
-        clear():void {
-            util.clearArray(this.array);
-        }
-
-        removeAtIndex(index:number):E {
-            dsa.error.checkNotNull(index);
-            dsa.error.checkIndex(index, this.size());
-
-            var element = this.get(index);
-            this.array.splice(index, 1);
-            return element;
-        }
-
-        remove(element:E):boolean {
-            dsa.error.checkNotNull(element);
-
-            var index = this.indexOf(element);
-            if (index >= 0) {
-                this.array.splice(index, 1);
-                return true;
-            } else {
-                return false;
+        var index = 0;
+        for (var element in this) {
+            if (element.compareTo(value) === 0) {
+                return index;
             }
+            index++;
         }
+        return -1;
+    }
 
-        equals(collection:Collection<E>):boolean {
-            return collectionEquals(this, collection);
-        }
+    set(index:number, element:E):E {
+        Error.checkNotNull(element);
 
-        forEach(callback:ForEachCollectionCallback<E>):void {
-            collectionForEach(this, callback);
-        }
+        var currentValue = this.get(index);
+        this.array[index] = element;
 
-        get(index:number):E {
-            dsa.error.checkNotNull(index);
-            dsa.error.checkIndex(index, this.size());
+        return currentValue;
+    }
 
-            return this.array[index];
-        }
+    size():number {
+        return this.array.length;
+    }
 
-        has(element:E):boolean {
-            return this.indexOf(element) >= 0;
-        }
+    toArray():E[] {
+        //TODO: immutable?
+        return this.array;
+    }
 
-        indexOf(value:E):number {
-            dsa.error.checkNotNull(value);
-
-            var index = 0;
-            for (var element in this) {
-                if (element.compareTo(value) === 0) {
-                    return index;
-                }
-                index++;
-            }
-            return -1;
-        }
-
-        set(index:number, element:E):E {
-            dsa.error.checkNotNull(element);
-
-            var currentValue = this.get(index);
-            this.array[index] = element;
-
-            return currentValue;
-        }
-
-        size():number {
-            return this.array.length;
-        }
-
-        toArray():E[] {
-            //TODO: immutable?
-            return this.array;
-        }
-
-        isEmpty():boolean {
-            return this.size() > 0;
-        }
-
+    isEmpty():boolean {
+        return this.size() > 0;
     }
 
 }
+
+export = ArrayList;
+

@@ -1,14 +1,10 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
+
 module dsa.structs {
 
-    export interface Entry<K, V> {
-        key: K
-        value: V;
-        next: Entry<K, V>; //TODO: consider using a singly linkedlist?
-    }
-
-    export class ES6BaseMapIterator<E> implements Iterator<E> {
+    export class ES6BaseMapIterator<E> implements Interfaces.Iterator<E> {
         private currentEntry: Entry<any, any>;
         private done = false;
 
@@ -36,11 +32,11 @@ module dsa.structs {
     }
 
     // TODO: benchmark this solution compared to actually implementing a HashMap with an array.
-    export class ES6BaseMap<K extends Object, V extends Object> implements Map<K, V> {
+    export class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> implements Interfaces.Map<K, V> {
 
         private keyCount: number;
 
-        constructor(private map:ES6Map<number, Entry<K, V>>) {
+        constructor(private map:Interfaces.ES6Map<number, Interfaces.Entry<K, V>>) {
         }
 
         clear():void {
@@ -53,12 +49,12 @@ module dsa.structs {
             return this.get(key) !== null;
         }
 
-        equals(map:Map<K, V>):boolean {
+        equals(map:Interfaces.Map<K, V>):boolean {
             //TODO: need a generic map equals!
             return false;
         }
 
-        forEach(callback:ForEachMapCallback<K, V>):void {
+        forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
             dsa.error.checkNotNull(callback);
 
             this.map.forEach(function (entry) {
@@ -93,7 +89,7 @@ module dsa.structs {
             return dsa.structs.iterableIsEmpty(this);
         }
 
-        keys():Iterator<K> {
+        keys():Interfaces.Iterator<K> {
             return new ES6BaseMapIterator<K>(this.map.values(), (currentEntry) => {
                 return currentEntry.key;
             });
@@ -184,13 +180,13 @@ module dsa.structs {
             return this.keyCount;
         }
 
-        values():Iterator<V> {
+        values():Interfaces.Iterator<V> {
             return new ES6BaseMapIterator<V>(this.map.values(), (currentEntry) => {
                 return currentEntry.value;
             });
         }
 
-        __iterator__():Iterator<K> {
+        __iterator__():Interfaces.Iterator<K> {
             return this.keys();
         }
 

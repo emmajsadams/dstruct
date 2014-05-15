@@ -3,16 +3,16 @@
 describe("Tree", () => {
 
     describe("RedBlackTree", () => {
-        var tree: dsa.structs.RedBlackTree<number, number>;
+        var tree: dsa.structs.RedBlackTree<Number, Number>;
 
         beforeEach(() => {
-            tree = new dsa.structs.RedBlackTree<number, number>();
+            tree = new dsa.structs.RedBlackTree<Number, Number>();
         });
 
         it("Should find a key and value after inserted once.", () => {
             tree.insert(4, 2);
 
-            expect(tree.get(4).value === 2);
+            expect(tree.get(4) === 2);
             expect(tree.size() === 1);
         });
 
@@ -23,7 +23,7 @@ describe("Tree", () => {
             tree.insert(4, 2);
             tree.insert(4, 4);
 
-            expect(tree.get(4).value === 4);
+            expect(tree.get(4) === 4);
             expect(tree.size() === 1);
         });
 

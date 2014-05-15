@@ -1,29 +1,13 @@
-/// <reference path="../../../References.d.ts"/>
+/// <reference path="./TreeNode.ts"/>
+
+import Interfaces = require("../../Interfaces");
 
 module dsa.structs {
-
-    export interface Tree<K extends ComparableObject, V extends Object> extends Iterable {
-        clear(): void;
-
-        //TODO: mixin, helper function for shared logic?
-        //equals(tree: Tree<E, V>):boolean;
-        forEach(callback:ForEachMapCallback<K, V>): void;
-        get(key:K): V;
-
-        //TODO: mixin, helper function for shared logic?
-        isEmpty(): boolean;
-        keys(): Iterator<K>;
-        remove(key:K): boolean;
-
-        insert(key:K, value:V): void;
-        //values(): Iterator<V>;
-
-    }
 
 
 
     //TODO: interface?!
-    export class RedBlackTreeNode<K extends ComparableObject, V extends Object> extends TreeNode<K, V> {
+    export class RedBlackTreeNode<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> extends TreeNode<K, V> {
         public red = true;
 
         constructor(public key:K = null, public value:V = null, public left:RedBlackTreeNode<K, V> = null, public right:RedBlackTreeNode<K, V> = null) {
@@ -33,7 +17,7 @@ module dsa.structs {
 
     // Consider rewriting as ES6 iterator
     // TODO: Ensure comparator is used!
-    export class TreeIterator<K extends ComparableObject, V extends Object> implements Iterator<K> {
+    export class TreeIterator<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> implements Interfaces.Iterator<K> {
         // consider protected?
         private ancestors = []; //TODO type
         private cursor:RedBlackTreeNode<K, V>; //TODO
@@ -47,7 +31,7 @@ module dsa.structs {
             return this.cursor !== null ? this.cursor.key : null;
         }
 
-        next():IteratorReturn<K> {
+        next():Interfaces.IteratorReturn<K> {
             if (this.cursor === null) {
                 var root = this.tree._root;
                 if (root !== null) {
@@ -134,7 +118,7 @@ module dsa.structs {
     // TODO: this could use a lot of improvements. Look at CLR more and the gnu opensource implementation
     // https://www.opensource.apple.com/source/gcc/gcc-5484/libjava/java/util/TreeMap.java
     // TODO: ensure the insert check to replace the value guarentees uniqueness!
-    export class RedBlackTree<K extends ComparableObject, V extends Object> implements Tree<K, V> {
+    export class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> implements Interfaces.Tree<K, V> {
         // Protected
         // TODO: does this need to be protected?
         _size:number;
@@ -145,6 +129,7 @@ module dsa.structs {
 
         // inserts a node with the given key and value
         // if a node with the given key exists, the value will be overwritten with the given value
+        // TODO: Return value?
         insert(key:K, value:V) {
             dsa.error.checkNotNull(key);
             dsa.error.checkNotNull(value);
@@ -226,6 +211,7 @@ module dsa.structs {
             return returnValue;
         }
 
+        //TODO: return value?
         remove(key:K) {
             dsa.error.checkNotNull(key);
 
@@ -319,7 +305,7 @@ module dsa.structs {
             return this.size() === 0;
         }
 
-        keys(): Iterator<K> {
+        keys(): Interfaces.Iterator<K> {
             return null; //TODO
         }
 
