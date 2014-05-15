@@ -2,6 +2,8 @@
 
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
+import IterableHelpers = require("../IterableHelpers");
+import ArrayListIterator = require("./ArrayListIterator");
 
 /**
  * TODO
@@ -9,7 +11,7 @@ import Error = require("../../Error");
  * @param initialCapacity TODO
  * @returns TODO
  */
-class ArrayList<E extends BaseObject> implements Interfaces.List<E> {
+class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     private array:E[];
 
     constructor(initialCapacity?:number) {
@@ -60,11 +62,12 @@ class ArrayList<E extends BaseObject> implements Interfaces.List<E> {
     }
 
     equals(collection:Interfaces.Collection<E>):boolean {
-        return collectionEquals(this, collection);
+        return IterableHelpers.equals(this, collection);
     }
 
     forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
-        collectionForEach(this, callback);
+        //TODO forEach?
+        this.forEach(callback);
     }
 
     get(index:number):E {
@@ -110,7 +113,7 @@ class ArrayList<E extends BaseObject> implements Interfaces.List<E> {
     }
 
     isEmpty():boolean {
-        return this.size() > 0;
+        return IterableHelpers.isEmpty(this);
     }
 
 }
