@@ -1,202 +1,176 @@
 /// <reference path="../../../References.d.ts"/>
 
 import Interfaces = require("../../Interfaces");
+import Error = require("../../Error");
+import MapHelpers = require("./MapHelpers");
+import ES6BaseMapIterator = require("./ES6BaseMapIterator");
 
-module dsa.structs {
+// TODO: benchmark this solution compared to actually implementing a HashMap with an array.
+class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> implements Interfaces.Map<K, V> {
 
-    export class ES6BaseMapIterator<E> implements Interfaces.Iterator<E> {
-        private currentEntry: Entry<any, any>;
-        private done = false;
+    private keyCount: number;
 
-        constructor(private iterator: Iterator<Entry<any, any>>,
-                    private valueCallback: (entry: Entry<any, any>) => any) {
-        }
-
-        next(): IteratorReturn<E> {
-            // Check if there is an entry to return
-            if (this.currentEntry === null || this.currentEntry.next === null) {
-                // Get next entry, assign done value and current entry.
-                var next = this.iterator.next();
-                this.done = next.done;
-                this.currentEntry = next.value;
-            }
-
-            return {
-                value: this.valueCallback(this.currentEntry),
-
-                // Check if there is a current entry, and if this is the last key and return true.
-                // Else return false.
-                done: !!(this.currentEntry.next === null && this.done)
-            };
-        }
+    constructor(private map:Interfaces.ES6Map<number, Interfaces.Entry<K, V>>) {
     }
 
-    // TODO: benchmark this solution compared to actually implementing a HashMap with an array.
-    export class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> implements Interfaces.Map<K, V> {
+    clear():void {
+        this.map.clear();
+    }
 
-        private keyCount: number;
+    containsKey(key:K):boolean {
+        Error.checkNotNull(key);
 
-        constructor(private map:Interfaces.ES6Map<number, Interfaces.Entry<K, V>>) {
-        }
+        return this.get(key) !== null;
+    }
 
-        clear():void {
-            this.map.clear();
-        }
+    equals(map:Interfaces.Map<K, V>):boolean {
+        //TODO: need a generic map equals!
+        return false;
+    }
 
-        containsKey(key:K):boolean {
-            dsa.error.checkNotNull(key);
+    forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
+        Error.checkNotNull(callback);
 
-            return this.get(key) !== null;
-        }
-
-        equals(map:Interfaces.Map<K, V>):boolean {
-            //TODO: need a generic map equals!
-            return false;
-        }
-
-        forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
-            dsa.error.checkNotNull(callback);
-
-            this.map.forEach(function (entry) {
-                while (entry !== null) {
-                    callback(entry.value, entry.key);
-                    entry = entry.next;
-                }
-            });
-        }
-
-        get(key:K):V {
-            dsa.error.checkNotNull(key);
-
-            // Check if the bucket exists
-            var entry = this.map.get(key.hashCode());
-            if (!entry) {
-                return null;
-            }
-
-            // Check if an entry with the key exists in the bucket
+        this.map.forEach(function (entry) {
             while (entry !== null) {
-                if (entry.key.equals(key)) {
-                    return entry.value;
-                }
+                callback(entry.value, entry.key);
                 entry = entry.next;
             }
+        });
+    }
 
+    get(key:K):V {
+        Error.checkNotNull(key);
+
+        // Check if the bucket exists
+        var entry = this.map.get(key.hashCode());
+        if (!entry) {
             return null;
         }
 
-        isEmpty():boolean {
-            return dsa.structs.iterableIsEmpty(this);
-        }
-
-        keys():Interfaces.Iterator<K> {
-            return new ES6BaseMapIterator<K>(this.map.values(), (currentEntry) => {
-                return currentEntry.key;
-            });
-        }
-
-        remove(key:K):V {
-            dsa.error.checkNotNull(key);
-
-            var hashCode = key.hashCode();
-            // Check if the bucket exists
-            var entry = this.map.get(hashCode);
-            if (!entry) {
-                return null;
-            }
-
-            // Check if the first entry is the key
+        // Check if an entry with the key exists in the bucket
+        while (entry !== null) {
             if (entry.key.equals(key)) {
-                this.keyCount--;
-                if (entry.next) {
-                    // Map hashCode to entry.next if it exist s
-                    this.map.set(hashCode, entry.next);
-                } else {
-                    // Remove the hashCode mapping else
-                    this.map.delete(hashCode);
-                }
-
                 return entry.value;
             }
+            entry = entry.next;
+        }
 
-            // Check if the next entry has the key and remove it from the bucket and set.
-            while (entry.next !== null) {
-                if (entry.next.key.equals(key)) {
-                    this.keyCount--;
-                    var removedEntry = entry.next;
-                    entry.next = entry.next.next;
-                    return removedEntry.value;
-                }
-                entry = entry.next;
+        return null;
+    }
+
+    isEmpty():boolean {
+        return dsa.structs.iterableIsEmpty(this);
+    }
+
+    keys():Interfaces.Iterator<K> {
+        return new ES6BaseMapIterator<K>(this.map.values(), (currentEntry) => {
+            return currentEntry.key;
+        });
+    }
+
+    remove(key:K):V {
+        Error.checkNotNull(key);
+
+        var hashCode = key.hashCode();
+        // Check if the bucket exists
+        var entry = this.map.get(hashCode);
+        if (!entry) {
+            return null;
+        }
+
+        // Check if the first entry is the key
+        if (entry.key.equals(key)) {
+            this.keyCount--;
+            if (entry.next) {
+                // Map hashCode to entry.next if it exist s
+                this.map.set(hashCode, entry.next);
+            } else {
+                // Remove the hashCode mapping else
+                this.map.delete(hashCode);
             }
+
+            return entry.value;
+        }
+
+        // Check if the next entry has the key and remove it from the bucket and set.
+        while (entry.next !== null) {
+            if (entry.next.key.equals(key)) {
+                this.keyCount--;
+                var removedEntry = entry.next;
+                entry.next = entry.next.next;
+                return removedEntry.value;
+            }
+            entry = entry.next;
+        }
+
+        return null;
+    }
+
+    set(key:K, value:V):V {
+        Error.checkNotNull(key);
+        Error.checkNotNull(value);
+
+        // Check if the bucket exists
+        var hashCode = key.hashCode();
+        var entry = this.map.get(hashCode);
+        if (!entry) {
+            this.keyCount++;
+
+            // Map the hashCode to a new bucket if no bucket exists.
+            this.map.set(hashCode, {
+                key: key,
+                value: value,
+                next: null
+            });
 
             return null;
         }
 
-        set(key:K, value:V):V {
-            dsa.error.checkNotNull(key);
-            dsa.error.checkNotNull(value);
-
-            // Check if the bucket exists
-            var hashCode = key.hashCode();
-            var entry = this.map.get(hashCode);
-            if (!entry) {
-                this.keyCount++;
-
-                // Map the hashCode to a new bucket if no bucket exists.
-                this.map.set(hashCode, {
-                    key: key,
-                    value: value,
-                    next: null
-                });
-
-                return null;
-            }
-
-            // Check if an entry with the key exists in the bucket
-            while (entry.next !== null) {
-                if (entry.key.equals(key)) {
-                    return this.swapEntryValue(entry, key, value);
-                }
-                entry = entry.next;
-            }
-
-            // Check if the last entry has the key. Else add it.
+        // Check if an entry with the key exists in the bucket
+        while (entry.next !== null) {
             if (entry.key.equals(key)) {
                 return this.swapEntryValue(entry, key, value);
-            } else {
-               this.keyCount++;
-               entry.next = {
-                   key: key,
-                   value: value,
-                   next: null
-               };
             }
-
-            return null;
+            entry = entry.next;
         }
 
-        size():number {
-            return this.keyCount;
+        // Check if the last entry has the key. Else add it.
+        if (entry.key.equals(key)) {
+            return this.swapEntryValue(entry, key, value);
+        } else {
+           this.keyCount++;
+           entry.next = {
+               key: key,
+               value: value,
+               next: null
+           };
         }
 
-        values():Interfaces.Iterator<V> {
-            return new ES6BaseMapIterator<V>(this.map.values(), (currentEntry) => {
-                return currentEntry.value;
-            });
-        }
+        return null;
+    }
 
-        __iterator__():Interfaces.Iterator<K> {
-            return this.keys();
-        }
+    size():number {
+        return this.keyCount;
+    }
 
-        private swapEntryValue(entry: Entry<K, V>, key:K, value: V) {
-            // Swap value
-            var oldValue = entry.value;
-            entry.value = value;
-            return oldValue;
-        }
+    values():Interfaces.Iterator<V> {
+        return new ES6BaseMapIterator<V>(this.map.values(), (currentEntry) => {
+            return currentEntry.value;
+        });
+    }
 
+    __iterator__():Interfaces.Iterator<K> {
+        return this.keys();
+    }
+
+    private swapEntryValue(entry: Interfaces.Entry<K, V>, key:K, value: V) {
+        // Swap value
+        var oldValue = entry.value;
+        entry.value = value;
+        return oldValue;
     }
 
 }
+
+export = ES6BaseMap;

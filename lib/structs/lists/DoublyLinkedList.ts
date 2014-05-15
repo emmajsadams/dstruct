@@ -5,7 +5,7 @@ import DoublyLinkedListHelpers = require("./DoublyLinkedListHelpers");
 import Error = require("../../Error");
 import IterableHelpers = require("../IterableHelpers");
 
-export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
+class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     private rootNode:DoublyLinkedListHelpers.Node<E>;
     private lastNode:DoublyLinkedListHelpers.Node<E>;
     private count:number;
@@ -22,8 +22,8 @@ export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interf
     }
 
     addAtIndex(index:number, element:E):void {
-        dsa.error.checkNotNull(element);
-        dsa.error.checkIndex(index, this.size());
+        Error.checkNotNull(element);
+        Error.checkIndex(index, this.size());
 
         if (index === 0) {
             if (this.size() === 0) {
@@ -45,7 +45,7 @@ export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interf
     }
 
     remove(element:E):boolean {
-        dsa.error.checkNotNull(element);
+        Error.checkNotNull(element);
 
         if (this.size() === 0) {
             return false;
@@ -78,8 +78,8 @@ export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interf
     }
 
     removeAtIndex(index:number):E {
-        dsa.error.checkNotNull(index);
-        dsa.error.checkIndex(index, this.size());
+        Error.checkNotNull(index);
+        Error.checkIndex(index, this.size());
 
         if (this.size() === 1) {
             var element = this.rootNode.value;
@@ -91,16 +91,16 @@ export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interf
     }
 
     equals(collection:Interfaces.Collection<E>):boolean {
-        return collectionEquals(this, collection);
+        return IterableHelpers.equals(this, collection);
     }
 
     forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
-        collectionForEach(this, callback);
+        IterableHelpers.forEach(this, callback);
     }
 
     get(index:number):E {
-        dsa.error.checkNotNull(index);
-        dsa.error.checkIndex(index, this.size());
+        Error.checkNotNull(index);
+        Error.checkIndex(index, this.size());
 
         return this.getNodeByIndex(index).value;
     }
@@ -110,7 +110,7 @@ export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interf
     }
 
     indexOf(element:E):number {
-        dsa.error.checkNotNull(element);
+        Error.checkNotNull(element);
 
         var i = 0;
         for (var node in this) {
@@ -124,7 +124,7 @@ export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interf
     }
 
     set(index:number, element:E):E {
-        dsa.error.checkNotNull(element);
+        Error.checkNotNull(element);
 
         return this.getNodeByIndex(index).value = element;
     }
@@ -173,5 +173,7 @@ export class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interf
         this.count--;
         return element;
     }
+
 }
 
+export = DoublyLinkedList;
