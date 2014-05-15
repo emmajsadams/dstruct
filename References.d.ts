@@ -1,8 +1,7 @@
 //grunt-start
+/// <reference path="lib/Error.ts" />
 /// <reference path="lib/Interfaces.d.ts" />
 /// <reference path="lib/Util.ts" />
-/// <reference path="lib/error/Exceptions.ts" />
-/// <reference path="lib/error/Error.ts" />
 /// <reference path="lib/search/BinarySearch.ts" />
 /// <reference path="lib/search/Search.d.ts" />
 /// <reference path="lib/sort/InsertionSort.ts" />
@@ -11,6 +10,7 @@
 /// <reference path="lib/structs/CollectionObject.ts" />
 /// <reference path="lib/structs/IterableHelpers.ts" />
 /// <reference path="lib/structs/lists/ArrayList.ts" />
+/// <reference path="lib/structs/lists/ArrayListIterator.ts" />
 /// <reference path="lib/structs/lists/DoublyLinkedList.ts" />
 /// <reference path="lib/structs/maps/ES6BaseMap.ts" />
 /// <reference path="lib/structs/maps/HashMap.ts" />
