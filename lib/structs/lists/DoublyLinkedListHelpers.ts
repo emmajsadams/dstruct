@@ -2,13 +2,13 @@
 
 import Interfaces = require("../../Interfaces");
 
-export class Node<E extends BaseObject> {
+export class Node<E extends Interfaces.BaseObject> {
     constructor(public value:E, public prev?:Node<E>, public next?:Node<E>) {
     }
 }
 
 // Circular doubly linked
-export class Iterator<E extends BaseObject> implements Interfaces.Iterator<E> {
+export class Iterator<E extends Interfaces.BaseObject> implements Interfaces.Iterator<E> {
     constructor(private currentNode:Node<E>) {
     }
 

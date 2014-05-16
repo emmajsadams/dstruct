@@ -14,10 +14,8 @@ node_modules
 bower_components
 typings
 
-# grunt
-.temp
-bin/dist.js
+
+# Typescript
 lib/**/*.js
-dist.js
 .tscache
 tscommand*.tmp.txt

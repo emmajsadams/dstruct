@@ -1,69 +1,70 @@
 /// <reference path="../../../References.d.ts"/>
 
 import Interfaces = require("../../Interfaces");
+import Error = require("../../Error");
+import IterableHelpers = require("../IterableHelpers");
+import TreeMap = require("../maps/TreeMap");
 
-module dsa.structs {
+// TODO: best null/base object for values?
+class TreeSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.Set<E> {
 
-    // TODO: best null/base object for values?
-    export class TreeSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.Set<E> {
+    private treeMap: TreeMap<E, Interfaces.BaseObject>;
 
-        private treeMap: TreeMap<E, Interfaces.BaseObject>;
+    constructor() {
+        this.treeMap = new TreeMap<E, Interfaces.BaseObject>();
+    }
 
-        constructor() {
-            this.treeMap = new TreeMap<E, Interfaces.BaseObject>();
-        }
+    add(element:E): boolean {
+        this.treeMap.set(element, undefined);
 
-        add(element:E): boolean {
-            this.treeMap.set(element, undefined);
+        return false; //TODO!
+    }
 
-            return false; //TODO!
-        }
+    clear(): void {
+        this.treeMap.clear();
+    }
 
-        clear(): void {
-            this.treeMap.clear();
-        }
+    remove(element:E): boolean {
+        this.treeMap.remove(element);
 
-        remove(element:E): boolean {
-            this.treeMap.remove(element);
+        //TODO!
+        return false;
+    }
 
-            //TODO!
-            return false;
-        }
+    equals(set: Interfaces.Set<E>):boolean {
+        return IterableHelpers.equals<E>(this, set);
+    }
 
-        equals(set: Interfaces.Set<E>):boolean {
-            return collectionEquals(this, set);
-        }
+    forEach(callback: Interfaces.ForEachCollectionCallback<E>): void {
+        //TODO!
+        //this.treeMap.forEach(callback);
+    }
 
-        forEach(callback: Interfaces.ForEachCollectionCallback<E>): void {
-            //TODO!
-            //this.treeMap.forEach(callback);
-        }
+    has(element:E):boolean {
+        return this.treeMap.containsKey(element);
+    }
 
-        has(element:E):boolean {
-            return this.treeMap.containsKey(element);
-        }
+    isEmpty(): boolean {
+        return IterableHelpers.isEmpty(this);
+    }
 
-        isEmpty(): boolean {
-            return iterableIsEmpty(this);
-        }
+    size(): number {
+        return this.treeMap.size();
+    }
 
-        size(): number {
-            return this.treeMap.size();
-        }
+    toArray(): E[] {
+        return null; //TODO!
+    }
 
-        toArray(): E[] {
-            return null; //TODO!
-        }
+    values(): Interfaces.Iterator<E> {
+        //TODO
+        return null;
+    }
 
-        values(): Interfaces.Iterator<E> {
-            //TODO
-            return null;
-        }
-
-        __iterator__(): Interfaces.Iterator<E> {
-            return this.treeMap.keys();
-        }
-
+    __iterator__(): Interfaces.Iterator<E> {
+        return this.treeMap.keys();
     }
 
 }
+
+export = TreeSet;

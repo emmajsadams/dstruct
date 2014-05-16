@@ -6,7 +6,7 @@ class ES6BaseMapIterator<E> implements Interfaces.Iterator<E> {
     private currentEntry: Interfaces.Entry<any, any>;
     private done = false;
 
-    constructor(private iterator: Iterator<Interfaces.Entry<any, any>>,
+    constructor(private iterator: Interfaces.Iterator<Interfaces.Entry<any, any>>,
                 private valueCallback: (entry: Interfaces.Entry<any, any>) => any) {
     }
 

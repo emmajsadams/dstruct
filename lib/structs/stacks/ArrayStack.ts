@@ -1,23 +1,22 @@
 /// <reference path="../../../References.d.ts"/>
 
 import Interfaces = require("../../Interfaces");
+import ArrayList = require("../lists/ArrayList");
 
-module dsa.structs {
+class ArrayStack<E extends Interfaces.BaseObject> extends ArrayList<E> implements Interfaces.Stack<E> {
 
-    export class ArrayStack<E extends Interfaces.BaseObject> extends ArrayList<E> implements Interfaces.Stack<E> {
+    peek(): E {
+        return this.get(this.size() - 1);
+    }
 
-        peek(): E {
-            return this.get(this.size() - 1);
-        }
+    pop(): E {
+        return this.removeAtIndex(this.size() - 1);
+    }
 
-        pop(): E {
-            return this.removeAtIndex(this.size() - 1);
-        }
-
-        push(element: E): void {
-            this.add(element);
-        }
-
+    push(element: E): void {
+        this.add(element);
     }
 
 }
+
+export = ArrayStack;

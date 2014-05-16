@@ -1,71 +1,71 @@
 /// <reference path="../../../References.d.ts"/>
 
 import Interfaces = require("../../Interfaces");
+import Error = require("../../Error");
+import IterableHelpers = require("../IterableHelpers");
 
-module dsa.structs {
+//TODO: reimplement with HashMAp
+class HashSet<E extends Interfaces.BaseObject> implements Interfaces.Set<E> {
 
-    //TODO: reimplement with HashMAp
-    export class HashSet<E extends Interfaces.BaseObject> implements Interfaces.Set<E> {
+    private set: Interfaces.ES6Set<E>;
 
-        private set: Interfaces.ES6Set<E>;
+    constructor() {
+        this.set = <any>new Set();
+    }
 
-        constructor() {
-            this.set = <any>new Set();
-        }
+    add(element:E): boolean {
+        this.set.add(element);
 
-        add(element:E): boolean {
-            this.set.add(element);
+        //TODO!
+        return false;
+    }
 
-            //TODO!
-            return false;
-        }
+    clear(): void {
+        this.set.clear();
+    }
 
-        clear(): void {
-            this.set.clear();
-        }
+    remove(element:E): boolean {
+        this.set.delete(element);
+        //TODO!
+        return false;
+    }
 
-        remove(element:E): boolean {
-            this.set.delete(element);
-            //TODO!
-            return false;
-        }
+    equals(set: Interfaces.Set<E>):boolean {
+        return IterableHelpers.equals<E>(this, set);
+    }
 
-        equals(set: Interfaces.Set<E>):boolean {
-            return collectionEquals(this, set);
-        }
+    forEach(callback: Interfaces.ForEachCollectionCallback<E>): void {
+        this.set.forEach(callback);
+    }
 
-        forEach(callback: Interfaces.ForEachCollectionCallback<E>): void {
-            this.set.forEach(callback);
-        }
+    has(element:E): boolean {
+        return this.set.has(element);
+    }
 
-        has(element:E): boolean {
-            return this.set.has(element);
-        }
+    // TODO: mixin or abstract class for shared isEmpty logic?
+    isEmpty(): boolean {
+        return IterableHelpers.isEmpty(this);
+    }
 
-        // TODO: mixin or abstract class for shared isEmpty logic?
-        isEmpty(): boolean {
-            return dsa.structs.iterableIsEmpty(this);
-        }
+    size(): number {
+        return this.set.size;
+    }
 
-        size(): number {
-            return this.set.size;
-        }
+    // Although a readonly property would be better, typescript does not support this for interfaces.
+    toArray(): E[] {
+        return null; //TODO!
+    }
 
-        // Although a readonly property would be better, typescript does not support this for interfaces.
-        toArray(): E[] {
-            return null; //TODO!
-        }
+    values(): Interfaces.Iterator<E> {
+        //TODO
+        return null;
+    }
 
-        values(): Interfaces.Iterator<E> {
-            //TODO
-            return null;
-        }
-
-        // not to be used directly, enables using for (var element:E,
-        __iterator__(): Interfaces.Iterator<E> {
-            return this.set.values();
-        }
-
+    // not to be used directly, enables using for (var element:E,
+    __iterator__(): Interfaces.Iterator<E> {
+        return this.set.values();
     }
 
 }
+
+export = HashSet;

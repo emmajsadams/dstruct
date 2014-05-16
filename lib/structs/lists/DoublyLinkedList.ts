@@ -91,7 +91,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     }
 
     equals(collection:Interfaces.Collection<E>):boolean {
-        return IterableHelpers.equals(this, collection);
+        return IterableHelpers.equals<E>(this, collection);
     }
 
     forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
