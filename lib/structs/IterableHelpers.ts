@@ -1,12 +1,13 @@
 /// <reference path="../../References.d.ts"/>
 
 import Interfaces = require("../Interfaces");
+import Error = require("../Error");
 
 // TODO: generic equals for maps may be different that lists since keys, and values must be comparaed!
 export function equals<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable,
                                                         otherIterable:Interfaces.Iterable):boolean {
-    dsa.error.checkNotNull(iterable);
-    dsa.error.checkNotNull(otherIterable);
+    Error.checkNotNull(iterable);
+    Error.checkNotNull(otherIterable);
 
     if (iterable.size() !== otherIterable.size()) {
         return false;
@@ -37,6 +38,6 @@ export function isEmpty(iterable:Interfaces.Iterable) {
     return iterable.size() === 0;
 }
 
-export function forEach(iterable:Interfaces.Iterable, callback: Interfaces.ForEachCollectionCallback): void {
+export function forEach<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable, callback: Interfaces.ForEachCollectionCallback<E>): void {
     //TODO!
 }

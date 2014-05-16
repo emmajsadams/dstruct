@@ -3,6 +3,7 @@
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 import MapHelpers = require("./MapHelpers");
+import IterableHelpers = require("../IterableHelpers");
 import ES6BaseMapIterator = require("./ES6BaseMapIterator");
 
 // TODO: benchmark this solution compared to actually implementing a HashMap with an array.
@@ -24,8 +25,7 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
     }
 
     equals(map:Interfaces.Map<K, V>):boolean {
-        //TODO: need a generic map equals!
-        return false;
+        return MapHelpers.equals(this, map);
     }
 
     forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
@@ -60,7 +60,7 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
     }
 
     isEmpty():boolean {
-        return dsa.structs.iterableIsEmpty(this);
+        return IterableHelpers.isEmpty(this);
     }
 
     keys():Interfaces.Iterator<K> {

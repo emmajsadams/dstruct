@@ -3,12 +3,10 @@
 import Interfaces = require("../../Interfaces");
 import ES6BaseMap = require("./ES6BaseMap");
 
-module dsa.structs {
+class HashMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> extends ES6BaseMap<K, V> {
 
-    export class HashMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> extends ES6BaseMap<K, V> {
-
-        constructor() { super(<any>new Map()); }
-
-    }
+    constructor() { super(<any>new Map()); }
 
 }
+
+export = HashMap;

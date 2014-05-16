@@ -1,5 +1,5 @@
 {
-  "name": "App",
+  "name": "dsa",
   "version": "0.0.0",
   "scripts": {
     "install": "bower install && tsd update && grunt bowerInstall"
@@ -25,10 +25,9 @@
     "karma-jasmine": "*",
     "karma-story-reporter": "*",
     "karma": "*",
-    "grunt-traceur": "0.0.3",
-    "grunt-typescript": "^0.3.5"
+    "grunt-traceur": "*"
   },
   "dependencies": {
-    "es6-collections": "^0.2.0"
+    "es6-collections": "*"
   }
 }

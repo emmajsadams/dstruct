@@ -16,6 +16,7 @@ module.exports = function(grunt) {
           dot: true,
           src: [
             'bin',
+            'lib/**/**.js'
 
           ]
         }]
@@ -33,40 +34,22 @@ module.exports = function(grunt) {
       },
     },
 
-    // Compiles TypeScript to JavaScript
     ts: {
       development: {
         // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
-        src: [
-          'lib/**/*.ts'
-        ],
-
-        // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
-        //html: ['test/work/**/*.tpl.html'],
+        src: ['lib/**/*.ts'],
 
         // If specified, generate this file that to can use for reference management
         reference: 'References.d.ts',
 
-        // If specified, generate an out.js file which is the merged js file
-        out: 'bin/dist.js',
-
-        // If specified, the generate JavaScript files are placed here. Only works if out is not specified
-        //outDir: 'test/outputdirectory',
-
-        // If specified, watches this directory for changes, and re-runs the current target
-        //watch: 'ts',
+        outDir: 'bin/js',
 
         // Use to override the default options, http://gruntjs.com/configuring-tasks#options
         options: {
-          // 'es3' (default) | 'es5'
           target: 'es5',
-          // 'amd' guarantees that the compiled output is sorted according to the dependency graph
           module: 'amd',
-          // true (default) | false
           sourceMap: false,
-          // true | false (default)
           declaration: false,
-          // true (default) | false
           removeComments: true
         },
       },
@@ -231,7 +214,7 @@ module.exports = function(grunt) {
     'clean:development',
     'ts:development',
     //'concurrent:compileDevelopment',
-    'traceur',
+    //'traceur',
     //'watch:typescript'
   ]);
 

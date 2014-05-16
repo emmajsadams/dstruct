@@ -4,6 +4,7 @@ import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 import IterableHelpers = require("../IterableHelpers");
 import ArrayListIterator = require("./ArrayListIterator");
+import ArrayUtilities = require("../../ArrayUtilities");
 
 /**
  * TODO
@@ -37,7 +38,7 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     }
 
     clear():void {
-        util.clearArray(this.array);
+        ArrayUtilities.clear(this.array);
     }
 
     removeAtIndex(index:number):E {
@@ -62,7 +63,7 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     }
 
     equals(collection:Interfaces.Collection<E>):boolean {
-        return IterableHelpers.equals(this, collection);
+        return IterableHelpers.equals<E>(this, collection);
     }
 
     forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
