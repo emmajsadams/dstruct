@@ -73,7 +73,7 @@ module.exports = function(grunt) {
         // If specified, the generate JavaScript files are placed here. Only works if out is not specified
         outDir: '.temp',
 
-        baseDir: 'test/',
+        //baseDir: '',
 
         // If specified, watches this directory for changes, and re-runs the current target
         //watch: 'ts',
