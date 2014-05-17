@@ -1,10 +1,16 @@
 /// <reference path="../../References.d.ts"/>
 
+import Interfaces = require("../../lib/Interfaces");
+import HashMap = require("../../lib/structures/maps/HashMap");
+import TreeMap = require("../../lib/structures/maps/TreeMap");
+import WeakHashMap = require("../../lib/structures/maps/WeakHashMap");
+import HashBiMap = require("../../lib/structures/maps/biMaps/HashBiMap");
+
 
 //TODO: make this set of tests work with objects, to test the key equality with non primitives.
-function test(mapFactory: () => dsa.structs.Map<Number, Number>, name: string) {
+function test(mapFactory: () => Interfaces.Map<Number, Number>, name: string) {
     describe(name, () => {
-        var map: dsa.structs.Map<Number, Number>;
+        var map: Interfaces.Map<Number, Number>;
 
         beforeEach(() => {
             map = mapFactory();
@@ -22,19 +28,19 @@ function test(mapFactory: () => dsa.structs.Map<Number, Number>, name: string) {
 describe("Map", () => {
 
     test(() => {
-        return new dsa.structs.HashMap<Number, Number>();
+        return new HashMap<Number, Number>();
     }, "HashMap");
 
     test(() => {
-        return new dsa.structs.TreeMap<Number, Number>();
+        return new TreeMap<Number, Number>();
     }, "TreeMap");
 
     test(() => {
-        return new dsa.structs.WeakHashMap<Number, Number>();
+        return new WeakHashMap<Number, Number>();
     }, "WeakHashMap");
 
     test(() => {
-        return new dsa.structs.HashBiMap<Number, Number>();
+        return new HashBiMap<Number, Number>();
     }, "HashBiMap");
 
 });
