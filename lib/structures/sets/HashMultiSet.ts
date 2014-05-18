@@ -4,6 +4,7 @@ import Interfaces = require("../../Interfaces");
 
 
     /*
+    //TODO: Create an interface for MultiSets!
     export class MultiSet<E> implements Set<E> {
         private map:Map<E, number>;
 
