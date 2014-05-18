@@ -6,6 +6,7 @@ import IterableHelpers = require("../IterableHelpers");
 import TreeMap = require("../maps/TreeMap");
 
 // TODO: best null/base object for values?
+// TODO: Create an interface for SortedSet, inherit that instead.
 class TreeSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.Set<E> {
 
     private treeMap: TreeMap<E, Interfaces.BaseObject>;
