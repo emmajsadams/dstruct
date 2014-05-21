@@ -9,3 +9,12 @@ String.prototype.hashCode = function () {
     }
     return hash;
 };
+String.prototype.equals = function (otherString) {
+    return this.valueOf() === otherString;
+};
+Number.prototype.hashCode = function () {
+    return this.valueOf();
+};
+Number.prototype.equals = function (otherNumber) {
+    return this.valueOf() === otherNumber;
+};

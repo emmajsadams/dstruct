@@ -1,5 +1,7 @@
 /// <reference path="../../References.d.ts"/>
 
+/*
+
 describe("Tree", () => {
 
     describe("RedBlackTree", () => {
@@ -39,3 +41,4 @@ describe("Tree", () => {
     })
 
 });
+*/

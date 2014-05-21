@@ -9,7 +9,7 @@ import ES6BaseMapIterator = require("./ES6BaseMapIterator");
 // TODO: benchmark this solution compared to actually implementing a HashMap with an array.
 class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> implements Interfaces.Map<K, V> {
 
-    private keyCount: number;
+    private keyCount = 0;
 
     constructor(private map:Interfaces.ES6Map<number, Interfaces.Entry<K, V>>) {
     }

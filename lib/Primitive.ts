@@ -20,6 +20,16 @@ String.prototype.hashCode = function () {
     }
     return hash;
 };
+String.prototype.equals = function (otherString) {
+    return this === otherString;
+};
+Number.prototype.hashCode = function () {
+    return this;
+};
+Number.prototype.equals = function (otherNumber) {
+    return this === otherNumber;
+};
+
 /*
  String.prototype.equals = function (otherString: string): boolean {
  //TODO: test this implementation
