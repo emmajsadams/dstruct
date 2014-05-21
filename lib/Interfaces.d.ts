@@ -1,9 +1,6 @@
 /// <reference path="../References.d.ts"/>
 
-
-
-declare module interfaces {
-
+declare module Interfaces {
 
     //TODO: consider using BaseObject.prototype, make the prototype not enumberable
     export interface BaseObject {
@@ -175,4 +172,4 @@ declare module interfaces {
     }
 }
 
-export = interfaces;
+export = Interfaces;

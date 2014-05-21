@@ -2,6 +2,7 @@ define(["require", "exports", "../../Error", "./MapHelpers", "../IterableHelpers
     var ES6BaseMap = (function () {
         function ES6BaseMap(map) {
             this.map = map;
+            this.keyCount = 0;
         }
         ES6BaseMap.prototype.clear = function () {
             this.map.clear();

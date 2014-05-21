@@ -12,5 +12,7 @@ define(["require", "exports", "./ES6BaseMap"], function(require, exports, ES6Bas
         }
         return WeakHashMap;
     })(ES6BaseMap);
-    exports.WeakHashMap = WeakHashMap;
+
+    
+    return WeakHashMap;
 });

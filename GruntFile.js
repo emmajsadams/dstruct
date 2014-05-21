@@ -16,8 +16,7 @@ module.exports = function(grunt) {
           dot: true,
           src: [
             'bin',
-            'lib/**/**.js'
-
+            'lib/**/**.js',
           ]
         }]
       },
@@ -27,12 +26,27 @@ module.exports = function(grunt) {
           dot: true,
           src: [
             //'bin',
-            '.temp'
+            '.temp',
+              'lib/**/**.js',
+              'test/collection/**.js'
 
           ]
         }]
       },
     },
+
+  requirejs: {
+      compile: {
+          options: {
+              baseUrl: "bin/js",
+              paths: {
+
+              },
+              name: "dsa",
+              out: "bin/dsa.dist.js"
+          }
+      }
+  },
 
     ts: {
       development: {
@@ -57,8 +71,9 @@ module.exports = function(grunt) {
       unit: {
         // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
         src: [
-          'lib/**/*.ts',
-          'test/**/*.ts'
+          'lib/Interfaces.d.ts',
+            //'lib/dsa.ts',
+            'test/**/*.ts'
         ],
 
         // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
@@ -71,7 +86,7 @@ module.exports = function(grunt) {
         //out: '',
 
         // If specified, the generate JavaScript files are placed here. Only works if out is not specified
-        outDir: '.temp',
+        //outDir: '.temp',
 
         //baseDir: '',
 
@@ -166,7 +181,7 @@ module.exports = function(grunt) {
     // Test settings
     karma: {
       unit: {
-        configFile: 'test/karma.js'
+        configFile: 'karma.js'
       }
     },
 
@@ -210,9 +225,11 @@ module.exports = function(grunt) {
 
   });
 
+
   grunt.registerTask('dev', [
     'clean:development',
     'ts:development',
+    'requirejs'
     //'concurrent:compileDevelopment',
     //'traceur',
     //'watch:typescript'
@@ -225,7 +242,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('unit', [
     'clean:unit',
-    'ts:unit',
+    //'ts:unit',
     'karma'
   ]);
 };
