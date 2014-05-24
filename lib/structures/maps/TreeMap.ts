@@ -6,7 +6,6 @@ import MapHelpers = require("./MapHelpers");
 import RedBlackTree = require("../trees/RedBlackTree");
 import IterableHelpers = require("../IterableHelpers");
 
-
 class TreeMap<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> implements Interfaces.SortedMap<K, V> {
 
     private tree:Interfaces.Tree<K, V>;
