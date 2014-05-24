@@ -20,19 +20,6 @@ module.exports = function(grunt) {
           ]
         }]
       },
-
-      unit: {
-        files: [{
-          dot: true,
-          src: [
-            //'bin',
-            '.temp',
-              'lib/**/**.js',
-              'test/collection/**.js'
-
-          ]
-        }]
-      },
     },
 
   requirejs: {
