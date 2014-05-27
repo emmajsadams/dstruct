@@ -1,6 +1,14 @@
 {
-  "name": "dsa",
-  "version": "0.0.0",
+  "name": "tscollections",
+  "version": "0.0.1",
+  "description": "TypeScript collections and algorithms library. Comprehensive, tested, idiomatic interface.",
+  "keywords": ["TypeScript", "collections", "algorithms", "sorting", "searching", "List", "Map", "Set", "Stack"],
+  "license": "MIT",
+  "author": {
+      "name": "Cody Stebbins",
+      "email": "mail@codystebbins.com",
+      "url": "http://codystebbins.com/"
+  },
   "scripts": {
     "install": "bower install && tsd update && grunt bowerInstall"
   },

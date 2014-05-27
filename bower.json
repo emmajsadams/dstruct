@@ -1,10 +1,14 @@
 {
-  "name": "app",
-  "version": "0.0.0",
-  "dependencies": {
-    "lodash": "*",
-    "requirejs": "*"
-  },
-  "devDependencies": {
-  }
+    "name": "tscollections",
+    "version": "0.0.1",
+    "main": "path/to/main.css",
+    "ignore": [
+        ".jshintrc",
+        "**/*.txt"
+    ],
+    "dependencies": {
+        "requirejs": "*"
+    },
+    "devDependencies": {
+    }
 }
