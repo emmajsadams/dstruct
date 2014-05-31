@@ -44,11 +44,13 @@ declare module Interfaces {
     }
 
     export interface Collection<E extends BaseObject> extends Iterable {
+        /**
+         * Adds a single occurrence of the specified element to this collection
+         * @param element Element to add one occurrence of.
+         */
         add(element:E): boolean;
-        //addAll(collection: Collection<E>);
         clear(): void;
         remove(element:E): boolean;
-        //deleteAll(collection: Collection<E>);
 
         // TODO: should equals be a collection member, or a utility function? leaning towards utility for ease.
         equals(collection: Collection<E>):boolean;
@@ -56,7 +58,6 @@ declare module Interfaces {
 
         // TODO: mixin or abstract class for shared has logic?
         has(element:E): boolean;
-        //hasAll(collection: Collection<E>);
 
         // TODO: mixin or abstract class for shared isEmpty logic?
         isEmpty(): boolean;
@@ -66,6 +67,12 @@ declare module Interfaces {
 
         // not to be used directly, enables using for (var element:E,
         __iterator__(): Iterator<E>;
+
+
+        // TODO: all methods
+        //addAll(collection: Collection<E>);
+        //deleteAll(collection: Collection<E>);
+        //hasAll(collection: Collection<E>);
     }
 
     export interface List<E extends BaseObject> extends Collection<E> {
