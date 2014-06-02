@@ -50,11 +50,10 @@ class BaseMultiSet<E> {
             ? this.map.remove(element)
             : this.map.set(element, occurrences);
     }
-/*
-    forEach(callback: ForEachCollectionCallback<E>, thisArg?:any):void {
-        this.map.forEach(<any>callback, thisArg);
+
+    forEach(callback: Interfaces.ForEachCollectionCallback<E>):void {
+        this.map.forEach(callback);
     }
- */
 
     values(): Interfaces.Iterator<E> {
         return this.map.keys();
@@ -67,6 +66,10 @@ class BaseMultiSet<E> {
     toArray(): E[] {
         //TODO!!!
         return [];
+    }
+
+    __iterator__(): Interfaces.Iterator<E> {
+        return this.values();
     }
 }
 
