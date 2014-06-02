@@ -17,7 +17,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     }
 
     add(element:E):boolean {
-        this.addAtIndex(0, element);
+        this.addAtIndex(this.size() - 1, element);
         return true;
     }
 
@@ -25,15 +25,38 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
         Error.checkNotNull(element);
         Error.checkIndex(index, this.size());
 
+        // TODO: handle at n index
         if (index === 0) {
             if (this.size() === 0) {
                 this.rootNode = this.lastNode = new DoublyLinkedListHelpers.Node<E>(element);
-                this.rootNode.next = this.rootNode;
-                this.rootNode.prev = this.rootNode;
             } else if (this.size() === 1) {
-                this.lastNode.next = new DoublyLinkedListHelpers.Node<E>(element);
-                this.rootNode.prev = this.lastNode.next;
+                // Assign the root to the new element node, link the root to last.
+                this.rootNode = new DoublyLinkedListHelpers.Node<E>(element);
+                this.rootNode.next = this.lastNode;
+                this.lastNode.prev = this.rootNode;
+            } else {
+                // Store the current root in a temporary variable, and reassign the root to the element.
+                var previousRootNode = this.rootNode;
+                this.rootNode = new DoublyLinkedListHelpers.Node<E>(element);
+
+                // Reassign rootNode next, and previousRoot to link the element in the list.
+                this.rootNode.next = previousRootNode;
+                previousRootNode.prev = this.rootNode;
             }
+        } else if (index === this.size() - 1){
+            var previousLastNode = this.lastNode;
+            this.lastNode = new DoublyLinkedListHelpers.Node<E>(element);
+
+            // Assign the new last node.prev to the previousLastNode.
+            // previousLastNode.next is assigned to the new lastNode.
+            this.lastNode.prev = previousLastNode;
+            previousLastNode.next = this.lastNode;
+        } else {
+            // Handles the n index case, where n is not the end or beginning of the list.
+            var node = this.getNodeByIndex(index);
+            var previousNode = node.prev;
+            node.prev = new DoublyLinkedListHelpers.Node<E>(element, node, previousNode);
+            previousNode.next = node.prev;
         }
 
         this.count++;
@@ -49,21 +72,14 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
 
         if (this.size() === 0) {
             return false;
+        } else if (this.size() == 1) {
+            return this.removeAtIndex(0) !== null;
         }
 
         if (this.rootNode.value.equals(element)) {
-            if (this.size() === 1) {
-                this.clear();
-                return true;
-            }
-
-            this.rootNode = this.rootNode.next;
-            this.rootNode.prev = this.lastNode;
-            this.lastNode.prev = this.rootNode;
-            this.count--;
-            return true;
+            return this.removeAtIndex(0) !== null;
         } else if (this.lastNode.value.equals(element)) {
-            return this.removeLastNode() !== null;
+            return this.removeAtIndex(this.size() - 1) !== null;
         } else {
             var node = this.getNodeByElement(element);
             if (node) {
@@ -81,12 +97,20 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
         Error.checkNotNull(index);
         Error.checkIndex(index, this.size());
 
+        // TODO, handle n case, and 0 case.
         if (this.size() === 1) {
             var element = this.rootNode.value;
             this.clear();
             return element;
+        } else if (index === 0) {
+            var element = this.rootNode.value;
+            this.rootNode = this.rootNode.next;
+            this.count--;
+            return element;
         } else if (this.size() - 1 === index) {
             return this.removeLastNode();
+        } else {
+            //TODO: handle n index case.
         }
     }
 
