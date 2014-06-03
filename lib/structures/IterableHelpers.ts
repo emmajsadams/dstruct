@@ -23,7 +23,7 @@ export function equals<E extends Interfaces.BaseObject>(iterable:Interfaces.Iter
     var index = 0;
     while (index < iterable.size()) {
         var collectionNext = collectionIterator.next();
-        var otherCollectionNext = collectionIterator.next();
+        var otherCollectionNext = otherCollectionIterator.next();
         if (!collectionNext.value.equals(otherCollectionNext.value)) {
             return false;
         }
@@ -34,10 +34,29 @@ export function equals<E extends Interfaces.BaseObject>(iterable:Interfaces.Iter
     return true;
 }
 
+export function toArray<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable):E[] {
+    Error.checkNotNull(iterable);
+
+
+    var array = new Array(iterable.size());
+    iterable.forEach((value: E) => {
+        array.push(value);
+    });
+
+    return array;
+}
+
 export function isEmpty(iterable:Interfaces.Iterable) {
     return iterable.size() === 0;
 }
 
 export function forEach<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable, callback: Interfaces.ForEachCollectionCallback<E>): void {
-    //TODO!
+    Error.checkNotNull(iterable);
+
+    var collectionIterator = iterable.__iterator__();
+    var collectionNext = collectionIterator.next();
+    while (!collectionNext.done) {
+        callback(collectionNext.value);
+        collectionNext = collectionIterator.next();
+    }
 }

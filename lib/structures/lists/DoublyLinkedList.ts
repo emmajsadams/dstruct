@@ -157,13 +157,8 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
         return this.count;
     }
 
-    // O(N)
     toArray():E[] {
-        var array = [];
-        for (var node in this) {
-            array.push(node.value);
-        }
-        return array;
+        return IterableHelpers.toArray(this);
     }
 
     isEmpty():boolean {

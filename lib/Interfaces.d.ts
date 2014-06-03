@@ -141,6 +141,9 @@ declare module Interfaces {
         values(): Iterator<E>;
     }
 
+    export interface SortedSet<E extends BaseObject> extends Set<E>{
+    }
+
     export interface ES6Set<E extends BaseObject> {
         size: number;
 
