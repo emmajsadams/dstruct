@@ -1,4 +1,4 @@
-define(["require", "exports", "../../Error", "./MapHelpers", "../IterableHelpers", "./ES6BaseMapIterator"], function(require, exports, Error, MapHelpers, IterableHelpers, ES6BaseMapIterator) {
+define(["require", "exports", "../../Error", "./MapHelpers", "../IterableHelpers", "./ES6Helpers"], function(require, exports, Error, MapHelpers, IterableHelpers, ES6Helpers) {
     var ES6BaseMap = (function () {
         function ES6BaseMap(map) {
             this.map = map;
@@ -57,7 +57,7 @@ define(["require", "exports", "../../Error", "./MapHelpers", "../IterableHelpers
         };
 
         ES6BaseMap.prototype.keys = function () {
-            return new ES6BaseMapIterator(this.map.values(), function (currentEntry) {
+            return new ES6Helpers.Iterator(this.map.values(), function (currentEntry) {
                 return currentEntry.key;
             });
         };
@@ -140,7 +140,7 @@ define(["require", "exports", "../../Error", "./MapHelpers", "../IterableHelpers
         };
 
         ES6BaseMap.prototype.values = function () {
-            return new ES6BaseMapIterator(this.map.values(), function (currentEntry) {
+            return new ES6Helpers.Iterator(this.map.values(), function (currentEntry) {
                 return currentEntry.value;
             });
         };

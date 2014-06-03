@@ -7,10 +7,7 @@ import ArrayListIterator = require("./ArrayListIterator");
 import ArrayUtilities = require("../../ArrayUtilities");
 
 /**
- * TODO
- * @param comparator TODO
- * @param initialCapacity TODO
- * @returns TODO
+ * Resizable-array implementation of the List interface
  */
 class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     private array:E[];
