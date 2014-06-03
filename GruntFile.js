@@ -227,8 +227,8 @@ module.exports = function(grunt) {
     'uglify'
   ]);
 
-  grunt.registerTask('unit', [
-    'clean:unit',
+  grunt.registerTask('test', [
+    //'clean:unit',
     //'ts:unit',
     'karma'
   ]);

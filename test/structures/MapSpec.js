@@ -1,5 +1,6 @@
-define(["structures/maps/HashMap"], function (HashMap) {
-    function test(mapFactory, name) {
+(function () {
+
+    function mapSpec(mapFactory, name) {
         describe(name, function () {
             var map;
 
@@ -34,17 +35,23 @@ define(["structures/maps/HashMap"], function (HashMap) {
                 expect(map.size()).toBe(7);
             });
 
-
         });
     }
 
+    define(["structures/maps/HashMap", "structures/maps/TreeMap"], function (HashMap, TreeMap) {
 
-    describe("Map", function () {
+        describe("Maps", function () {
 
-        test(function () {
-            return new HashMap();
-        }, "HashMap");
+            mapSpec(function () {
+                return new HashMap();
+            }, "HashMap");
+
+            mapSpec(function () {
+                return new TreeMap();
+            }, "TreeMap");
+
+        });
 
     });
 
-});
+})();

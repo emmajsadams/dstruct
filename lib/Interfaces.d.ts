@@ -1,5 +1,6 @@
 /// <reference path="../References.d.ts"/>
 
+
 declare module Interfaces {
 
     //TODO: consider using BaseObject.prototype, make the prototype not enumberable

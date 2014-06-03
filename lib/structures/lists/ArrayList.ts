@@ -25,7 +25,7 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
 
     add(element:E):boolean {
         //TODO: should it default add at 0?
-        this.addAtIndex(this.size() - 1, element);
+        this.addAtIndex(this.size(), element);
 
         //TODO: return true?
         return true;
@@ -34,7 +34,11 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     addAtIndex(index:number, element:E):void {
         Error.checkNotNull(element);
 
-        this.array.splice(index, 0, element);
+        if (index === this.size()) {
+            this.array.push(element);
+        } else {
+            this.array.splice(index, 0, element);
+        }
     }
 
     clear():void {
