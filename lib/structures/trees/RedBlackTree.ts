@@ -9,7 +9,7 @@ import Error = require("../../Error");
 // TODO: ensure the insert check to replace the value guarantees uniqueness!
 class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> implements Interfaces.Tree<K, V> {
 
-    private count:number; //TODO: count? have to name it something other than size due to method
+    private nodeCount = 0;
     private root:RedBlackTreeHelpers.Node<K, V> = null;
 
     constructor() {
@@ -38,7 +38,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
             // empty tree
             this.root = new RedBlackTreeHelpers.Node<K, V>(key, value);
             returnValue = true;
-            this.count++;
+            this.nodeCount++;
         } else {
             var head = new RedBlackTreeHelpers.Node<K, V>(); // fake tree root
 
@@ -59,7 +59,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
                     node = new RedBlackTreeHelpers.Node<K, V>(key, value);
                     parent.setChild(direction, node);
                     returnValue = true;
-                    this.count++;
+                    this.nodeCount++;
                 } else if (this.isRed(node.left) && this.isRed(node.right)) {
                     // color flip
                     node.red = true;
@@ -183,7 +183,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
         if (found !== null) {
             found.key = node.key;
             parent.setChild(parent.right === node, node.getChild(node.left === null));
-            this.count--;
+            this.nodeCount--;
         }
 
         // update root and make it black
@@ -196,7 +196,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
     }
 
     size():number {
-        return this.count;
+        return this.nodeCount;
     }
 
     isEmpty():boolean {
@@ -209,7 +209,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
 
     clear():void {
         this.root = null;
-        this.count = 0;
+        this.nodeCount = 0;
     }
 
     // return null

@@ -64,7 +64,7 @@ export function checkArgument(condition:boolean, message?:string):void {
 }
 
 export function checkIndex(index:number, size:number, message?:string):void {
-    if (index < 0 || index >= size) {
+    if (index < 0 || index > size) {
         throw new IndexOutOfBounds(message).error;
     }
 }

@@ -84,7 +84,7 @@ define(["require", "exports"], function(require, exports) {
     exports.checkArgument = checkArgument;
 
     function checkIndex(index, size, message) {
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBounds(message).error;
         }
     }

@@ -8,7 +8,7 @@ import IterableHelpers = require("../IterableHelpers");
 class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     private rootNode:DoublyLinkedListHelpers.Node<E>;
     private lastNode:DoublyLinkedListHelpers.Node<E>;
-    private count:number;
+    private count = 0;
 
     constructor() {
     }
@@ -18,7 +18,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     }
 
     add(element:E):boolean {
-        this.addAtIndex(this.size() - 1, element);
+        this.addAtIndex(this.size(), element);
         return true;
     }
 
@@ -27,24 +27,28 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
         Error.checkIndex(index, this.size());
 
         // TODO: handle at n index
-        if (index === 0) {
-            if (this.size() === 0) {
-                this.rootNode = this.lastNode = new DoublyLinkedListHelpers.Node<E>(element);
-            } else if (this.size() === 1) {
+        if (this.size() === 0) {
+            this.rootNode = this.lastNode = new DoublyLinkedListHelpers.Node<E>(element);
+        } else if (this.size() === 1) {
+            if (index === 0) {
                 // Assign the root to the new element node, link the root to last.
                 this.rootNode = new DoublyLinkedListHelpers.Node<E>(element);
                 this.rootNode.next = this.lastNode;
                 this.lastNode.prev = this.rootNode;
             } else {
-                // Store the current root in a temporary variable, and reassign the root to the element.
-                var previousRootNode = this.rootNode;
-                this.rootNode = new DoublyLinkedListHelpers.Node<E>(element);
-
-                // Reassign rootNode next, and previousRoot to link the element in the list.
-                this.rootNode.next = previousRootNode;
-                previousRootNode.prev = this.rootNode;
+                this.lastNode = new DoublyLinkedListHelpers.Node<E>(element);
+                this.rootNode.next = this.lastNode;
+                this.lastNode.prev = this.rootNode;
             }
-        } else if (index === this.size() - 1) {
+        } else if (index === 0) {
+            // Store the current root in a temporary variable, and reassign the root to the element.
+            var previousRootNode = this.rootNode;
+            this.rootNode = new DoublyLinkedListHelpers.Node<E>(element);
+
+            // Reassign rootNode next, and previousRoot to link the element in the list.
+            this.rootNode.next = previousRootNode;
+            previousRootNode.prev = this.rootNode;
+        } else if (index === this.size()) {
             var previousLastNode = this.lastNode;
             this.lastNode = new DoublyLinkedListHelpers.Node<E>(element);
 
@@ -96,7 +100,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
 
     removeAtIndex(index:number):E {
         Error.checkNotNull(index);
-        Error.checkIndex(index, this.size());
+        Error.checkIndex(index, this.size() - 1);
 
         // TODO, handle n case, and 0 case.
         if (this.size() === 1) {
@@ -130,7 +134,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
 
     get(index:number):E {
         Error.checkNotNull(index);
-        Error.checkIndex(index, this.size());
+        Error.checkIndex(index, this.size() - 1);
 
         return this.getNodeByIndex(index).value;
     }
@@ -173,20 +177,28 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     }
 
     private getNodeByElement(element:E):DoublyLinkedListHelpers.Node<E> {
-        for (var node in this) {
+        var node = this.rootNode;
+        while (node) {
             if (element.equals(node.value)) {
-                return node.value;
+                return node;
             }
+            node = node.next;
         }
-        return null
+        return null;
     }
 
     private getNodeByIndex(index:number):DoublyLinkedListHelpers.Node<E> {
+        var node = this.rootNode;
         var i = 0;
-        for (var node in this) {
+        while (node) {
             if (i === index) {
                 return node;
             }
+            if (i > index) {
+                return null;
+            }
+            node = node.next;
+            i++;
         }
         return null;
     }

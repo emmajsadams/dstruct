@@ -8,7 +8,7 @@ define(["require", "exports", "../../Error", "../IterableHelpers", "./ArrayListI
         };
 
         ArrayList.prototype.add = function (element) {
-            this.addAtIndex(this.size() - 1, element);
+            this.addAtIndex(this.size(), element);
 
             return true;
         };
@@ -16,7 +16,11 @@ define(["require", "exports", "../../Error", "../IterableHelpers", "./ArrayListI
         ArrayList.prototype.addAtIndex = function (index, element) {
             Error.checkNotNull(element);
 
-            this.array.splice(index, 0, element);
+            if (index === this.size()) {
+                this.array.push(element);
+            } else {
+                this.array.splice(index, 0, element);
+            }
         };
 
         ArrayList.prototype.clear = function () {

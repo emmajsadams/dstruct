@@ -1,6 +1,7 @@
 define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(require, exports, RedBlackTreeHelpers, Error) {
     var RedBlackTree = (function () {
         function RedBlackTree() {
+            this.nodeCount = 0;
             this.root = null;
         }
         RedBlackTree.prototype.equals = function () {
@@ -22,7 +23,7 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
             if (this.root === null) {
                 this.root = new RedBlackTreeHelpers.Node(key, value);
                 returnValue = true;
-                this.count++;
+                this.nodeCount++;
             } else {
                 var head = new RedBlackTreeHelpers.Node();
 
@@ -40,7 +41,7 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
                         node = new RedBlackTreeHelpers.Node(key, value);
                         parent.setChild(direction, node);
                         returnValue = true;
-                        this.count++;
+                        this.nodeCount++;
                     } else if (this.isRed(node.left) && this.isRed(node.right)) {
                         node.red = true;
                         node.left.red = false;
@@ -148,7 +149,7 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
             if (found !== null) {
                 found.key = node.key;
                 parent.setChild(parent.right === node, node.getChild(node.left === null));
-                this.count--;
+                this.nodeCount--;
             }
 
             this.root = head.right;
@@ -160,7 +161,7 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
         };
 
         RedBlackTree.prototype.size = function () {
-            return this.count;
+            return this.nodeCount;
         };
 
         RedBlackTree.prototype.isEmpty = function () {
@@ -173,7 +174,7 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
 
         RedBlackTree.prototype.clear = function () {
             this.root = null;
-            this.count = 0;
+            this.nodeCount = 0;
         };
 
         RedBlackTree.prototype.get = function (key) {

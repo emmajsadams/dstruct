@@ -1,13 +1,14 @@
 define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../IterableHelpers"], function(require, exports, DoublyLinkedListHelpers, Error, IterableHelpers) {
     var DoublyLinkedList = (function () {
         function DoublyLinkedList() {
+            this.count = 0;
         }
         DoublyLinkedList.prototype.__iterator__ = function () {
             return new DoublyLinkedListHelpers.Iterator(this.rootNode);
         };
 
         DoublyLinkedList.prototype.add = function (element) {
-            this.addAtIndex(this.size() - 1, element);
+            this.addAtIndex(this.size(), element);
             return true;
         };
 
@@ -15,21 +16,25 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
             Error.checkNotNull(element);
             Error.checkIndex(index, this.size());
 
-            if (index === 0) {
-                if (this.size() === 0) {
-                    this.rootNode = this.lastNode = new DoublyLinkedListHelpers.Node(element);
-                } else if (this.size() === 1) {
+            if (this.size() === 0) {
+                this.rootNode = this.lastNode = new DoublyLinkedListHelpers.Node(element);
+            } else if (this.size() === 1) {
+                if (index === 0) {
                     this.rootNode = new DoublyLinkedListHelpers.Node(element);
                     this.rootNode.next = this.lastNode;
                     this.lastNode.prev = this.rootNode;
                 } else {
-                    var previousRootNode = this.rootNode;
-                    this.rootNode = new DoublyLinkedListHelpers.Node(element);
-
-                    this.rootNode.next = previousRootNode;
-                    previousRootNode.prev = this.rootNode;
+                    this.lastNode = new DoublyLinkedListHelpers.Node(element);
+                    this.rootNode.next = this.lastNode;
+                    this.lastNode.prev = this.rootNode;
                 }
-            } else if (index === this.size() - 1) {
+            } else if (index === 0) {
+                var previousRootNode = this.rootNode;
+                this.rootNode = new DoublyLinkedListHelpers.Node(element);
+
+                this.rootNode.next = previousRootNode;
+                previousRootNode.prev = this.rootNode;
+            } else if (index === this.size()) {
                 var previousLastNode = this.lastNode;
                 this.lastNode = new DoublyLinkedListHelpers.Node(element);
 
@@ -78,7 +83,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
 
         DoublyLinkedList.prototype.removeAtIndex = function (index) {
             Error.checkNotNull(index);
-            Error.checkIndex(index, this.size());
+            Error.checkIndex(index, this.size() - 1);
 
             if (this.size() === 1) {
                 var element = this.rootNode.value;
@@ -110,7 +115,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
 
         DoublyLinkedList.prototype.get = function (index) {
             Error.checkNotNull(index);
-            Error.checkIndex(index, this.size());
+            Error.checkIndex(index, this.size() - 1);
 
             return this.getNodeByIndex(index).value;
         };
@@ -152,20 +157,28 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
         };
 
         DoublyLinkedList.prototype.getNodeByElement = function (element) {
-            for (var node in this) {
+            var node = this.rootNode;
+            while (node) {
                 if (element.equals(node.value)) {
-                    return node.value;
+                    return node;
                 }
+                node = node.next;
             }
             return null;
         };
 
         DoublyLinkedList.prototype.getNodeByIndex = function (index) {
+            var node = this.rootNode;
             var i = 0;
-            for (var node in this) {
+            while (node) {
                 if (i === index) {
                     return node;
                 }
+                if (i > index) {
+                    return null;
+                }
+                node = node.next;
+                i++;
             }
             return null;
         };
