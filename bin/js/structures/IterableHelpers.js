@@ -15,7 +15,7 @@ define(["require", "exports", "../Error"], function(require, exports, Error) {
         var index = 0;
         while (index < iterable.size()) {
             var collectionNext = collectionIterator.next();
-            var otherCollectionNext = collectionIterator.next();
+            var otherCollectionNext = otherCollectionIterator.next();
             if (!collectionNext.value.equals(otherCollectionNext.value)) {
                 return false;
             }
@@ -27,12 +27,32 @@ define(["require", "exports", "../Error"], function(require, exports, Error) {
     }
     exports.equals = equals;
 
+    function toArray(iterable) {
+        Error.checkNotNull(iterable);
+
+        var array = new Array(iterable.size());
+        iterable.forEach(function (value) {
+            array.push(value);
+        });
+
+        return array;
+    }
+    exports.toArray = toArray;
+
     function isEmpty(iterable) {
         return iterable.size() === 0;
     }
     exports.isEmpty = isEmpty;
 
     function forEach(iterable, callback) {
+        Error.checkNotNull(iterable);
+
+        var collectionIterator = iterable.__iterator__();
+        var collectionNext = collectionIterator.next();
+        while (!collectionNext.done) {
+            callback(collectionNext.value);
+            collectionNext = collectionIterator.next();
+        }
     }
     exports.forEach = forEach;
 });

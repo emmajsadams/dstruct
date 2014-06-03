@@ -115,6 +115,11 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
         }
     }
 
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
+    }
+
     equals(collection:Interfaces.Collection<E>):boolean {
         return IterableHelpers.equals<E>(this, collection);
     }
@@ -159,7 +164,8 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     }
 
     toArray():E[] {
-        return IterableHelpers.toArray(this);
+        // TODO: type properly
+        return IterableHelpers.toArray<E>(this);
     }
 
     isEmpty():boolean {

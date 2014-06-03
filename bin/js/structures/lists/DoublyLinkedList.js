@@ -7,7 +7,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
         };
 
         DoublyLinkedList.prototype.add = function (element) {
-            this.addAtIndex(0, element);
+            this.addAtIndex(this.size() - 1, element);
             return true;
         };
 
@@ -18,12 +18,28 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
             if (index === 0) {
                 if (this.size() === 0) {
                     this.rootNode = this.lastNode = new DoublyLinkedListHelpers.Node(element);
-                    this.rootNode.next = this.rootNode;
-                    this.rootNode.prev = this.rootNode;
                 } else if (this.size() === 1) {
-                    this.lastNode.next = new DoublyLinkedListHelpers.Node(element);
-                    this.rootNode.prev = this.lastNode.next;
+                    this.rootNode = new DoublyLinkedListHelpers.Node(element);
+                    this.rootNode.next = this.lastNode;
+                    this.lastNode.prev = this.rootNode;
+                } else {
+                    var previousRootNode = this.rootNode;
+                    this.rootNode = new DoublyLinkedListHelpers.Node(element);
+
+                    this.rootNode.next = previousRootNode;
+                    previousRootNode.prev = this.rootNode;
                 }
+            } else if (index === this.size() - 1) {
+                var previousLastNode = this.lastNode;
+                this.lastNode = new DoublyLinkedListHelpers.Node(element);
+
+                this.lastNode.prev = previousLastNode;
+                previousLastNode.next = this.lastNode;
+            } else {
+                var node = this.getNodeByIndex(index);
+                var previousNode = node.prev;
+                node.prev = new DoublyLinkedListHelpers.Node(element, node, previousNode);
+                previousNode.next = node.prev;
             }
 
             this.count++;
@@ -39,21 +55,14 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
 
             if (this.size() === 0) {
                 return false;
+            } else if (this.size() == 1) {
+                return this.removeAtIndex(0) !== null;
             }
 
             if (this.rootNode.value.equals(element)) {
-                if (this.size() === 1) {
-                    this.clear();
-                    return true;
-                }
-
-                this.rootNode = this.rootNode.next;
-                this.rootNode.prev = this.lastNode;
-                this.lastNode.prev = this.rootNode;
-                this.count--;
-                return true;
+                return this.removeAtIndex(0) !== null;
             } else if (this.lastNode.value.equals(element)) {
-                return this.removeLastNode() !== null;
+                return this.removeAtIndex(this.size() - 1) !== null;
             } else {
                 var node = this.getNodeByElement(element);
                 if (node) {
@@ -75,9 +84,20 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
                 var element = this.rootNode.value;
                 this.clear();
                 return element;
+            } else if (index === 0) {
+                var element = this.rootNode.value;
+                this.rootNode = this.rootNode.next;
+                this.count--;
+                return element;
             } else if (this.size() - 1 === index) {
                 return this.removeLastNode();
+            } else {
             }
+        };
+
+        DoublyLinkedList.prototype.hashCode = function () {
+            Error.notImplemented();
+            return null;
         };
 
         DoublyLinkedList.prototype.equals = function (collection) {
@@ -124,11 +144,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
         };
 
         DoublyLinkedList.prototype.toArray = function () {
-            var array = [];
-            for (var node in this) {
-                array.push(node.value);
-            }
-            return array;
+            return IterableHelpers.toArray(this);
         };
 
         DoublyLinkedList.prototype.isEmpty = function () {

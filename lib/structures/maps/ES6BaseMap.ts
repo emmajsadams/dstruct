@@ -28,6 +28,11 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
         return MapHelpers.equals(this, map);
     }
 
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
+    }
+
     forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
         Error.checkNotNull(callback);
 

@@ -54,6 +54,21 @@ define(["require", "exports"], function(require, exports) {
     })(BaseException);
     exports.IndexOutOfBounds = IndexOutOfBounds;
 
+    var NotImplemented = (function (_super) {
+        __extends(NotImplemented, _super);
+        function NotImplemented(message) {
+            this.name = "NotImplemented";
+            _super.call(this, message);
+        }
+        return NotImplemented;
+    })(BaseException);
+    exports.NotImplemented = NotImplemented;
+
+    function notImplemented() {
+        throw new NotImplemented().error;
+    }
+    exports.notImplemented = notImplemented;
+
     function checkNotNull(argument, message) {
         if (argument === null || argument === undefined) {
             throw new NullPointer(message || "argument is null.").error;

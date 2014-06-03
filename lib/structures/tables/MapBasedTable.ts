@@ -3,74 +3,109 @@
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 
-interface Table<R, C, V> {
-    clear(): void;
-    column(columnKey:C): Map<R, V>;
-    columnKeys(): Iterator<C>;
-    columnMap(): Map<C, Map<R, V>>;
-    contains(rowKey:R, columnKey:C): boolean;
-    containsColumn(columnKey: C): boolean;
-    containsRow(rowKey:R): boolean;
-    containsColumn(columnKey:C): boolean;
-    //TODO: containsValue
-    //TODO: equals()
-    get(row:R, column:C): V;
-    //TODO: hashCode
-    isEmpty(): boolean;
-    put(rowKey: R, columnKey: C, value: V): V;
-    //putAll
-    remove(rowKey: R, columnKey: C): V;
-    row(rowKey: R);
-    rowKeys(): Iterator<R>;
-    rowMap(): Map<R, Map<C, V>>
-    size(): number;
-    //TODO: values, may contain duplicates
-}
-
 // TODO: attempt implementation without two maps.
-class MapBasedTable<R, C, V> {
+class MapBasedTable<R extends Interfaces.BaseObject, C extends Interfaces.BaseObject, V extends Interfaces.BaseObject> implements Interfaces.Table<R, C, V>{
 
-    constructor(private rowMap:Interfaces.Map<R, Map<C, V>>,
-                private columnMap: Interfaces.Map<C, Map<R, V>>) {
+    constructor(private rows:Interfaces.Map<R, Interfaces.Map<C, V>>,
+                private columns:Interfaces.Map<C, Interfaces.Map<R, V>>) {
     }
 
     clear():void {
-        this.rowMap.clear();
-        this.columnMap.clear();
+        this.rows.clear();
+        this.columns.clear();
     }
 
-    column(columnKey:C);
-    columnKeys(): Interfaces.Iterator<C>;
-    columnMap(): Interfaces.Map<C, Map<R, V>>;
-    contains(rowKey:R, columnKey:C);
-    containsColumn(columnKey: C);
-    containsRow(rowKey:R);
-    containsColumn(columnKey:C);
+    column(columnKey:C): Interfaces.Map<R, V> {
+        return this.columns.get(columnKey);
+    }
 
-    //TODO: containsValue
-    //TODO: equals()
+    columnKeys(): Interfaces.Iterator<C> {
+        return this.columns.keys();
+    }
+
+    columnMap(): Interfaces.Map<C, Interfaces.Map<R, V>> {
+        return this.columns;
+    }
+
+    contains(rowKey:R, columnKey:C): boolean {
+        return this.get(rowKey, columnKey) !== null;
+    }
+
+    containsColumn(columnKey: C): boolean {
+        return this.column(columnKey) !== null;
+    }
+
+    containsRow(rowKey:R): boolean {
+        return this.row(rowKey) !== null;
+    }
+
+    containsValue(value: V): boolean {
+        Error.notImplemented();
+        return false;
+    }
+
+    equals(table: Interfaces.Table<R, C, V>): boolean {
+        Error.notImplemented();
+        return false;
+    }
 
     get(rowKey:R, columnKey:C):V {
-        var row = this.rowMap.get(rowKey);
+        var row = this.rows.get(rowKey);
 
         return row ? row.get(columnKey) : null;
     }
 
-    //TODO: hashCode
-
-    isEmpty();
-    put(rowKey: R, columnKey: C, value: V);
-    //putAll
-    remove(rowKey: R, columnKey: C): V {
-        var row = this.rowMap
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
     }
 
-    row(rowKey: R);
-    rowKeys(): Interfaces.Iterator<R>;
-    rowMap(): Interfaces.Map<R, Map<C, V>>
+    isEmpty(): boolean {
+        Error.notImplemented();
+        return false;
+    }
 
+    put(rowKey: R, columnKey: C, value: V): V {
+        return null;
+    }
+    //putAll
+    remove(rowKey: R, columnKey: C): V {
+        var row = this.rows.get(rowKey);
+        if (row) {
+            row.remove(columnKey);
+        }
+        var column = this.columns.get(columnKey);
+        if (column) {
+            return column.remove(rowKey)
+        }
 
+        return null;
+    }
 
+    row(rowKey: R): Interfaces.Map<C, V> {
+        Error.notImplemented();
+        return null;
+    }
+
+    rowKeys(): Interfaces.Iterator<R> {
+        Error.notImplemented();
+        return null;
+    }
+
+    rowMap(): Interfaces.Map<R, Interfaces.Map<C, V>> {
+        Error.notImplemented();
+        return null;
+    }
+
+    size(): number {
+        Error.notImplemented();
+        return null;
+    }
+
+    values(): Interfaces.Iterator<V> {
+        Error.notImplemented();
+        return null;
+    }
 
 }
 

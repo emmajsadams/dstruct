@@ -1,13 +1,19 @@
 interface Number {
     hashCode(): number;
-    equals(string:Number);
-    compareTo(otherString:Number): number;
+    equals(otherNumber:Number);
+    compareTo(otherNumber:Number): number;
 }
 
 interface String {
     hashCode(): number;
-    equals(string:String);
+    equals(otherString:String);
     compareTo(otherString:String): number;
+}
+
+interface Boolean {
+    hashCode(): number;
+    equals(otherBoolean:Boolean);
+    compareTo(otherBoolean:Boolean): number;
 }
 
 String.prototype.hashCode = function () {
@@ -23,11 +29,28 @@ String.prototype.hashCode = function () {
 String.prototype.equals = function (otherString) {
     return this === otherString;
 };
+String.prototype.compareTo = function (otherString) {
+    return null; //TODO
+};
+
 Number.prototype.hashCode = function () {
     return this;
 };
 Number.prototype.equals = function (otherNumber) {
     return this === otherNumber;
+};
+Number.prototype.compareTo = function (otherNumber) {
+    return null; //TODO
+};
+
+Boolean.prototype.hashCode = function () {
+    return this ? 1 : 0; //TODO
+};
+Boolean.prototype.equals = function (otherBoolean) {
+    return this === otherBoolean;
+};
+Boolean.prototype.compareTo = function (otherBoolean) {
+    return null; //TODO
 };
 
 /*

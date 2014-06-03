@@ -1,14 +1,13 @@
-/// <reference path="../../../References.d.ts"/>
-
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
+import IterableHelpers = require("../IterableHelpers");
 
 interface MultiSet<E> {
 
 }
 
 //TODO: Create an interface for MultiSets!
-class BaseMultiSet<E> {
+class BaseMultiSet<E extends Interfaces.BaseObject> {
     constructor(private map:Interfaces.Map<E, number>) {
     }
 
@@ -43,6 +42,16 @@ class BaseMultiSet<E> {
         this.map.clear();
     }
 
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
+    }
+
+    equals(set:Interfaces.Set<E>):boolean {
+        Error.notImplemented();
+        return null;
+    }
+
     remove(element:E, occurrences:number = 1):number {
         return this.setCount(element, this.count(element) - occurrences);
     }
@@ -56,7 +65,9 @@ class BaseMultiSet<E> {
     }
 
     forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
-        this.map.forEach(callback);
+        Error.notImplemented();
+        //TODO: Use map foreach to repliate collection for each
+        //this.map.forEach(callback);
     }
 
     values():Interfaces.Iterator<E> {
@@ -68,7 +79,7 @@ class BaseMultiSet<E> {
     }
 
     toArray():E[] {
-        return IterableHelpers.toArray(this);
+        return IterableHelpers.toArray<E>(this);
     }
 
     __iterator__():Interfaces.Iterator<E> {
