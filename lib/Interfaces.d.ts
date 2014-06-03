@@ -1,6 +1,5 @@
 /// <reference path="../References.d.ts"/>
 
-
 declare module Interfaces {
 
     //TODO: consider using BaseObject.prototype, make the prototype not enumberable
@@ -18,12 +17,6 @@ declare module Interfaces {
     }
 
 
-    /*
-     TODO: move to new file
-
-     */
-    //TODO: array
-
     // Use in for ( element in Iterator ) { .. }
     // throws StopIteration when done
     export interface Iterator<E> {
@@ -35,6 +28,9 @@ declare module Interfaces {
         done: boolean;
     }
 
+    /**
+     * A set of elements that can be iterated over.
+     */
     export interface Iterable extends BaseObject {
         forEach(callback:(element:any) => void): void;
         size(): number;
@@ -45,6 +41,9 @@ declare module Interfaces {
         (value:E): void;
     }
 
+    /**
+     * A group of elements. No guarantees of order or allowing duplicates.
+     */
     export interface Collection<E extends BaseObject> extends Iterable {
         /**
          * Adds a single occurrence of the specified element to this collection
@@ -77,6 +76,10 @@ declare module Interfaces {
         //hasAll(collection: Collection<E>);
     }
 
+    /**
+     * An ordered collection of elements. Permits random access, insertion, and deletion.
+     * Allows duplicate and null elements.
+     */
     export interface List<E extends BaseObject> extends Collection<E> {
         indexOf(element:E): number;
         get(index:number): E;
@@ -87,29 +90,6 @@ declare module Interfaces {
 
     export interface ForEachMapCallback<K, V> {
         (value:V, key:K): void;
-    }
-
-    // Based on the MDN ES6 documentation of the upcoming ES6 Map proposal.
-    // Not necessarily complete, only the methods used within the library are part of the interface.
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_BaseObjects/Map
-    export interface ES6Map<K, V> {
-        size: number;
-
-        clear(): void;
-        delete(key:K): boolean;
-        //TODO: entries?
-        forEach(callback:ForEachMapCallback<K, V>): void;
-        get(key:K): V;
-        has(key:K): boolean;
-        keys(): Iterator<K>;
-        set(key:K, value:V): void;
-        values(): Iterator<V>;
-    }
-
-    export interface Entry<K, V> {
-        key: K
-        value: V;
-        next: Entry<K, V>; //TODO: consider using a singly linkedlist?
     }
 
     export interface Map<K extends BaseObject, V extends BaseObject> extends Iterable {
@@ -132,32 +112,17 @@ declare module Interfaces {
         __iterator__(): Iterator<K>;
     }
 
-    export interface SortedMap<K extends ComparableBaseObject, V extends BaseObject> extends Map<K, V> {
-    }
+    export interface SortedMap<K extends ComparableBaseObject, V extends BaseObject> extends Map<K, V> {}
 
     export interface BiMap<K extends BaseObject, V extends BaseObject> extends Map<K ,V> {
-        inverse(): BiMap<V, K>
+        inverse(): BiMap<V, K>;
     }
 
     export interface Set<E extends BaseObject> extends Collection<E> {
         values(): Iterator<E>;
     }
 
-    export interface SortedSet<E extends BaseObject> extends Set<E> {
-    }
-
-    export interface ES6Set<E extends BaseObject> {
-        size: number;
-
-        add(value:E): void;
-        clear(): void;
-        delete(value:E): boolean;
-        //TODO: entries?
-        forEach(callback:ForEachCollectionCallback<E>): void;
-        has(value:E): boolean;
-        //keys(): Iterator<E>;
-        values(): Iterator<E>;
-    }
+    export interface SortedSet<E extends BaseObject> extends Set<E> {}
 
     export interface Stack<E extends BaseObject> extends Collection<E> {
         peek(): E;
@@ -170,7 +135,6 @@ declare module Interfaces {
         pop():E;
         push(element:E):void;
     }
-
 
     export interface Table<R extends BaseObject, C extends BaseObject, V extends BaseObject> {
         clear(): void;
@@ -196,20 +160,16 @@ declare module Interfaces {
 
     export interface Tree<K extends ComparableBaseObject, V extends BaseObject> extends Iterable {
         clear(): void;
-
-        //TODO: mixin, helper function for shared logic?
-        //equals(tree: Tree<E, V>):boolean;
         forEach(callback:ForEachMapCallback<K, V>): void;
         get(key:K): V;
-
-        //TODO: mixin, helper function for shared logic?
         isEmpty(): boolean;
         keys(): Iterator<K>;
         remove(key:K): boolean;
-
         insert(key:K, value:V): void;
-        //values(): Iterator<V>;
 
+        // TODO: add these
+        //values(): Iterator<V>;
+        //equals(tree: Tree<E, V>):boolean;
     }
 }
 

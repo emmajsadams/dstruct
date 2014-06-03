@@ -4,14 +4,14 @@ import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 import MapHelpers = require("./MapHelpers");
 import IterableHelpers = require("../IterableHelpers");
-import ES6BaseMapIterator = require("./ES6BaseMapIterator");
+import ES6Helpers = require("./ES6Helpers");
 
 // TODO: benchmark this solution compared to actually implementing a HashMap with an array.
 class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> implements Interfaces.Map<K, V> {
 
     private keyCount = 0;
 
-    constructor(private map:Interfaces.ES6Map<number, Interfaces.Entry<K, V>>) {
+    constructor(private map:ES6Helpers.Map<number, ES6Helpers.Entry<K, V>>) {
     }
 
     clear():void {
@@ -69,7 +69,7 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
     }
 
     keys():Interfaces.Iterator<K> {
-        return new ES6BaseMapIterator<K>(this.map.values(), (currentEntry) => {
+        return new ES6Helpers.Iterator<K>(this.map.values(), (currentEntry) => {
             return currentEntry.key;
         });
     }
@@ -160,7 +160,7 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
     }
 
     values():Interfaces.Iterator<V> {
-        return new ES6BaseMapIterator<V>(this.map.values(), (currentEntry) => {
+        return new ES6Helpers.Iterator<V>(this.map.values(), (currentEntry) => {
             return currentEntry.value;
         });
     }
@@ -169,7 +169,7 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
         return this.keys();
     }
 
-    private swapEntryValue(entry:Interfaces.Entry<K, V>, key:K, value:V) {
+    private swapEntryValue(entry:ES6Helpers.Entry<K, V>, key:K, value:V) {
         // Swap value
         var oldValue = entry.value;
         entry.value = value;
