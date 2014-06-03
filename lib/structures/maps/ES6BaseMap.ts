@@ -139,12 +139,12 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
         if (entry.key.equals(key)) {
             return this.swapEntryValue(entry, key, value);
         } else {
-           this.keyCount++;
-           entry.next = {
-               key: key,
-               value: value,
-               next: null
-           };
+            this.keyCount++;
+            entry.next = {
+                key: key,
+                value: value,
+                next: null
+            };
         }
 
         return null;
@@ -164,7 +164,7 @@ class ES6BaseMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObjec
         return this.keys();
     }
 
-    private swapEntryValue(entry: Interfaces.Entry<K, V>, key:K, value: V) {
+    private swapEntryValue(entry:Interfaces.Entry<K, V>, key:K, value:V) {
         // Swap value
         var oldValue = entry.value;
         entry.value = value;

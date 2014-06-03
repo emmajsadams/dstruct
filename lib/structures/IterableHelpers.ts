@@ -4,8 +4,7 @@ import Interfaces = require("../Interfaces");
 import Error = require("../Error");
 
 // TODO: generic equals for maps may be different that lists since keys, and values must be comparaed!
-export function equals<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable,
-                                                        otherIterable:Interfaces.Iterable):boolean {
+export function equals<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable, otherIterable:Interfaces.Iterable):boolean {
     Error.checkNotNull(iterable);
     Error.checkNotNull(otherIterable);
 
@@ -39,7 +38,7 @@ export function toArray<E extends Interfaces.BaseObject>(iterable:Interfaces.Ite
 
 
     var array = new Array(iterable.size());
-    iterable.forEach((value: E) => {
+    iterable.forEach((value:E) => {
         array.push(value);
     });
 
@@ -50,7 +49,7 @@ export function isEmpty(iterable:Interfaces.Iterable) {
     return iterable.size() === 0;
 }
 
-export function forEach<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable, callback: Interfaces.ForEachCollectionCallback<E>): void {
+export function forEach<E extends Interfaces.BaseObject>(iterable:Interfaces.Iterable, callback:Interfaces.ForEachCollectionCallback<E>):void {
     Error.checkNotNull(iterable);
 
     var collectionIterator = iterable.__iterator__();

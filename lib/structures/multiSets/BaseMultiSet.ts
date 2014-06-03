@@ -12,7 +12,7 @@ class BaseMultiSet<E> {
     constructor(private map:Interfaces.Map<E, number>) {
     }
 
-    size(): number {
+    size():number {
         return this.map.size();
     }
 
@@ -25,11 +25,11 @@ class BaseMultiSet<E> {
         return this.setCount(element, this.count(element) + occurrences);
     }
 
-   /**
-    * Returns the number of occurrences of the specified element.
-    * @param element Element to retrieve the occurrences of.
-    * @returns The number of occurrences of the element in this multiset.
-    */
+    /**
+     * Returns the number of occurrences of the specified element.
+     * @param element Element to retrieve the occurrences of.
+     * @returns The number of occurrences of the element in this multiset.
+     */
     count(element:E):number {
         var count = this.map.get(element);
         return count ? count : 0;
@@ -44,7 +44,7 @@ class BaseMultiSet<E> {
     }
 
     remove(element:E, occurrences:number = 1):number {
-        return this.setCount(element,  this.count(element) - occurrences);
+        return this.setCount(element, this.count(element) - occurrences);
     }
 
     setCount(element:E, occurrences:number):number {
@@ -55,11 +55,11 @@ class BaseMultiSet<E> {
             : this.map.set(element, occurrences);
     }
 
-    forEach(callback: Interfaces.ForEachCollectionCallback<E>):void {
+    forEach(callback:Interfaces.ForEachCollectionCallback<E>):void {
         this.map.forEach(callback);
     }
 
-    values(): Interfaces.Iterator<E> {
+    values():Interfaces.Iterator<E> {
         return this.map.keys();
     }
 
@@ -67,11 +67,11 @@ class BaseMultiSet<E> {
         return this.size() === 0;
     }
 
-    toArray(): E[] {
+    toArray():E[] {
         return IterableHelpers.toArray(this);
     }
 
-    __iterator__(): Interfaces.Iterator<E> {
+    __iterator__():Interfaces.Iterator<E> {
         return this.values();
     }
 }

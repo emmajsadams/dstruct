@@ -1,21 +1,21 @@
 interface Number {
     hashCode(): number;
-    equals(string: Number);
-    compareTo(otherString: Number): number;
+    equals(string:Number);
+    compareTo(otherString:Number): number;
 }
 
 interface String {
     hashCode(): number;
-    equals(string: String);
-    compareTo(otherString: String): number;
+    equals(string:String);
+    compareTo(otherString:String): number;
 }
 
 String.prototype.hashCode = function () {
     var hash = 0, i, chr, len;
     if (this.length == 0) return hash;
     for (i = 0, len = this.length; i < len; i++) {
-        chr   = this.charCodeAt(i);
-        hash  = ((hash << 5) - hash) + chr;
+        chr = this.charCodeAt(i);
+        hash = ((hash << 5) - hash) + chr;
         hash |= 0; // Convert to 32bit integer
     }
     return hash;

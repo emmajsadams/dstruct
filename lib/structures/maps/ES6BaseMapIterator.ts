@@ -3,14 +3,13 @@
 import Interfaces = require("../../Interfaces");
 
 class ES6BaseMapIterator<E> implements Interfaces.Iterator<E> {
-    private currentEntry: Interfaces.Entry<any, any>;
+    private currentEntry:Interfaces.Entry<any, any>;
     private done = false;
 
-    constructor(private iterator: Interfaces.Iterator<Interfaces.Entry<any, any>>,
-                private valueCallback: (entry: Interfaces.Entry<any, any>) => any) {
+    constructor(private iterator:Interfaces.Iterator<Interfaces.Entry<any, any>>, private valueCallback:(entry:Interfaces.Entry<any, any>) => any) {
     }
 
-    next(): Interfaces.IteratorReturn<E> {
+    next():Interfaces.IteratorReturn<E> {
         // Check if there is an entry to return
         if (this.currentEntry === null || this.currentEntry.next === null) {
             // Get next entry, assign done value and current entry.

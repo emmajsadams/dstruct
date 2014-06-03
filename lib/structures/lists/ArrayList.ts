@@ -19,7 +19,7 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
         this.array = new Array(initialCapacity || 0);
     }
 
-    __iterator__(): Interfaces.Iterator<E> {
+    __iterator__():Interfaces.Iterator<E> {
         return new ArrayListIterator(this.array);
     }
 

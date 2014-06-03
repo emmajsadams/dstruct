@@ -6,10 +6,10 @@ declare module Interfaces {
     export interface BaseObject {
         // TODO: hashCode needs to be unique currently, should not! Consider implementing an actual hashMap instead of using the ES6 collections.
         hashCode(): number;
-        equals(otherBaseObject: BaseObject);
+        equals(otherBaseObject:BaseObject);
     }
     export interface Comparable {
-        compareTo(otherBaseObject: BaseObject): number;
+        compareTo(otherBaseObject:BaseObject): number;
     }
     //TODO: is this necessary? typesafe generics seems to not be able to implement multiple interfaces
     export interface ComparableBaseObject extends BaseObject, Comparable {
@@ -17,9 +17,9 @@ declare module Interfaces {
 
 
     /*
-    TODO: move to new file
+     TODO: move to new file
 
-    */
+     */
     //TODO: array
 
     // Use in for ( element in Iterator ) { .. }
@@ -34,7 +34,7 @@ declare module Interfaces {
     }
 
     export interface Iterable {
-        forEach(callback: (element:any) => void): void;
+        forEach(callback:(element:any) => void): void;
         size(): number;
         __iterator__(): any;
     }
@@ -53,8 +53,8 @@ declare module Interfaces {
         remove(element:E): boolean;
 
         // TODO: should equals be a collection member, or a utility function? leaning towards utility for ease.
-        equals(collection: Collection<E>):boolean;
-        forEach(callback: ForEachCollectionCallback<E>): void;
+        equals(collection:Collection<E>):boolean;
+        forEach(callback:ForEachCollectionCallback<E>): void;
 
         // TODO: mixin or abstract class for shared has logic?
         has(element:E): boolean;
@@ -137,17 +137,17 @@ declare module Interfaces {
         inverse(): BiMap<V, K>
     }
 
-    export interface Set<E extends BaseObject> extends Collection<E>{
+    export interface Set<E extends BaseObject> extends Collection<E> {
         values(): Iterator<E>;
     }
 
-    export interface SortedSet<E extends BaseObject> extends Set<E>{
+    export interface SortedSet<E extends BaseObject> extends Set<E> {
     }
 
     export interface ES6Set<E extends BaseObject> {
         size: number;
 
-        add(value: E): void;
+        add(value:E): void;
         clear(): void;
         delete(value:E): boolean;
         //TODO: entries?
@@ -157,10 +157,10 @@ declare module Interfaces {
         values(): Iterator<E>;
     }
 
-    export interface Stack<E extends BaseObject> extends List<E>{
+    export interface Stack<E extends BaseObject> extends List<E> {
         peek(): E;
         pop(): E;
-        push(element: E): void;
+        push(element:E): void;
     }
 
     export interface Tree<K extends ComparableBaseObject, V extends BaseObject> extends Iterable {

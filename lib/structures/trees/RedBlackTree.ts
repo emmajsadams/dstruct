@@ -193,7 +193,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
         return this.size() === 0;
     }
 
-    keys(): Interfaces.Iterator<K> {
+    keys():Interfaces.Iterator<K> {
         return new RedBlackTreeHelpers.Iterator<K, V>(this.root);
     }
 
