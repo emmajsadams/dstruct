@@ -1,5 +1,3 @@
-
-
 /**
  * Partitions the (sub)array into values less than and greater
  * than the pivot value
@@ -9,7 +7,7 @@
  * @param {int} left The index of the leftmost element
  * @param {int} left The index of the rightmost element
  * /
-function partition(array, pivot, left, right) {
+ function partition(array, pivot, left, right) {
 
     var storeIndex = left,
         pivotValue = array[pivot];
@@ -35,7 +33,7 @@ function partition(array, pivot, left, right) {
     return storeIndex;
 }
 
-/**
+ /**
  * Sorts the (sub-)array
  *
  * @param {Array} array The target array
@@ -43,7 +41,7 @@ function partition(array, pivot, left, right) {
  * @param {int} left The index of the rightmost element,
  defaults array.length-1
  * /
-function sort(array, left, right) {
+ function sort(array, left, right) {
 
     var pivot = null;
 
@@ -74,21 +72,21 @@ function sort(array, left, right) {
 
 }
 
-/**
+ /**
  * Swaps two values in the heap
  *
  * @param {int} indexA Index of the first item to be swapped
  * @param {int} indexB Index of the second item to be swapped
  * /
-function swap(array, indexA, indexB) {
+ function swap(array, indexA, indexB) {
     var temp = array[indexA];
     array[indexA] = array[indexB];
     array[indexB] = temp;
 }
 
-/// BEtter solution
-// FROM! http://en.literateprograms.org/Quicksort_%28JavaScript%29
-function partition(array, begin, end, pivot) {
+ /// BEtter solution
+ // FROM! http://en.literateprograms.org/Quicksort_%28JavaScript%29
+ function partition(array, begin, end, pivot) {
     var pivotValue = array[pivot];
     swap(array, pivot, end-1);
     var store=begin;
@@ -104,7 +102,7 @@ function partition(array, begin, end, pivot) {
     return store;
 }
 
-function qsort(array, begin, end) {
+ function qsort(array, begin, end) {
     if(end-1>begin) {
         var pivot = randomPivot(begin, end);
         pivot = partition(array, begin, end, pivot);
@@ -113,11 +111,11 @@ function qsort(array, begin, end) {
     }
 }
 
-function QuickSort(array) {
+ function QuickSort(array) {
     qsort(array, 0, array.length);
 }
 
-function randomPivot(begin, end) {
+ function randomPivot(begin, end) {
     return begin+Math.floor(Math.random()*(end-begin))
 }
  */

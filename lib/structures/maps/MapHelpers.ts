@@ -3,18 +3,16 @@
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 
-export function equals<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject>(
-    map:Interfaces.Map<K, V>,
-    otherMap:Interfaces.Map<K, V>):boolean {
+export function equals<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject>(map:Interfaces.Map<K, V>, otherMap:Interfaces.Map<K, V>):boolean {
     return false; //TODO! implement
     /*
-    return iterableEquals<K>(map, otherMap, (mapIterator) => {
-        var mapKey = <any>mapIterator.next(); //TODO: remove any
-        var mapValue = <any>map.get(mapKey.value);
-        var otherMapValue = <any>otherMap.get(mapKey.value);
+     return iterableEquals<K>(map, otherMap, (mapIterator) => {
+     var mapKey = <any>mapIterator.next(); //TODO: remove any
+     var mapValue = <any>map.get(mapKey.value);
+     var otherMapValue = <any>otherMap.get(mapKey.value);
 
-        return mapValue.value.equals(otherMapValue.value);
-    })*/
+     return mapValue.value.equals(otherMapValue.value);
+     })*/
 }
 
 export function forEach<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject>(map:Interfaces.Map<K, V>, callback:Interfaces.ForEachMapCallback<K, V>):void {
@@ -24,7 +22,7 @@ export function forEach<K extends Interfaces.BaseObject, V extends Interfaces.Ba
     if (map.size() > 0) {
         var keys = map.keys();
         var values = map.values();
-        var key: Interfaces.IteratorReturn<K>;
+        var key:Interfaces.IteratorReturn<K>;
         do {
             key = keys.next();
             var value = values.next();

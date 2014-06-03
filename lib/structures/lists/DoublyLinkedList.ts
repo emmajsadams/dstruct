@@ -10,7 +10,8 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     private lastNode:DoublyLinkedListHelpers.Node<E>;
     private count:number;
 
-    constructor() {}
+    constructor() {
+    }
 
     __iterator__():Interfaces.Iterator<E> {
         return new DoublyLinkedListHelpers.Iterator(this.rootNode);
@@ -43,7 +44,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
                 this.rootNode.next = previousRootNode;
                 previousRootNode.prev = this.rootNode;
             }
-        } else if (index === this.size() - 1){
+        } else if (index === this.size() - 1) {
             var previousLastNode = this.lastNode;
             this.lastNode = new DoublyLinkedListHelpers.Node<E>(element);
 

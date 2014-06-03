@@ -5,7 +5,8 @@ import Interfaces = require("../../Interfaces");
 class ArrayListIterator<E extends Interfaces.BaseObject> implements Interfaces.Iterator<E> {
     private index = 0;
 
-    constructor(private array:E[]) {}
+    constructor(private array:E[]) {
+    }
 
     next():Interfaces.IteratorReturn<E> {
         var element = this.array[this.index];

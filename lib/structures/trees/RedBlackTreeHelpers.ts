@@ -69,37 +69,6 @@ export class Iterator<K extends Interfaces.ComparableBaseObject, V extends Inter
         return { value: this.key(), done: false };
     }
 
-    /*
-     prev():K {
-     if (this.cursor === null) {
-     var root = this.tree.root;
-     if (root !== null) {
-     this.maxNode(root);
-     }
-     }
-     else {
-     if (this.cursor.left === null) {
-     var save;
-     do {
-     save = this.cursor;
-     if (this.ancestors.length) {
-     this.cursor = this.ancestors.pop();
-     }
-     else {
-     this.cursor = null;
-     break;
-     }
-     } while (this.cursor.left === save);
-     }
-     else {
-     this.ancestors.push(this.cursor);
-     this.maxNode(this.cursor.left);
-     }
-     }
-     return this.key();
-     }
-     */
-
     // TODO: Consider returning the node, and assignign it to curors?
     private minNode(start:Node<K, V>):void {
         while (start.left !== null) {
@@ -109,15 +78,5 @@ export class Iterator<K extends Interfaces.ComparableBaseObject, V extends Inter
         this.cursor = start;
     }
 
-    /*
-    // TODO: Consider returning the node, and assignign it to curors?
-     private maxNode(start:Node<K, V>):void {
-        while (start.right !== null) {
-            this.ancestors.push(start);
-            start = start.right;
-        }
-        this.cursor = start;
-    }
-    */
 
 }

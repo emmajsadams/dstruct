@@ -6,9 +6,9 @@ import BaseMultiSet = require("./BaseMultiSet");
 
 class HashMultiSet<E> extends BaseMultiSet<E> {
 
-  constructor() {
-      super(new HashMap<E, number>());
-  }
+    constructor() {
+        super(new HashMap<E, number>());
+    }
 
 }
 

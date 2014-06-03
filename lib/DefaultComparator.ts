@@ -3,7 +3,7 @@
 import Interfaces = require("./Interfaces");
 
 // TODO: only works for base types. Ensure not used in new classes.
-function DefaultComparator(item1: any, item2: any): number {
+function DefaultComparator(item1:any, item2:any):number {
     if (item1 === item2) {
         return 0;
     } else if (!item1 || item1 < item2) {
