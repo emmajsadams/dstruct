@@ -11,7 +11,10 @@ import DoublyLinkedList = require("./structures/lists/DoublyLinkedList");
 // Maps
 import HashMap = require("./structures/maps/HashMap");
 import TreeMap = require("./structures/maps/TreeMap");
-import WeakHashMap = require("./structures/maps/WeakHashMap");
+
+// WeakHashMap cannot be implemented until ES6 is implemented. This is because the implementation
+// requires low level access to memory. Uncomment when using in a ES6 environment. 
+//import WeakHashMap = require("./structures/maps/WeakHashMap");
 
 // BiMaps
 import HashBiMap = require("./structures/maps/biMaps/HashBiMap");
