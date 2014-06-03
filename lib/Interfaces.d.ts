@@ -8,6 +8,7 @@ declare module Interfaces {
         hashCode(): number;
         equals(otherBaseObject:BaseObject);
     }
+
     export interface Comparable {
         compareTo(otherBaseObject:BaseObject): number;
     }
@@ -33,7 +34,7 @@ declare module Interfaces {
         done: boolean;
     }
 
-    export interface Iterable {
+    export interface Iterable extends BaseObject {
         forEach(callback:(element:any) => void): void;
         size(): number;
         __iterator__(): any;
@@ -157,10 +158,39 @@ declare module Interfaces {
         values(): Iterator<E>;
     }
 
-    export interface Stack<E extends BaseObject> extends List<E> {
+    export interface Stack<E extends BaseObject> extends Collection<E> {
         peek(): E;
         pop(): E;
         push(element:E): void;
+    }
+
+    export interface Queue<E extends BaseObject> extends Collection<E>{
+        peek():E;
+        pop():E;
+        push(element:E):void;
+    }
+
+
+    export interface Table<R extends BaseObject, C extends BaseObject, V extends BaseObject> {
+        clear(): void;
+        column(columnKey:C): Interfaces.Map<R, V>;
+        columnKeys(): Iterator<C>;
+        columnMap(): Interfaces.Map<C, Interfaces.Map<R, V>>;
+        contains(rowKey:R, columnKey:C): boolean;
+        containsColumn(columnKey: C): boolean;
+        containsRow(rowKey:R): boolean;
+        containsValue(value: V): boolean;
+        equals(table: Table<R, C, V>): boolean;
+        get(row:R, column:C): V;
+        hashCode(): number;
+        isEmpty(): boolean;
+        put(rowKey: R, columnKey: C, value: V): V;
+        remove(rowKey: R, columnKey: C): V;
+        row(rowKey: R);
+        rowKeys(): Iterator<R>;
+        rowMap(): Interfaces.Map<R, Interfaces.Map<C, V>>
+        size(): number;
+        values(): Iterator<V>;
     }
 
     export interface Tree<K extends ComparableBaseObject, V extends BaseObject> extends Iterable {

@@ -1,5 +1,6 @@
 /// <reference path="../../../References.d.ts"/>
 
+import Interfaces = require("../../Interfaces");
 import MapSet = require("./MapSet");
 import HashMap = require("../maps/HashMap");
 

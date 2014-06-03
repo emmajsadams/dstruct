@@ -18,6 +18,11 @@ define(["require", "exports", "../../Error", "./MapHelpers", "../IterableHelpers
             return MapHelpers.equals(this, map);
         };
 
+        ES6BaseMap.prototype.hashCode = function () {
+            Error.notImplemented();
+            return null;
+        };
+
         ES6BaseMap.prototype.forEach = function (callback) {
             Error.checkNotNull(callback);
 

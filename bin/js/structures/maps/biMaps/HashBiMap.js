@@ -10,6 +10,11 @@ define(["require", "exports", "../MapHelpers", "../../../Error", "../../Iterable
             return this.map.containsKey(key);
         };
 
+        HashBiMap.prototype.hashCode = function () {
+            Error.notImplemented();
+            return null;
+        };
+
         HashBiMap.prototype.equals = function (biMap) {
             return MapHelpers.equals(this, biMap);
         };

@@ -4,29 +4,30 @@ import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 import IterableHelpers = require("../IterableHelpers");
 
-class BaseSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.Set<E> {
+class MapSet<E extends Interfaces.BaseObject> implements Interfaces.Set<E> {
 
-    private treeMap:TreeMap<E, Interfaces.BaseObject>;
-
-    constructor() {
-        this.treeMap = new TreeMap<E, Interfaces.BaseObject>();
-    }
+    constructor(private map:Interfaces.Map<E, boolean>) {}
 
     add(element:E):boolean {
-        this.treeMap.set(element, undefined);
+        this.map.set(element, true);
 
         return false; //TODO!
     }
 
     clear():void {
-        this.treeMap.clear();
+        this.map.clear();
     }
 
     remove(element:E):boolean {
-        this.treeMap.remove(element);
+        this.map.remove(element);
 
         //TODO!
         return false;
+    }
+
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
     }
 
     equals(set:Interfaces.Set<E>):boolean {
@@ -38,7 +39,7 @@ class BaseSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.S
     }
 
     has(element:E):boolean {
-        return this.treeMap.containsKey(element);
+        return this.map.containsKey(element);
     }
 
     isEmpty():boolean {
@@ -46,11 +47,11 @@ class BaseSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.S
     }
 
     size():number {
-        return this.treeMap.size();
+        return this.map.size();
     }
 
     toArray():E[] {
-        return IterableHelpers.toArray(this);
+        return IterableHelpers.toArray<E>(this);
     }
 
     values():Interfaces.Iterator<E> {
@@ -59,9 +60,9 @@ class BaseSet<E extends Interfaces.ComparableBaseObject> implements Interfaces.S
     }
 
     __iterator__():Interfaces.Iterator<E> {
-        return this.treeMap.keys();
+        return this.map.keys();
     }
 
 }
 
-export = BaseSet;
+export = MapSet;

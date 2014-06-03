@@ -10,11 +10,28 @@ String.prototype.hashCode = function () {
     return hash;
 };
 String.prototype.equals = function (otherString) {
-    return this.valueOf() === otherString;
+    return this === otherString;
 };
+String.prototype.compareTo = function (otherString) {
+    return null;
+};
+
 Number.prototype.hashCode = function () {
-    return this.valueOf();
+    return this;
 };
 Number.prototype.equals = function (otherNumber) {
-    return this.valueOf() === otherNumber;
+    return this === otherNumber;
+};
+Number.prototype.compareTo = function (otherNumber) {
+    return null;
+};
+
+Boolean.prototype.hashCode = function () {
+    return this ? 1 : 0;
+};
+Boolean.prototype.equals = function (otherBoolean) {
+    return this === otherBoolean;
+};
+Boolean.prototype.compareTo = function (otherBoolean) {
+    return null;
 };

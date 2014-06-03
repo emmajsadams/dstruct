@@ -22,6 +22,11 @@ class TreeMap<K extends Interfaces.ComparableBaseObject, V extends Interfaces.Ba
         return this.get(key) !== null;
     }
 
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
+    }
+
     equals(map:Interfaces.Map<K, V>):boolean {
         return MapHelpers.equals(this, map);
     }

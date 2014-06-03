@@ -39,7 +39,18 @@ export class IndexOutOfBounds extends BaseException {
     }
 }
 
+export class NotImplemented extends BaseException {
+    constructor(message?:string) {
+        this.name = "NotImplemented";
+        super(message);
+    }
+}
+
 // Precondition helpers
+export function notImplemented() {
+    throw new NotImplemented().error;
+}
+
 export function checkNotNull(argument:any, message?:string):void {
     if (argument === null || argument === undefined) {
         throw new NullPointer(message || "argument is null.").error;

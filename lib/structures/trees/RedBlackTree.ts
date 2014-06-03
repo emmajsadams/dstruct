@@ -15,6 +15,16 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
     constructor() {
     }
 
+    equals(): boolean {
+        Error.notImplemented();
+        return null;
+    }
+
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
+    }
+
     // inserts a node with the given key and value
     // if a node with the given key exists, the value will be overwritten with the given value
     // TODO: Return value?

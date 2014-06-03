@@ -62,6 +62,11 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
         }
     }
 
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
+    }
+
     equals(collection:Interfaces.Collection<E>):boolean {
         return IterableHelpers.equals<E>(this, collection);
     }
@@ -109,7 +114,8 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     }
 
     toArray():E[] {
-        return IterableHelpers.toArray(this);
+        // TODO: type properly
+        return IterableHelpers.toArray<E>(this);
     }
 
     isEmpty():boolean {

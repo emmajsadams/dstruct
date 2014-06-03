@@ -3,6 +3,16 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
         function RedBlackTree() {
             this.root = null;
         }
+        RedBlackTree.prototype.equals = function () {
+            Error.notImplemented();
+            return null;
+        };
+
+        RedBlackTree.prototype.hashCode = function () {
+            Error.notImplemented();
+            return null;
+        };
+
         RedBlackTree.prototype.insert = function (key, value) {
             Error.checkNotNull(key);
             Error.checkNotNull(value);

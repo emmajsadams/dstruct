@@ -1,4 +1,4 @@
-define(["require", "exports", "./MapHelpers", "../trees/RedBlackTree", "../IterableHelpers"], function(require, exports, MapHelpers, RedBlackTree, IterableHelpers) {
+define(["require", "exports", "../../Error", "./MapHelpers", "../trees/RedBlackTree", "../IterableHelpers"], function(require, exports, Error, MapHelpers, RedBlackTree, IterableHelpers) {
     var TreeMap = (function () {
         function TreeMap() {
             this.tree = new RedBlackTree();
@@ -9,6 +9,11 @@ define(["require", "exports", "./MapHelpers", "../trees/RedBlackTree", "../Itera
 
         TreeMap.prototype.containsKey = function (key) {
             return this.get(key) !== null;
+        };
+
+        TreeMap.prototype.hashCode = function () {
+            Error.notImplemented();
+            return null;
         };
 
         TreeMap.prototype.equals = function (map) {

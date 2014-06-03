@@ -15,6 +15,11 @@ class HashBiMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject
         return this.map.containsKey(key);
     }
 
+    hashCode(): number {
+        Error.notImplemented();
+        return null;
+    }
+
     equals(biMap:Interfaces.BiMap<K, V>):boolean {
         return MapHelpers.equals(this, biMap);
     }

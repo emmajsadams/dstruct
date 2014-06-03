@@ -44,6 +44,11 @@ define(["require", "exports", "../../Error", "../IterableHelpers", "./ArrayListI
             }
         };
 
+        ArrayList.prototype.hashCode = function () {
+            Error.notImplemented();
+            return null;
+        };
+
         ArrayList.prototype.equals = function (collection) {
             return IterableHelpers.equals(this, collection);
         };
@@ -90,7 +95,7 @@ define(["require", "exports", "../../Error", "../IterableHelpers", "./ArrayListI
         };
 
         ArrayList.prototype.toArray = function () {
-            return this.array;
+            return IterableHelpers.toArray(this);
         };
 
         ArrayList.prototype.isEmpty = function () {
