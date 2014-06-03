@@ -3,6 +3,10 @@
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 
+interface MultiSet<E> {
+
+}
+
 //TODO: Create an interface for MultiSets!
 class BaseMultiSet<E> {
     constructor(private map:Interfaces.Map<E, number>) {
@@ -64,8 +68,7 @@ class BaseMultiSet<E> {
     }
 
     toArray(): E[] {
-        //TODO!!!
-        return [];
+        return IterableHelpers.toArray(this);
     }
 
     __iterator__(): Interfaces.Iterator<E> {

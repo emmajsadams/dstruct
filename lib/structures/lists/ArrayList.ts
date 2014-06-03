@@ -109,8 +109,7 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     }
 
     toArray():E[] {
-        //TODO: immutable?
-        return this.array;
+        return IterableHelpers.toArray(this);
     }
 
     isEmpty():boolean {
