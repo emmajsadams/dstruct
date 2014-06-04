@@ -21,6 +21,7 @@ define(["require", "exports", "../../Error", "./MapHelpers", "../trees/RedBlackT
         };
 
         TreeMap.prototype.forEach = function (callback) {
+            this.tree.forEach(callback);
         };
 
         TreeMap.prototype.get = function (key) {

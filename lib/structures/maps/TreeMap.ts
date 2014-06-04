@@ -32,7 +32,7 @@ class TreeMap<K extends Interfaces.ComparableBaseObject, V extends Interfaces.Ba
     }
 
     forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
-        //TODO:
+        this.tree.forEach(callback);
     }
 
     get(key:K):V {

@@ -1,4 +1,4 @@
-define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(require, exports, RedBlackTreeHelpers, Error) {
+define(["require", "exports", "./RedBlackTreeHelpers", "../../Error", "../maps/MapHelpers"], function(require, exports, RedBlackTreeHelpers, Error, MapHelpers) {
     var RedBlackTree = (function () {
         function RedBlackTree() {
             this.nodeCount = 0;
@@ -169,7 +169,15 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
         };
 
         RedBlackTree.prototype.keys = function () {
-            return new RedBlackTreeHelpers.Iterator(this.root);
+            return new RedBlackTreeHelpers.Iterator(this.root, this.size(), function (node) {
+                return node.key;
+            });
+        };
+
+        RedBlackTree.prototype.values = function () {
+            return new RedBlackTreeHelpers.Iterator(this.root, this.size(), function (node) {
+                return node.value;
+            });
         };
 
         RedBlackTree.prototype.clear = function () {
@@ -194,10 +202,11 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error"], function(
         };
 
         RedBlackTree.prototype.forEach = function (callback) {
+            MapHelpers.forEach(this, callback);
         };
 
         RedBlackTree.prototype.__iterator__ = function () {
-            return new RedBlackTreeHelpers.Iterator(this.root);
+            return this.keys();
         };
 
         RedBlackTree.prototype.isRed = function (node) {

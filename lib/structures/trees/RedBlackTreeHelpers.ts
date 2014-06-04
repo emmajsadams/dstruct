@@ -23,21 +23,20 @@ export class Node<K extends Interfaces.ComparableBaseObject, V extends Interface
 }
 
 // TODO: Ensure comparator is used!
-export class Iterator<K extends Interfaces.ComparableBaseObject, V extends Interfaces.BaseObject> implements Interfaces.Iterator<K> {
+// TODO: Properly type
+export class Iterator<E extends Interfaces.BaseObject> implements Interfaces.Iterator<E> {
     // consider protected?
-    private ancestors = []; //TODO type
-    private cursor:Node<K, V>; //TODO
+    private ancestors = [];
+    private cursor: any; //Node<K, V>;
+    private index: number = -1;
 
     // TODO: replace treebase with interface?
-    constructor(private root:Node<K, V>) {
+    constructor(private root:any, private size: number, private nodeValue: (node: any) => E) {
     }
 
-    private key():K {
-        return this.cursor !== null ? this.cursor.key : null;
-    }
-
-    next():Interfaces.IteratorReturn<K> {
-        if (this.cursor === null) {
+    next():Interfaces.IteratorReturn<E> {
+        this.index++;
+        if (!this.cursor) {
             var root = this.root;
             if (root !== null) {
                 this.minNode(root);
@@ -66,11 +65,11 @@ export class Iterator<K extends Interfaces.ComparableBaseObject, V extends Inter
         }
 
         //TODO: done!
-        return { value: this.key(), done: false };
+        return { value: this.nodeValue(this.cursor), done: this.index >= this.size - 1 };
     }
 
     // TODO: Consider returning the node, and assignign it to curors?
-    private minNode(start:Node<K, V>):void {
+    private minNode(start:any):void {
         while (start.left !== null) {
             this.ancestors.push(start);
             start = start.left;

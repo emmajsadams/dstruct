@@ -3,6 +3,7 @@
 import Interfaces = require("../../Interfaces");
 import RedBlackTreeHelpers = require("./RedBlackTreeHelpers");
 import Error = require("../../Error");
+import MapHelpers = require("../maps/MapHelpers")
 
 // TODO: this could use a lot of improvements. Look at CLR more and the gnu opensource implementation
 // https://www.opensource.apple.com/source/gcc/gcc-5484/libjava/java/util/TreeMap.java
@@ -204,7 +205,15 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
     }
 
     keys():Interfaces.Iterator<K> {
-        return new RedBlackTreeHelpers.Iterator<K, V>(this.root);
+        return new RedBlackTreeHelpers.Iterator<K>(this.root, this.size(), function (node) {
+            return node.key;
+        });
+    }
+
+    values():Interfaces.Iterator<V> {
+        return new RedBlackTreeHelpers.Iterator<V>(this.root, this.size(),function (node) {
+            return node.value;
+        });
     }
 
     clear():void {
@@ -235,12 +244,13 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
     forEach(callback:any):void {
         //TODO! foreach
         //dsa.structs.collectionForEach(this, callback);
+        MapHelpers.forEach(<any>this, callback);
     }
 
     // returns a null iterator
     // call next() or prev() to point to an element
-    __iterator__():RedBlackTreeHelpers.Iterator<K, V> {
-        return new RedBlackTreeHelpers.Iterator<K, V>(this.root);
+    __iterator__(): Interfaces.Iterator<K> {
+        return this.keys();
     }
 
     private isRed(node:RedBlackTreeHelpers.Node<K, V>):boolean {
