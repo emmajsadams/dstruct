@@ -27,16 +27,16 @@ define(["require", "exports"], function(require, exports) {
     exports.Node = Node;
 
     var Iterator = (function () {
-        function Iterator(root) {
+        function Iterator(root, size, nodeValue) {
             this.root = root;
+            this.size = size;
+            this.nodeValue = nodeValue;
             this.ancestors = [];
+            this.index = -1;
         }
-        Iterator.prototype.key = function () {
-            return this.cursor !== null ? this.cursor.key : null;
-        };
-
         Iterator.prototype.next = function () {
-            if (this.cursor === null) {
+            this.index++;
+            if (!this.cursor) {
                 var root = this.root;
                 if (root !== null) {
                     this.minNode(root);
@@ -59,7 +59,7 @@ define(["require", "exports"], function(require, exports) {
                 }
             }
 
-            return { value: this.key(), done: false };
+            return { value: this.nodeValue(this.cursor), done: this.index >= this.size - 1 };
         };
 
         Iterator.prototype.minNode = function (start) {

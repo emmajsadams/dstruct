@@ -16,6 +16,7 @@ interface Boolean {
     compareTo(otherBoolean:Boolean): number;
 }
 
+// TODO: make these non enumerable.
 String.prototype.hashCode = function () {
     var hash = 0, i, chr, len;
     if (this.length == 0) return hash;

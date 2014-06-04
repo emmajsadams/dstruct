@@ -36,6 +36,16 @@
                 expect(tree.get(4) === null);
                 expect(tree.size() === 1);
             });
+
+            it("Should forEach over inserted elements", function () {
+                tree.insert(4, 2);
+                tree.forEach(function(key, value) {
+                    expect(key).toBe(4);
+                    expect(value).toBe(2);
+                });
+
+                expect(tree.size() === 1);
+            });
         });
     }
 

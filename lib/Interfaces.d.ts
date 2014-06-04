@@ -2,23 +2,34 @@
 
 declare module Interfaces {
 
-    //TODO: consider using BaseObject.prototype, make the prototype not enumberable
+    /**
+     * An object which can be compared for equality and hashed. All objects
+     * used with the collections and algorithms must implement this algorithm.
+     * Primitive types are modified in "Primitive" to implement this interface.
+     */
     export interface BaseObject {
-        // TODO: hashCode needs to be unique currently, should not! Consider implementing an actual hashMap instead of using the ES6 collections.
         hashCode(): number;
         equals(otherBaseObject:BaseObject);
     }
 
+    /**
+     * An object which can be compared with another comparable.
+     */
     export interface Comparable {
-        compareTo(otherBaseObject:BaseObject): number;
+        compareTo(otherComparable: Comparable): number;
     }
-    //TODO: is this necessary? typesafe generics seems to not be able to implement multiple interfaces
+
+    /**
+     * An object which implements BaseObject and Comparable.
+     *
+     * NOTE: This class is only necessary because TypeScript has problems with
+     * multiple interfaces for generic arguments
+     */
     export interface ComparableBaseObject extends BaseObject, Comparable {
     }
 
 
     // Use in for ( element in Iterator ) { .. }
-    // throws StopIteration when done
     export interface Iterator<E> {
         next(): IteratorReturn<E>;
     }
@@ -92,38 +103,53 @@ declare module Interfaces {
         (value:V, key:K): void;
     }
 
+    /**
+     * An object that maps keys to values. Duplicate keys are prohibited. Each key
+     * must map to one value. Duplicate values are allowed.
+     */
     export interface Map<K extends BaseObject, V extends BaseObject> extends Iterable {
         clear(): void;
-
-        //TODO: mixin, helper function for shared logic?
         containsKey(key:K): boolean;
         equals(map:Map<K, V>):boolean;
         forEach(callback:ForEachMapCallback<K, V>): void;
         get(key:K): V;
-
-        //TODO: mixin, helper function for shared logic?
         isEmpty(): boolean;
         keys(): Iterator<K>;
         remove(key:K): V;
         set(key:K, value:V): V;
         values(): Iterator<V>;
-
-        // TODO: ensure current standard matches this interface.
         __iterator__(): Iterator<K>;
     }
 
+    /**
+     * A sorted version of a Map. Keys are maintained in sorted order. All other
+     * Map conditions apply.
+     */
     export interface SortedMap<K extends ComparableBaseObject, V extends BaseObject> extends Map<K, V> {}
 
+    /**
+     * A map that maintains the uniqueness of its values as well as the keys. This
+     * allows an inverse view of the map where values are mapped to keys.
+     */
     export interface BiMap<K extends BaseObject, V extends BaseObject> extends Map<K ,V> {
         inverse(): BiMap<V, K>;
     }
 
+    /**
+     * A collection that contains no duplicate elements.
+     */
     export interface Set<E extends BaseObject> extends Collection<E> {
         values(): Iterator<E>;
     }
 
+    /**
+     * A set which maintains the sorted order of elements.
+     */
     export interface SortedSet<E extends BaseObject> extends Set<E> {}
 
+    /**
+     *
+     */
     export interface Stack<E extends BaseObject> extends Collection<E> {
         peek(): E;
         pop(): E;
