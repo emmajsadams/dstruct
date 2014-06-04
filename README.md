@@ -1,8 +1,11 @@
 Data Structures & Algorithms for TypeScript and Javascript
 ====
 
+Current version: 0.0.1. NOT READY FOR PRODUCTION!!
+ * NPM: https://www.npmjs.org/package/tscollections
+ * Bower: http://bower.io/search/?q=tscollections
+
 The missing TypeScript data structures and algorithms library. Based on Java & C# Collections, and Google Guava.
-NOT READY FOR PRODUCTION! API subject to change, library not fully tested, some collections not finished. Check back at the end of June.
 
 Mostly finished and tested.
 * Lists
