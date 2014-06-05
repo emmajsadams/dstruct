@@ -1,7 +1,7 @@
 Data Structures & Algorithms for TypeScript and Javascript
 ====
 
-Current version: 0.0.1. NOT READY FOR PRODUCTION!!
+Current version: 0.0.2. NOT READY FOR PRODUCTION!! Check back at the end of June.
  * NPM: https://www.npmjs.org/package/tscollections
  * Bower: http://bower.io/search/?q=tscollections
 
