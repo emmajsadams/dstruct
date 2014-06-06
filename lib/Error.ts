@@ -1,5 +1,3 @@
-/// <reference path="../References.d.ts"/>
-
 // Exceptions
 export class BaseException {
     error:Error;

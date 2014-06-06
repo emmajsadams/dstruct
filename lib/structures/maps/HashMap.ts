@@ -1,4 +1,3 @@
-/// <reference path="../../../References.d.ts"/>
 
 import Interfaces = require("../../Interfaces");
 import ES6BaseMap = require("./ES6BaseMap");

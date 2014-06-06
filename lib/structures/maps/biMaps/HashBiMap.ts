@@ -1,5 +1,3 @@
-/// <reference path="../../../../References.d.ts"/>
-
 import Interfaces = require("../../../Interfaces");
 import MapHelpers = require("../MapHelpers");
 import Error = require("../../../Error");
