@@ -22,7 +22,7 @@ module.exports = function (config) {
             // Dependencies
             "node_modules/es6-collections/build/es6-collections.js",
 
-            {pattern: 'bin/js/**/*.js', included: false},
+            {pattern: 'bin/amd/**/*.js', included: false},
             {pattern: 'test/**/*Spec.js', included: false},
             'test/TestModule.js'
         ],
