@@ -50,12 +50,10 @@ module.exports = function (grunt) {
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: "bin/js",
-                    paths: {
-
-                    },
+                    baseUrl: "bin/amd",
+                    paths: {},
                     name: "dsa",
-                    out: "bin/dsa.dist.js"
+                    out: "bin/dsa.amd.min.js"
                 }
             }
         },
@@ -232,7 +230,8 @@ module.exports = function (grunt) {
 
     grunt.registerTask('prod', [
         'dev',
-        'ts:commonjs'
+        'ts:commonjs',
+        'requirejs'
     ]);
 
     grunt.registerTask('test', [
