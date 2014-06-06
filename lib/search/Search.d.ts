@@ -1,4 +1,3 @@
-/// <reference path="../../References.d.ts"/>
 
 declare module dsa.search {
 

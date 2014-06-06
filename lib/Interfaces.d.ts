@@ -1,5 +1,3 @@
-/// <reference path="../References.d.ts"/>
-
 declare module Interfaces {
 
     /**
