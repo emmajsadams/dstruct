@@ -195,6 +195,13 @@ declare module Interfaces {
         //values(): Iterator<V>;
         //equals(tree: Tree<E, V>):boolean;
     }
+
+    export interface Graph<K extends ComparableBaseObject, V extends BaseObject> extends Iterable {
+       add(key: K, value?: V, weight?: number): boolean;
+       remove(key: K): boolean;
+       isAdjacent(key: K): boolean;
+       neighbors(key: K): List<K>;
+    }
 }
 
 export = Interfaces;

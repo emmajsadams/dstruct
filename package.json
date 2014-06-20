@@ -2,12 +2,22 @@
   "name": "tscollections",
   "version": "0.0.2",
   "description": "TypeScript collections and algorithms library. Comprehensive, tested, idiomatic interface.",
-  "keywords": ["TypeScript", "collections", "algorithms", "sorting", "searching", "List", "Map", "Set", "Stack"],
+  "keywords": [
+    "TypeScript",
+    "collections",
+    "algorithms",
+    "sorting",
+    "searching",
+    "List",
+    "Map",
+    "Set",
+    "Stack"
+  ],
   "license": "MIT",
   "author": {
-      "name": "Cody Stebbins",
-      "email": "mail@codystebbins.com",
-      "url": "http://codystebbins.com/"
+    "name": "Cody Stebbins",
+    "email": "mail@codystebbins.com",
+    "url": "http://codystebbins.com/"
   },
   "scripts": {
     "install": "bower install && tsd update && grunt bowerInstall"
@@ -37,7 +47,8 @@
     "grunt-requirejs": "^0.4.2",
     "intern": "^1.7.0",
     "requirejs": "^2.1.11",
-    "karma-requirejs": "^0.2.1"
+    "karma-requirejs": "^0.2.1",
+    "browserify": "^4.1.11"
   },
   "dependencies": {
     "es6-collections": "*"
