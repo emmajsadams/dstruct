@@ -13,6 +13,7 @@
     "Set",
     "Stack"
   ],
+  "main": "bin/commonjs/dsa.js",
   "license": "MIT",
   "author": {
     "name": "Cody Stebbins",
