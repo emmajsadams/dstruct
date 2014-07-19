@@ -1,7 +1,7 @@
 {
-    "name": "tscollections",
-    "version": "0.0.2",
-    "main": "path/to/main.css",
+    "name": "dstruct",
+    "version": "0.0.3",
+    "main": "dsa.amd.min.js",
     "ignore": [
         ".jshintrc",
         "**/*.txt"
