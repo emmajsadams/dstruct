@@ -43,7 +43,7 @@ declare module Interfaces {
     export interface Iterable extends BaseObject {
         forEach(callback:(element:any) => void): void;
         size(): number;
-        __iterator__(): any;
+        __iterator__(): Iterator<any>; // not to be used directly, for es6 spec
     }
 
     export interface ForEachCollectionCallback<E extends BaseObject> {
@@ -75,7 +75,6 @@ declare module Interfaces {
         // Although a readonly property would be better, typescript does not support this for interfaces.
         toArray(): E[];
 
-        // not to be used directly, enables using for (var element:E,
         __iterator__(): Iterator<E>;
 
 

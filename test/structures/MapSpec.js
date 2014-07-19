@@ -38,7 +38,11 @@
         });
     }
 
-    define(["structures/maps/HashMap", "structures/maps/TreeMap"], function (HashMap, TreeMap) {
+    define([
+        "structures/maps/HashMap",
+        "structures/maps/TreeMap"], function (
+        HashMap,
+        TreeMap) {
 
         describe("Maps", function () {
 
