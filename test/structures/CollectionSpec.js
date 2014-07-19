@@ -2,32 +2,41 @@
 
     function spec(factory, name) {
         describe(name, function () {
-            var iterable;
+            var collection;
 
             beforeEach(function () {
-                iterable = factory();
+                collection = factory();
             });
             
             it("Should add one number and contain it as the only element.", function () {
-                iterable.add(42);
+                collection.add(42);
 
-                expect(iterable.get(0)).toBe(42);
-                expect(iterable.size()).toBe(1);
+                expect(collection.get(0)).toBe(42);
+                expect(collection.size()).toBe(1);
             });
 
             it("Should add multiple numbers and retain expected order.", function () {
-                iterable.add(4);
-                iterable.add(42);
-                iterable.add(44);
-                iterable.add(1997);
-                iterable.add(18405);
+                collection.add(4);
+                collection.add(42);
+                collection.add(44);
+                collection.add(1997);
+                collection.add(18405);
 
-                expect(iterable.get(0)).toBe(4);
-                expect(iterable.get(1)).toBe(42);
-                expect(iterable.get(2)).toBe(44);
-                expect(iterable.get(3)).toBe(1997);
-                expect(iterable.get(4)).toBe(18405);
-                expect(iterable.size()).toBe(5);
+                expect(collection.get(0)).toBe(4);
+                expect(collection.get(1)).toBe(42);
+                expect(collection.get(2)).toBe(44);
+                expect(collection.get(3)).toBe(1997);
+                expect(collection.get(4)).toBe(18405);
+                expect(collection.size()).toBe(5);
+            });
+
+            it("Should add multiple numbers and clear them.", function () {
+                collection.add(4);
+                collection.add(42);
+                collection.add(44);
+                collection.clear();
+
+                expect(collection.size()).toBe(0);
             });
             
         });
@@ -37,8 +46,7 @@
         "structures/lists/ArrayList",
         "structures/lists/DoublyLinkedList"], function (
         ArrayList,
-        DoublyLinkedList,
-        LinkedListQueue) {
+        DoublyLinkedList) {
 
         describe("Collection", function () {
 

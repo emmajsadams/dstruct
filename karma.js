@@ -10,14 +10,14 @@ module.exports = function (config) {
         // list of files / patterns to load in the browser
         files: [
             // Testing dependencies
-            "bower_components/jasmine/dist/jasmine-standalone-2.0.0/lib/jasmine-2.0.0/jasmine.js",
+            "bower_components/jasmine/lib/jasmine-core/jasmine.js",
             "node_modules/karma-jasmine/lib/adapter.js",
             "bower_components/requirejs/require.js",
             "node_modules/karma-requirejs/lib/adapter.js",
 
 
             // Modifies primitive values to include necessary structures & algorithms functions
-            "bin/js/Primitive.js",
+            "bin/amd/Primitive.js",
 
             // Dependencies
             "node_modules/es6-collections/build/es6-collections.js",
@@ -29,7 +29,7 @@ module.exports = function (config) {
 
         // list of files / patterns to exclude
         exclude: [
-            'bin/js/dsa.js'
+            'bin/amd/dsa.js'
         ],
 
         // web server port
@@ -53,7 +53,7 @@ module.exports = function (config) {
         // - PhantomJS
         // - IE (only Windows)
         browsers: [
-            "Chrome",
+            //"Chrome",
             "Firefox",
             //"IE"
         ],

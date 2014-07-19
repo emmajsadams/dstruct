@@ -13,7 +13,7 @@
 
     define([
         "structures/sets/HashSet",
-        "structures/lists/TreeSet"], function (
+        "structures/sets/TreeSet"], function (
         HashSet,
         TreeSet) {
 
