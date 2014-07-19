@@ -28,7 +28,7 @@
             });
 
             it("Should remove a key inserted.", function () {
-                tree.insert(4, 2);
+                 tree.insert(4, 2);
                 tree.insert(2, 2);
                 tree.insert(4, 4);
                 tree.remove(4);
