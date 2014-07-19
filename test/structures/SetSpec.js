@@ -17,7 +17,7 @@
         HashSet,
         TreeSet) {
 
-        describe("Collection", function () {
+        describe("Set", function () {
 
             spec(function () {
                 return new HashSet();

@@ -44,7 +44,7 @@
         HashMap,
         TreeMap) {
 
-        describe("Maps", function () {
+        describe("Map", function () {
 
             mapSpec(function () {
                 return new HashMap();
