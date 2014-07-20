@@ -153,7 +153,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
         };
 
         DoublyLinkedList.prototype.isEmpty = function () {
-            return this.size() > 0;
+            return IterableHelpers.isEmpty(this);
         };
 
         DoublyLinkedList.prototype.getNodeByElement = function (element) {
