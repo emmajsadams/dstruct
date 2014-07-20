@@ -36,6 +36,10 @@ Mostly finished and tested.
  * RedBlackTree
 
 
+Dependencies
+====
+
+ES6 Map support. Shims are ok. This library is tested against https://github.com/eriwen/es6-map-shim, but any ES6 tested shim should work.
 
 Development guide
 ====
