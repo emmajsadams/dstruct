@@ -40,10 +40,10 @@ declare module Interfaces {
     /**
      * A set of elements that can be iterated over.
      */
-    export interface Iterable extends BaseObject {
-        forEach(callback:(element:any) => void): void;
+    export interface Iterable<E> extends BaseObject {
+        forEach(callback:(element:E) => void): void;
         size(): number;
-        __iterator__(): Iterator<any>; // not to be used directly, for es6 spec
+        __iterator__(): Iterator<E>; // not to be used directly, for es6 spec
     }
 
     export interface ForEachCollectionCallback<E extends BaseObject> {
@@ -53,7 +53,7 @@ declare module Interfaces {
     /**
      * A group of elements. No guarantees of order or allowing duplicates.
      */
-    export interface Collection<E extends BaseObject> extends Iterable {
+    export interface Collection<E extends BaseObject> extends Iterable<E> {
         /**
          * Adds a single occurrence of the specified element to this collection
          * @param element Element to add one occurrence of.
@@ -104,7 +104,7 @@ declare module Interfaces {
      * An object that maps keys to values. Duplicate keys are prohibited. Each key
      * must map to one value. Duplicate values are allowed.
      */
-    export interface Map<K extends BaseObject, V extends BaseObject> extends Iterable {
+    export interface Map<K extends BaseObject, V extends BaseObject> extends Iterable<K> {
         clear(): void;
         containsKey(key:K): boolean;
         equals(map:Map<K, V>):boolean;
@@ -159,6 +159,7 @@ declare module Interfaces {
         push(element:E):void;
     }
 
+    // TODO: does this need to extend anything?
     export interface Table<R extends BaseObject, C extends BaseObject, V extends BaseObject> {
         clear(): void;
         column(columnKey:C): Interfaces.Map<R, V>;
@@ -181,7 +182,7 @@ declare module Interfaces {
         values(): Iterator<V>;
     }
 
-    export interface Tree<K extends ComparableBaseObject, V extends BaseObject> extends Iterable {
+    export interface Tree<K extends ComparableBaseObject, V extends BaseObject> extends Iterable<K> {
         clear(): void;
         forEach(callback:ForEachMapCallback<K, V>): void;
         get(key:K): V;
@@ -195,7 +196,7 @@ declare module Interfaces {
         //equals(tree: Tree<E, V>):boolean;
     }
 
-    export interface Graph<K extends ComparableBaseObject, V extends BaseObject> extends Iterable {
+    export interface Graph<K extends ComparableBaseObject, V extends BaseObject> extends Iterable<K> {
        add(key: K, value?: V, weight?: number): boolean;
        remove(key: K): boolean;
        isAdjacent(key: K): boolean;

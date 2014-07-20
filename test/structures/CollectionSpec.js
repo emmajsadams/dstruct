@@ -50,12 +50,11 @@
             });
 
             it("Should not find in a collection with multiple elements when that element does not exist.", function () {
-                collection.add(4);
                 collection.add(42);
                 collection.add(44);
-                collection.add(1997);
+                collection.add(34384937859);
 
-                expect(collection.has(1997)).toBe(true);
+                expect(collection.has(1814)).toBe(false);
             });
         });
     }

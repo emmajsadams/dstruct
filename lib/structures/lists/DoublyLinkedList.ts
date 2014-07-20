@@ -143,17 +143,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     }
 
     indexOf(element:E):number {
-        Error.checkNotNull(element);
-
-        var i = 0;
-        for (var node in this) {
-            if (element.equals(node.value)) {
-                return i;
-            }
-            i++;
-        }
-
-        return -1;
+        return IterableHelpers.indexOf(this, value);
     }
 
     set(index:number, element:E):E {

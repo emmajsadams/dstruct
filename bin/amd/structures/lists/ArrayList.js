@@ -73,16 +73,7 @@ define(["require", "exports", "../../Error", "../IterableHelpers", "./ArrayListI
         };
 
         ArrayList.prototype.indexOf = function (value) {
-            Error.checkNotNull(value);
-
-            var index = 0;
-            for (var element in this) {
-                if (element.compareTo(value) === 0) {
-                    return index;
-                }
-                index++;
-            }
-            return -1;
+            return IterableHelpers.indexOf(this, value);
         };
 
         ArrayList.prototype.set = function (index, element) {

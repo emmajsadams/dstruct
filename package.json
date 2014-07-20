@@ -21,7 +21,7 @@
     "url": "http://codystebbins.com/"
   },
   "scripts": {
-    "install": "bower install && tsd update && grunt bowerInstall"
+    "install": "bower install && tsd update"
   },
   "devDependencies": {
     "grunt-contrib-clean": "*",

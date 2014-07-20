@@ -87,16 +87,7 @@ class ArrayList<E extends Interfaces.BaseObject> implements Interfaces.List<E> {
     }
 
     indexOf(value:E):number {
-        Error.checkNotNull(value);
-
-        var index = 0;
-        for (var element in this) {
-            if (element.compareTo(value) === 0) {
-                return index;
-            }
-            index++;
-        }
-        return -1;
+        return IterableHelpers.indexOf(this, value);
     }
 
     set(index:number, element:E):E {
