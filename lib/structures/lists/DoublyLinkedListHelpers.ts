@@ -12,11 +12,18 @@ export class Iterator<E extends Interfaces.BaseObject> implements Interfaces.Ite
     }
 
     next():Interfaces.IteratorReturn<E> {
-        var node = this.currentNode;
-        this.currentNode = this.currentNode.next;
-        return {
-            value: this.currentNode.value,
-            done: this.currentNode.next === null
-        };
+        if (this.currentNode && this.currentNode !== undefined) {
+            var next = {
+                value: this.currentNode.value,
+                done: false
+            };
+            this.currentNode = this.currentNode.next;
+            return next;
+        } else {
+            return {
+                value: null,
+                done: true
+            }
+        }
     }
 }

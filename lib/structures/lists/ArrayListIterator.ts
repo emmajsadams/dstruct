@@ -8,12 +8,12 @@ class ArrayListIterator<E extends Interfaces.BaseObject> implements Interfaces.I
     }
 
     next():Interfaces.IteratorReturn<E> {
-        var element = this.array[this.index];
+        var next = this.index < this.array.length
+            ? { value: this.array[this.index], done: false }
+            : { value: null, done: true };
+
         this.index++;
-        return {
-            value: element,
-            done: this.index >= this.array.length - 1
-        };
+        return next;
     }
 }
 
