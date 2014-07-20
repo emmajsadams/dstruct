@@ -5,12 +5,10 @@ define(["require", "exports"], function(require, exports) {
             this.index = 0;
         }
         ArrayListIterator.prototype.next = function () {
-            var element = this.array[this.index];
+            var next = this.index < this.array.length ? { value: this.array[this.index], done: false } : { value: null, done: true };
+
             this.index++;
-            return {
-                value: element,
-                done: this.index >= this.array.length - 1
-            };
+            return next;
         };
         return ArrayListIterator;
     })();

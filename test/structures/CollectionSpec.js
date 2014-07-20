@@ -40,7 +40,16 @@
                 expect(collection.isEmpty()).toBe(true);
             });
 
-            it("Should find an element added to a collection that contains multiple elements.", function () {
+            it("Should find an element at the beginning of a collection that contains multiple elements.", function () {
+                collection.add(4);
+                collection.add(42);
+                collection.add(44);
+                collection.add(1997);
+
+                expect(collection.has(4)).toBe(true);
+            });
+
+            it("Should find an element at the end of a collection that contains multiple elements.", function () {
                 collection.add(4);
                 collection.add(42);
                 collection.add(44);
@@ -49,6 +58,18 @@
                 expect(collection.has(1997)).toBe(true);
             });
 
+            it("Should find an element not at the end or beginning of a collection that contains multiple elements.", function () {
+                collection.add(4);
+                collection.add(42);
+                collection.add(44);
+                collection.add(44);
+                collection.add(47);
+                collection.add(1997);
+
+                expect(collection.has(47)).toBe(true);
+            });
+
+            // TODO: begin, end, and n case for the not existence?
             it("Should not find in a collection with multiple elements when that element does not exist.", function () {
                 collection.add(42);
                 collection.add(44);

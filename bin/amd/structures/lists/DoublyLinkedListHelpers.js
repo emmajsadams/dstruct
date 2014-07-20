@@ -14,12 +14,19 @@ define(["require", "exports"], function(require, exports) {
             this.currentNode = currentNode;
         }
         Iterator.prototype.next = function () {
-            var node = this.currentNode;
-            this.currentNode = this.currentNode.next;
-            return {
-                value: this.currentNode.value,
-                done: this.currentNode.next === null
-            };
+            if (this.currentNode && this.currentNode !== undefined) {
+                var next = {
+                    value: this.currentNode.value,
+                    done: false
+                };
+                this.currentNode = this.currentNode.next;
+                return next;
+            } else {
+                return {
+                    value: null,
+                    done: true
+                };
+            }
         };
         return Iterator;
     })();
