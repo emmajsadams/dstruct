@@ -19,7 +19,7 @@ module.exports = function (config) {
             "node_modules/karma-requirejs/lib/adapter.js",
 
 
-            // Modifies primitive values to include necessary structures & algorithms functions
+            // TODO: remove this, include in script. Modifies primitive values to include necessary structures & algorithms functions
             "bin/amd/Primitive.js",
 
             {pattern: 'bin/amd/**/*.js', included: false},

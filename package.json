@@ -48,9 +48,9 @@
     "grunt-requirejs": "^0.4.2",
     "requirejs": "^2.1.11",
     "karma-requirejs": "^0.2.1",
-    "browserify": "^4.1.11"
+    "browserify": "^4.1.11",
+    "es6-map-shim": "*"
   },
   "dependencies": {
-    "es6-map-shim": "*"
   }
 }
