@@ -7,7 +7,6 @@
             beforeEach(function () {
                 multiSet = factory();
             });
-
         });
     }
 

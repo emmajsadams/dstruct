@@ -11,7 +11,7 @@
         });
     }
 
-    define(["structures/queue/LinkedListQueue"], function (LinkedListQueue) {
+    define(["structures/queues/LinkedListQueue"], function (LinkedListQueue) {
 
         describe("Queue", function () {
 
