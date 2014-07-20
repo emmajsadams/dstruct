@@ -1,4 +1,3 @@
-
 import Interfaces = require("../../Interfaces");
 
 export class Node<E extends Interfaces.BaseObject> {

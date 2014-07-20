@@ -1,4 +1,3 @@
-
 import Interfaces = require("../../Interfaces");
 import DoublyLinkedListHelpers = require("./DoublyLinkedListHelpers");
 import Error = require("../../Error");

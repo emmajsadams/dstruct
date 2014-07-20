@@ -61,6 +61,7 @@ declare module Interfaces {
          */
         add(element:E): boolean;
         clear(): void;
+        // If multiple element, first one is removed.
         remove(element:E): boolean;
 
         // TODO: should equals be a collection member, or a utility function? leaning towards utility for ease.

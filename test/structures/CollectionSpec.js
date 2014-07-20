@@ -40,6 +40,10 @@
                 expect(collection.isEmpty()).toBe(true);
             });
 
+            // .has()
+
+            // TODO: add cases for unique, versus non unique.?
+
             it("Should find an element at the beginning of a collection that contains multiple elements.", function () {
                 collection.add(4);
                 collection.add(42);
@@ -77,6 +81,37 @@
 
                 expect(collection.has(1814)).toBe(false);
             });
+
+            // END: .has()
+
+
+            // .remove()
+
+            it("Should remove a unique element not at the end or beginning of a collection with multiple elements.", function () {
+                collection.add(4);
+                collection.add(42);
+                collection.add(44);
+                collection.add(47);
+                collection.add(1997);
+
+                expect(collection.remove(44)).toBe(true);
+                expect(collection.has(44)).toBe(false);
+                expect(collection.size()).toBe(4);
+            });
+
+            it("Should remove a unique element at the beginning of a collection with multiple elements.", function () {
+                collection.add(4);
+                collection.add(590678);
+                collection.add(45890473);
+                collection.add(495768);
+                collection.add(80495890);
+
+                expect(collection.remove(4)).toBe(true);
+                expect(collection.has(4)).toBe(false);
+                expect(collection.size()).toBe(4);
+            });
+
+            // END: .remove()
         });
     }
 

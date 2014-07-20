@@ -9,6 +9,9 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
+            // Dependencies
+            "node_modules/es6-map-shim/es6-map-shim.js",
+
             // Testing dependencies
             "bower_components/jasmine/lib/jasmine-core/jasmine.js",
             "node_modules/karma-jasmine/lib/adapter.js",
@@ -18,9 +21,6 @@ module.exports = function (config) {
 
             // Modifies primitive values to include necessary structures & algorithms functions
             "bin/amd/Primitive.js",
-
-            // Dependencies
-            "node_modules/es6-collections/build/es6-collections.js",
 
             {pattern: 'bin/amd/**/*.js', included: false},
             {pattern: 'test/**/*Spec.js', included: false},
@@ -53,8 +53,8 @@ module.exports = function (config) {
         // - PhantomJS
         // - IE (only Windows)
         browsers: [
-            //"Chrome",
-            "Firefox",
+            "Chrome",
+            "Firefox"
             //"IE"
         ],
 
