@@ -167,12 +167,11 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
     }
 
     toArray():E[] {
-        // TODO: type properly
         return IterableHelpers.toArray<E>(this);
     }
 
     isEmpty():boolean {
-        return this.size() > 0;
+        return IterableHelpers.isEmpty(this);
     }
 
     private getNodeByElement(element:E):DoublyLinkedListHelpers.Node<E> {

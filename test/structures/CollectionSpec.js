@@ -37,8 +37,26 @@
                 collection.clear();
 
                 expect(collection.size()).toBe(0);
+                expect(collection.isEmpty()).toBe(true);
             });
-            
+
+            it("Should find an element added to a collection that contains multiple elements.", function () {
+                collection.add(4);
+                collection.add(42);
+                collection.add(44);
+                collection.add(1997);
+
+                expect(collection.has(1997)).toBe(true);
+            });
+
+            it("Should not find in a collection with multiple elements when that element does not exist.", function () {
+                collection.add(4);
+                collection.add(42);
+                collection.add(44);
+                collection.add(1997);
+
+                expect(collection.has(1997)).toBe(true);
+            });
         });
     }
 
