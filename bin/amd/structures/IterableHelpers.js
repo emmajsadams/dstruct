@@ -55,4 +55,24 @@ define(["require", "exports", "../Error"], function(require, exports, Error) {
         }
     }
     exports.forEach = forEach;
+
+    function indexOf(iterable, value) {
+        Error.checkNotNull(iterable);
+        Error.checkNotNull(value);
+
+        var index = 0;
+        var collectionIterator = iterable.__iterator__();
+        var collectionNext = collectionIterator.next();
+        while (!collectionNext.done) {
+            if (value.equals(collectionNext.value)) {
+                return index;
+            }
+
+            collectionNext = collectionIterator.next();
+            index++;
+        }
+
+        return -1;
+    }
+    exports.indexOf = indexOf;
 });

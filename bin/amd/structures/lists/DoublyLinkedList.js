@@ -125,17 +125,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
         };
 
         DoublyLinkedList.prototype.indexOf = function (element) {
-            Error.checkNotNull(element);
-
-            var i = 0;
-            for (var node in this) {
-                if (element.equals(node.value)) {
-                    return i;
-                }
-                i++;
-            }
-
-            return -1;
+            return IterableHelpers.indexOf(this, value);
         };
 
         DoublyLinkedList.prototype.set = function (index, element) {
