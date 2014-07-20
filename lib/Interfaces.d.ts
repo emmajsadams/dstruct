@@ -41,7 +41,8 @@ declare module Interfaces {
      * A set of elements that can be iterated over.
      */
     export interface Iterable<E> extends BaseObject {
-        forEach(callback:(element:E) => void): void;
+        // Todo, fix this typing
+        forEach(callback:any): void;
         size(): number;
         __iterator__(): Iterator<E>; // not to be used directly, for es6 spec
     }
