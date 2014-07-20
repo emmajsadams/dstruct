@@ -142,7 +142,7 @@ class DoublyLinkedList<E extends Interfaces.BaseObject> implements Interfaces.Li
         return this.indexOf(element) >= 0;
     }
 
-    indexOf(element:E):number {
+    indexOf(value:E):number {
         return IterableHelpers.indexOf(this, value);
     }
 

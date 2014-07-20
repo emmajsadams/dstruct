@@ -124,7 +124,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
             return this.indexOf(element) >= 0;
         };
 
-        DoublyLinkedList.prototype.indexOf = function (element) {
+        DoublyLinkedList.prototype.indexOf = function (value) {
             return IterableHelpers.indexOf(this, value);
         };
 

@@ -42,7 +42,7 @@ export function toArray<E extends Interfaces.BaseObject>(iterable:Interfaces.Ite
     return array;
 }
 
-export function isEmpty(iterable:Interfaces.Iterable) {
+export function isEmpty(iterable:Interfaces.Iterable<any>) {
     return iterable.size() === 0;
 }
 
