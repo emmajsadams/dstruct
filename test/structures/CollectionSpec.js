@@ -7,7 +7,7 @@
             beforeEach(function () {
                 collection = factory();
             });
-            
+
             it("Should add one number and contain it as the only element.", function () {
                 collection.add(42);
 
@@ -108,6 +108,30 @@
                 expect(collection.remove(4)).toBe(true);
                 expect(collection.has(4)).toBe(false);
                 expect(collection.size()).toBe(4);
+            });
+
+            it("Should remove the only element(number) that exists in the collection", function() {
+                collection.add(24);
+
+                expect(collection.remove(24)).toBe(true);
+                expect(collection.size()).toBe(0);
+            });
+
+            it("Should remove the only element(string) that exists in the collection", function() {
+                collection.add("jibb");
+
+                expect(collection.remove("jibb")).toBe(true);
+                expect(collection.size()).toBe(0);
+            });
+
+            it("Should remove the last element of the collection with multiple elements inside", function() {
+                collection.add(2335);
+                collection.add(2854689);
+                collection.add(0);
+
+                expect(collection.size()).toBe(3);
+                expect(collection.remove(0)).toBe(true);
+                expect(collection.size()).toBe(2);
             });
 
             /*
