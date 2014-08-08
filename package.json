@@ -49,7 +49,8 @@
     "requirejs": "^2.1.11",
     "karma-requirejs": "^0.2.1",
     "browserify": "^4.1.11",
-    "es6-map-shim": "*"
+    "es6-map-shim": "*",
+    "lodash": "*"
   },
   "dependencies": {
   }
