@@ -8,6 +8,14 @@
                 queue = factory();
             });
 
+            it("peek should return the element at index 0", function() {
+                queue.push(10);
+                queue.push(15);
+                queue.push(25);
+
+                expect(queue.peek()).toBe(10);
+            });
+
         });
     }
 
