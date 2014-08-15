@@ -1,6 +1,6 @@
 {
   "name": "dstruct",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "TypeScript collections and algorithms library. Comprehensive, tested, idiomatic interface.",
   "keywords": [
     "TypeScript",

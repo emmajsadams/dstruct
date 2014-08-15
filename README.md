@@ -3,7 +3,7 @@ dstruct (Alpha)
 
 Data Structures & Algorithms for TypeScript and Javascript. Based on Java & C# Collections, and Google Guava
 
-Current version: 0.0.3 (alpha). Currently not recommended for production. Moonlit project that is accepting contributors of all skill levels.
+Current version: 0.0.4 (alpha). Currently not recommended for production. Moonlit project that is accepting contributors of all skill levels.
  * NPM: https://www.npmjs.org/package/dstruct
  * Bower: http://bower.io/search/?q=dstruct
 
