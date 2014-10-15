@@ -15,7 +15,7 @@ define(["require", "exports", "../../Error"], function(require, exports, Error) 
             do {
                 key = keys.next();
                 var value = values.next();
-                callback(key.value, value.value);
+                callback(value.value, key.value);
             } while(!key.done);
         }
     }

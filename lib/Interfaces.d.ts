@@ -190,7 +190,8 @@ declare module Interfaces {
         get(key:K): V;
         isEmpty(): boolean;
         keys(): Iterator<K>;
-        remove(key:K): boolean;
+        values(): Iterator<V>;
+        remove(key:K): V;
         insert(key:K, value:V): void;
 
         // TODO: add these

@@ -88,7 +88,7 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error", "../maps/M
             Error.checkNotNull(key);
 
             if (this.root === null) {
-                return false;
+                return null;
             }
 
             var head = new RedBlackTreeHelpers.Node();
@@ -157,7 +157,7 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error", "../maps/M
                 this.root.red = false;
             }
 
-            return found !== null;
+            return found.value;
         };
 
         RedBlackTree.prototype.size = function () {
