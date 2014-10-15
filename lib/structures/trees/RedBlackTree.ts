@@ -110,11 +110,11 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
     }
 
     //TODO: return value?
-    remove(key:K) {
+    remove(key:K): V {
         Error.checkNotNull(key);
 
         if (this.root === null) {
-            return false;
+            return null;
         }
 
         var head = new RedBlackTreeHelpers.Node<K, V>(); // fake tree root
@@ -192,7 +192,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
             this.root.red = false;
         }
 
-        return found !== null;
+        return found.value;
     }
 
     size():number {
@@ -210,7 +210,7 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
     }
 
     values():Interfaces.Iterator<V> {
-        return new RedBlackTreeHelpers.Iterator<V>(this.root, this.size(),function (node) {
+        return new RedBlackTreeHelpers.Iterator<V>(this.root, this.size(), function (node) {
             return node.value;
         });
     }
@@ -241,8 +241,6 @@ class RedBlackTree<K extends Interfaces.ComparableBaseObject, V extends Interfac
     // calls cb on each node's data, in order
     // TODO: Type
     forEach(callback:any):void {
-        //TODO! foreach
-        //dsa.structs.collectionForEach(this, callback);
         MapHelpers.forEach(<any>this, callback);
     }
 

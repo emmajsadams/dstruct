@@ -1,4 +1,3 @@
-
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 
@@ -25,7 +24,7 @@ export function forEach<K extends Interfaces.BaseObject, V extends Interfaces.Ba
         do {
             key = keys.next();
             var value = values.next();
-            callback(<any>key.value, <any>value.value); //TODO: remove any,
+            callback(value.value, key.value);
         } while (!key.done);
     }
 }

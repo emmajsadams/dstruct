@@ -1,4 +1,3 @@
-
 import Interfaces = require("../../Interfaces");
 import Error = require("../../Error");
 import MapHelpers = require("./MapHelpers");
@@ -43,14 +42,11 @@ class TreeMap<K extends Interfaces.ComparableBaseObject, V extends Interfaces.Ba
     }
 
     keys():Interfaces.Iterator<K> {
-        //TODO!
-        return null;
+        return this.tree.keys();
     }
 
     remove(key:K):V {
-        //return this.tree.remove(key);
-        //TODO return value, not boolean
-        return null;
+        return this.tree.remove(key);
     }
 
     set(key:K, value:V):V {
@@ -63,8 +59,7 @@ class TreeMap<K extends Interfaces.ComparableBaseObject, V extends Interfaces.Ba
     }
 
     values():Interfaces.Iterator<V> {
-        //TODO!
-        return null;
+        return this.tree.values();
     }
 
     // not to be used directly

@@ -33,11 +33,11 @@ define(["require", "exports", "../../Error", "./MapHelpers", "../trees/RedBlackT
         };
 
         TreeMap.prototype.keys = function () {
-            return null;
+            return this.tree.keys();
         };
 
         TreeMap.prototype.remove = function (key) {
-            return null;
+            return this.tree.remove(key);
         };
 
         TreeMap.prototype.set = function (key, value) {
@@ -50,7 +50,7 @@ define(["require", "exports", "../../Error", "./MapHelpers", "../trees/RedBlackT
         };
 
         TreeMap.prototype.values = function () {
-            return null;
+            return this.tree.values();
         };
 
         TreeMap.prototype.__iterator__ = function () {

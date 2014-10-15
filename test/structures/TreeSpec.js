@@ -28,7 +28,7 @@
             });
 
             it("Should remove a key inserted.", function () {
-                 tree.insert(4, 2);
+                tree.insert(4, 2);
                 tree.insert(2, 2);
                 tree.insert(4, 4);
                 tree.remove(4);
@@ -39,7 +39,7 @@
 
             it("Should forEach over inserted elements", function () {
                 tree.insert(4, 2);
-                tree.forEach(function(key, value) {
+                tree.forEach(function(value, key) {
                     expect(key).toBe(4);
                     expect(value).toBe(2);
                 });
