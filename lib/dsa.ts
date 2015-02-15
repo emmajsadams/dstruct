@@ -40,31 +40,31 @@ import ArrayStack = require("./structures/stacks/ArrayStack");
 // TODO! - Not ready for production
 
 var dsa = {
-    'Lists': {
-        'ArrayList': ArrayList,
-        'DoublyLinkedList': DoublyLinkedList
-    },
-    'Maps': {
-        'HashMap': HashMap,
-        'TreeMap': TreeMap
-    },
-    'BiMaps': {
-        'HashBiMap': HashBiMap
-    },
-    'MultiSet': {
-        'HashMultiSet': HashMultiSet,
-        'TreeMultiSet': TreeMultiSet
-    },
-    'Queues': {
-        'LinkedListQueue': LinkedListQueue
-    },
-    'Sets': {
-        'HashSet': HashSet,
-        'TreeSet': TreeSet
-    },
-    'Stacks': {
-        'ArrayStack': ArrayStack
-    }
+  'Lists': {
+    'ArrayList': ArrayList,
+    'DoublyLinkedList': DoublyLinkedList
+  },
+  'Maps': {
+    'HashMap': HashMap,
+    'TreeMap': TreeMap
+  },
+  'BiMaps': {
+    'HashBiMap': HashBiMap
+  },
+  'MultiSet': {
+    'HashMultiSet': HashMultiSet,
+    'TreeMultiSet': TreeMultiSet
+  },
+  'Queues': {
+    'LinkedListQueue': LinkedListQueue
+  },
+  'Sets': {
+    'HashSet': HashSet,
+    'TreeSet': TreeSet
+  },
+  'Stacks': {
+    'ArrayStack': ArrayStack
+  }
 };
 
 export = dsa;

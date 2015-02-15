@@ -4,81 +4,81 @@ import Error = require("../../../Error");
 import IterableHelpers = require("../../IterableHelpers");
 import HashMap = require("../HashMap");
 
-class HashBiMap<K extends Interfaces.BaseObject, V extends Interfaces.BaseObject> implements Interfaces.BiMap<K, V> {
+class HashBiMap<K extends Interfaces.IBaseObject, V extends Interfaces.IBaseObject> implements Interfaces.IBiMap<K, V> {
 
-    constructor(private map:HashMap<K, V> = new HashMap<K, V>(), private inverseMap:HashMap<V, K> = new HashMap<V, K>()) {
+  constructor(private map: HashMap<K, V> = new HashMap<K, V>(), private inverseMap: HashMap<V, K> = new HashMap<V, K>()) {
+  }
+
+  containsKey(key: K): boolean {
+    return this.map.containsKey(key);
+  }
+
+  hashCode(): number {
+    Error.notImplemented();
+    return null;
+  }
+
+  equals(biMap: Interfaces.IBiMap<K, V>): boolean {
+    return MapHelpers.equals(this, biMap);
+  }
+
+  get(key: K): V {
+    return this.map.get(key);
+  }
+
+  remove(key: K): V {
+    Error.checkNotNull(key);
+
+    // Check for the key/value pair, return null if not found
+    var value = this.map.get(key);
+    if (!value) {
+      return null;
     }
 
-    containsKey(key:K):boolean {
-        return this.map.containsKey(key);
-    }
+    this.map.remove(key);
+    this.inverseMap.remove(value);
 
-    hashCode(): number {
-        Error.notImplemented();
-        return null;
-    }
+    return value;
+  }
 
-    equals(biMap:Interfaces.BiMap<K, V>):boolean {
-        return MapHelpers.equals(this, biMap);
-    }
+  set(key: K, value: V): V {
+    this.inverseMap.set(value, key);
+    return this.map.set(key, value);
+  }
 
-    get(key:K):V {
-        return this.map.get(key);
-    }
+  size(): number {
+    return this.map.size();
+  }
 
-    remove(key:K):V {
-        Error.checkNotNull(key);
+  isEmpty(): boolean {
+    return IterableHelpers.isEmpty(this);
+  }
 
-        // Check for the key/value pair, return null if not found
-        var value = this.map.get(key);
-        if (!value) {
-            return null;
-        }
+  inverse(): Interfaces.IBiMap<V, K> {
+    // TODO: return a copy, or immutable/protected?
+    return new HashBiMap<V, K>(this.inverseMap, this.map);
+  }
 
-        this.map.remove(key);
-        this.inverseMap.remove(value);
+  clear(): void {
+    this.map.clear();
+    this.inverseMap.clear();
+  }
 
-        return value;
-    }
+  forEach(callback: Interfaces.IForEachMapCallback<K, V>): void {
+    this.map.forEach(callback);
+  }
 
-    set(key:K, value:V):V {
-        this.inverseMap.set(value, key);
-        return this.map.set(key, value);
-    }
+  keys(): Interfaces.IIterator<K> {
+    return this.map.keys();
+  }
 
-    size():number {
-        return this.map.size();
-    }
+  values(): Interfaces.IIterator<V> {
+    return this.map.values();
+  }
 
-    isEmpty():boolean {
-        return IterableHelpers.isEmpty(this);
-    }
-
-    inverse():Interfaces.BiMap<V, K> {
-        // TODO: return a copy, or immutable/protected?
-        return new HashBiMap<V, K>(this.inverseMap, this.map);
-    }
-
-    clear():void {
-        this.map.clear();
-        this.inverseMap.clear();
-    }
-
-    forEach(callback:Interfaces.ForEachMapCallback<K, V>):void {
-        this.map.forEach(callback);
-    }
-
-    keys():Interfaces.Iterator<K> {
-        return this.map.keys();
-    }
-
-    values():Interfaces.Iterator<V> {
-        return this.map.values();
-    }
-
-    __iterator__():Interfaces.Iterator<K> {
-        return this.map.keys();
-    }
+  __iterator__(): Interfaces.IIterator<K> {
+    return this.map.keys();
+  }
 
 }
 
