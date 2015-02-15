@@ -1,4 +1,4 @@
-define(["require", "exports", "./structures/lists/ArrayList", "./structures/lists/DoublyLinkedList", "./structures/maps/HashMap", "./structures/maps/TreeMap", "./structures/maps/biMaps/HashBiMap", "./structures/multiSets/HashMultiSet", "./structures/multiSets/TreeMultiSet", "./structures/queues/LinkedListQueue", "./structures/sets/HashSet", "./structures/sets/TreeSet", "./structures/stacks/ArrayStack"], function(require, exports, ArrayList, DoublyLinkedList, HashMap, TreeMap, HashBiMap, HashMultiSet, TreeMultiSet, LinkedListQueue, HashSet, TreeSet, ArrayStack) {
+define(["require", "exports", "./structures/lists/ArrayList", "./structures/lists/DoublyLinkedList", "./structures/maps/HashMap", "./structures/maps/TreeMap", "./structures/maps/biMaps/HashBiMap", "./structures/multiSets/HashMultiSet", "./structures/multiSets/TreeMultiSet", "./structures/queues/LinkedListQueue", "./structures/sets/HashSet", "./structures/sets/TreeSet", "./structures/stacks/ArrayStack"], function (require, exports, ArrayList, DoublyLinkedList, HashMap, TreeMap, HashBiMap, HashMultiSet, TreeMultiSet, LinkedListQueue, HashSet, TreeSet, ArrayStack) {
     var dsa = {
         'Lists': {
             'ArrayList': ArrayList,
@@ -26,7 +26,5 @@ define(["require", "exports", "./structures/lists/ArrayList", "./structures/list
             'ArrayStack': ArrayStack
         }
     };
-
-    
     return dsa;
 });

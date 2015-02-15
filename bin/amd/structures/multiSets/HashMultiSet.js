@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "../maps/HashMap", "./BaseMultiSet"], function(require, exports, HashMap, BaseMultiSet) {
+define(["require", "exports", "../maps/HashMap", "./BaseMultiSet"], function (require, exports, HashMap, BaseMultiSet) {
     var HashMultiSet = (function (_super) {
         __extends(HashMultiSet, _super);
         function HashMultiSet() {
@@ -12,7 +12,5 @@ define(["require", "exports", "../maps/HashMap", "./BaseMultiSet"], function(req
         }
         return HashMultiSet;
     })(BaseMultiSet);
-
-    
     return HashMultiSet;
 });

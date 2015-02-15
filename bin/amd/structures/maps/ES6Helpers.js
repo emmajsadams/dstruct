@@ -1,6 +1,4 @@
-define(["require", "exports"], function(require, exports) {
-    
-
+define(["require", "exports"], function (require, exports) {
     var Iterator = (function () {
         function Iterator(iterator, valueCallback) {
             this.iterator = iterator;
@@ -13,7 +11,6 @@ define(["require", "exports"], function(require, exports) {
                 this.done = next.done;
                 this.currentEntry = next.value;
             }
-
             return {
                 value: this.valueCallback(this.currentEntry),
                 done: !!(this.currentEntry.next === null && this.done)

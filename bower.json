@@ -1,15 +1,15 @@
 {
-    "name": "dstruct",
-    "version": "0.0.3",
-    "main": "dsa.amd.min.js",
-    "ignore": [
-        ".jshintrc",
-        "**/*.txt"
-    ],
-    "dependencies": {
-        "requirejs": "*",
-        "jasmine": "*"
-    },
-    "devDependencies": {
-    }
+  "name": "dstruct",
+  "version": "0.0.3",
+  "main": "dsa.amd.min.js",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "requirejs": "~2.1.16"
+  },
+  "devDependencies": {
+    "jasmine": "~2.2.1"
+  }
 }
