@@ -169,13 +169,13 @@ define(["require", "exports", "./RedBlackTreeHelpers", "../../Error", "../maps/M
         };
 
         RedBlackTree.prototype.keys = function () {
-            return new RedBlackTreeHelpers.Iterator(this.root, this.size(), function (node) {
+            return new RedBlackTreeHelpers.IIterator(this.root, this.size(), function (node) {
                 return node.key;
             });
         };
 
         RedBlackTree.prototype.values = function () {
-            return new RedBlackTreeHelpers.Iterator(this.root, this.size(), function (node) {
+            return new RedBlackTreeHelpers.IIterator(this.root, this.size(), function (node) {
                 return node.value;
             });
         };

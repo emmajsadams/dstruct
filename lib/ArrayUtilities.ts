@@ -1,5 +1,5 @@
-export function clear(array:any[]) {
-    while (array.length > 0) {
-        array.pop();
-    }
+export function clear(array: any[]) {
+  while (array.length > 0) {
+    array.pop();
+  }
 }

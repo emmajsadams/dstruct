@@ -4,7 +4,7 @@ define(["require", "exports", "./DoublyLinkedListHelpers", "../../Error", "../It
             this.count = 0;
         }
         DoublyLinkedList.prototype.__iterator__ = function () {
-            return new DoublyLinkedListHelpers.Iterator(this.rootNode);
+            return new DoublyLinkedListHelpers.IIterator(this.rootNode);
         };
 
         DoublyLinkedList.prototype.add = function (element) {
