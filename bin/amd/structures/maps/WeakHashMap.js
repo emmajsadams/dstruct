@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "./ES6BaseMap"], function(require, exports, ES6BaseMap) {
+define(["require", "exports", "./ES6BaseMap"], function (require, exports, ES6BaseMap) {
     var WeakHashMap = (function (_super) {
         __extends(WeakHashMap, _super);
         function WeakHashMap() {
@@ -12,7 +12,5 @@ define(["require", "exports", "./ES6BaseMap"], function(require, exports, ES6Bas
         }
         return WeakHashMap;
     })(ES6BaseMap);
-
-    
     return WeakHashMap;
 });

@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "../lists/ArrayList"], function(require, exports, ArrayList) {
+define(["require", "exports", "../lists/ArrayList"], function (require, exports, ArrayList) {
     var ArrayStack = (function (_super) {
         __extends(ArrayStack, _super);
         function ArrayStack() {
@@ -13,17 +13,13 @@ define(["require", "exports", "../lists/ArrayList"], function(require, exports, 
         ArrayStack.prototype.peek = function () {
             return this.get(this.size() - 1);
         };
-
         ArrayStack.prototype.pop = function () {
             return this.removeAtIndex(this.size() - 1);
         };
-
         ArrayStack.prototype.push = function (element) {
             this.add(element);
         };
         return ArrayStack;
     })(ArrayList);
-
-    
     return ArrayStack;
 });

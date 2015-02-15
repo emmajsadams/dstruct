@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "../lists/DoublyLinkedList"], function(require, exports, DoublyLinkedList) {
+define(["require", "exports", "../lists/DoublyLinkedList"], function (require, exports, DoublyLinkedList) {
     var LinkedListQueue = (function (_super) {
         __extends(LinkedListQueue, _super);
         function LinkedListQueue() {
@@ -13,17 +13,13 @@ define(["require", "exports", "../lists/DoublyLinkedList"], function(require, ex
         LinkedListQueue.prototype.peek = function () {
             return this.get(0);
         };
-
         LinkedListQueue.prototype.pop = function () {
             return this.removeAtIndex(0);
         };
-
         LinkedListQueue.prototype.push = function (element) {
             this.add(element);
         };
         return LinkedListQueue;
     })(DoublyLinkedList);
-
-    
     return LinkedListQueue;
 });

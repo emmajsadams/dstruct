@@ -1,10 +1,10 @@
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
     var Node = (function () {
         function Node(key, value, left, right) {
-            if (typeof key === "undefined") { key = null; }
-            if (typeof value === "undefined") { value = null; }
-            if (typeof left === "undefined") { left = null; }
-            if (typeof right === "undefined") { right = null; }
+            if (key === void 0) { key = null; }
+            if (value === void 0) { value = null; }
+            if (left === void 0) { left = null; }
+            if (right === void 0) { right = null; }
             this.key = key;
             this.value = value;
             this.left = left;
@@ -14,18 +14,17 @@ define(["require", "exports"], function(require, exports) {
         Node.prototype.getChild = function (right) {
             return right ? this.right : this.left;
         };
-
         Node.prototype.setChild = function (right, node) {
             if (right) {
                 this.right = node;
-            } else {
+            }
+            else {
                 this.left = node;
             }
         };
         return Node;
     })();
     exports.Node = Node;
-
     var Iterator = (function () {
         function Iterator(root, size, nodeValue) {
             this.root = root;
@@ -41,27 +40,28 @@ define(["require", "exports"], function(require, exports) {
                 if (root !== null) {
                     this.minNode(root);
                 }
-            } else {
+            }
+            else {
                 if (this.cursor.right === null) {
                     var save;
                     do {
                         save = this.cursor;
                         if (this.ancestors.length) {
                             this.cursor = this.ancestors.pop();
-                        } else {
+                        }
+                        else {
                             this.cursor = null;
                             break;
                         }
-                    } while(this.cursor.right === save);
-                } else {
+                    } while (this.cursor.right === save);
+                }
+                else {
                     this.ancestors.push(this.cursor);
                     this.minNode(this.cursor.right);
                 }
             }
-
             return { value: this.nodeValue(this.cursor), done: this.index >= this.size - 1 };
         };
-
         Iterator.prototype.minNode = function (start) {
             while (start.left !== null) {
                 this.ancestors.push(start);

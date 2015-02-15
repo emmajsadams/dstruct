@@ -49,6 +49,9 @@ Setup
 * npm install -g tsd (if not installed)
 * npm install
 
+Style
+* Using these guidelines https://github.com/Platypi/style_typescript. tslint.json is copied from the guidelines as well to automate enforcement.
+
 Notes
 * Anytime changes are made to the lib directory (the main source code) "grunt dev" should be run. Grunt test relies on the last version of "grunt dev".
 * "grunt test" runs all the tests.

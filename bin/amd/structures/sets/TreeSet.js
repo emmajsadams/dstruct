@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "./MapSet", "../maps/TreeMap"], function(require, exports, MapSet, TreeMap) {
+define(["require", "exports", "./MapSet", "../maps/TreeMap"], function (require, exports, MapSet, TreeMap) {
     var TreeSet = (function (_super) {
         __extends(TreeSet, _super);
         function TreeSet() {
@@ -12,7 +12,5 @@ define(["require", "exports", "./MapSet", "../maps/TreeMap"], function(require, 
         }
         return TreeSet;
     })(MapSet);
-
-    
     return TreeSet;
 });

@@ -1,4 +1,4 @@
-define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
     var Node = (function () {
         function Node(value, prev, next) {
             this.value = value;
@@ -8,7 +8,6 @@ define(["require", "exports"], function(require, exports) {
         return Node;
     })();
     exports.Node = Node;
-
     var Iterator = (function () {
         function Iterator(currentNode) {
             this.currentNode = currentNode;
@@ -21,7 +20,8 @@ define(["require", "exports"], function(require, exports) {
                 };
                 this.currentNode = this.currentNode.next;
                 return next;
-            } else {
+            }
+            else {
                 return {
                     value: null,
                     done: true

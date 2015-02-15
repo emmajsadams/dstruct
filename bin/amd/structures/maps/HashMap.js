@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "./ES6BaseMap"], function(require, exports, ES6BaseMap) {
+define(["require", "exports", "./ES6BaseMap"], function (require, exports, ES6BaseMap) {
     var HashMap = (function (_super) {
         __extends(HashMap, _super);
         function HashMap() {
@@ -12,7 +12,5 @@ define(["require", "exports", "./ES6BaseMap"], function(require, exports, ES6Bas
         }
         return HashMap;
     })(ES6BaseMap);
-
-    
     return HashMap;
 });
