@@ -1,5 +1,7 @@
-dstruct (Alpha)
+dstruct
 ====
+
+NOT FOR PRODUCTION USE: This library is a learning excercise for me. If you'd like a production ready data structures library please see https://facebook.github.io/immutable-js/
 
 Data Structures & Algorithms for TypeScript and Javascript. Based on Java & C# Collections, and Google Guava
 
