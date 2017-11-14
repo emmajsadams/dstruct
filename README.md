@@ -5,12 +5,12 @@ NOT FOR PRODUCTION USE: This library is a learning excercise for me. If you'd li
 
 Data Structures & Algorithms for TypeScript and Javascript. Based on Java & C# Collections, and Google Guava
 
-Current version: 0.0.4 (alpha). Currently not recommended for production. Moonlit project that is accepting contributors of all skill levels.
+Current version: 0.0.4 (alpha).
  * NPM: https://www.npmjs.org/package/dstruct
  * Bower: http://bower.io/search/?q=dstruct
 
 Documentation can be found in https://github.com/codystebbins/tscollections/blob/master/lib/Interfaces.d.ts.
-Documentation describing the specific implementations can be found in the file representing that implementation. HTML version coming soon.
+Documentation describing the specific implementations can be found in the file representing that implementation.
 
 Mostly finished and tested.
 * Lists
@@ -41,7 +41,7 @@ Mostly finished and tested.
 Dependencies
 ====
 
-ES6 Map support. Shims are ok. This library is tested against https://github.com/eriwen/es6-map-shim, but any ES6 tested shim should work.
+ES6 Map support. https://github.com/eriwen/es6-map-shim is used by the library, but any shim or native browser support will work.
 
 Development guide
 ====
