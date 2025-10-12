@@ -16,9 +16,8 @@
   "main": "bin/commonjs/dsa.js",
   "license": "MIT",
   "author": {
-    "name": "Cody Stebbins",
-    "email": "mail@codystebbins.com",
-    "url": "http://codystebbins.com/"
+    "name": "Emma Adams",
+    "email": "emmajsadams@gmail.com"
   },
   "scripts": {
     "install": "bower install && tsd update"
